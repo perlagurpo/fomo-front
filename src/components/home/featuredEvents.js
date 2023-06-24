@@ -37,11 +37,13 @@ export default function FeaturedEvents ({ mockTest = true }) {
 
 
   return(
-    <div className="flex flex-row justify-center p-10 gap-x-10">
+    <div className="flex flex-col justify-center p-10 gap-x-10">
       <SearchBar events={events} setFilteredEvents={setFilteredEvents}/>
+      <div className="flex flex-row justify-center">
       { 
         filteredEvents.map(event => <FeaturedEventCard event={ event } key={event.id}/>)
       } 
+      </div>
     </div>
   );
 }
