@@ -1,7 +1,18 @@
 export default {
-  async getEvents() {
-    const response = await fetch('https://b1c4-2803-9800-9991-7d3e-c255-c7da-6f60-9484.ngrok-free.app/event/event/');
-    const data = await response.json();
-    return data;
+  async getEvents(data) {
+    if(data) {
+      const url = 'https://d78f-190-191-120-247.ngrok-free.app/event/event/?event_name=' + data
+    } else {
+      const url = 'https://d78f-190-191-120-247.ngrok-free.app/event/event/'
+    }
+    const rawResponse = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  });
+  const content = await rawResponse.json();
+  return content;
   }
-};
+}
