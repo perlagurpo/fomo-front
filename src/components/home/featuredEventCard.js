@@ -1,5 +1,8 @@
 
-export default function FeaturedEventCard({ event }) {
+'use client';
+import React from 'react';
+
+const FeaturedEventCard = ({ event }) => {
   
 
   return (
@@ -26,3 +29,4 @@ export default function FeaturedEventCard({ event }) {
   );
 }
 
+export default FeaturedEventCard;
