@@ -2,10 +2,12 @@
 import EventService from '../../app/api/event.service';
 import React, { useEffect, useState } from 'react';
 import FeaturedEventCard from './featuredEventCard';
+import SearchBar from "@/components/home/searchBar";
 
 export default function FeaturedEvents ({ mockTest = true }) {
 
   const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
 
   const mockEvents = [
     {
@@ -26,6 +28,7 @@ export default function FeaturedEvents ({ mockTest = true }) {
       const fetchedEvents = await EventService.getEvents();
       console.log(fetchedEvents)
       setEvents(fetchedEvents);
+      setFilteredEvents(fetchedEvents);
     };
 
     mockTest ? setEvents(mockEvents) : fetchEvents();
@@ -34,10 +37,13 @@ export default function FeaturedEvents ({ mockTest = true }) {
 
 
   return(
-    <div className="flex flex-row justify-center p-10 gap-x-10">
+    <div className="flex flex-col justify-center p-10 gap-x-10">
+      <SearchBar events={events} setFilteredEvents={setFilteredEvents}/>
+      <div className="flex flex-row justify-center">
       { 
-        events.map(event => <FeaturedEventCard event={ event } />)
+        filteredEvents.map(event => <FeaturedEventCard event={ event } key={event.id}/>)
       } 
+      </div>
     </div>
   );
 }
