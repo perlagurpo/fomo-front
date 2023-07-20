@@ -20,7 +20,7 @@ const SearchBar = ({ events, setFilteredEvents }) => {
   };
 
   return(
-    <div className="flex w-screen bg-secondary-two p-14 justify-center">
+    <div className="flex w-screen bg-fomo-sec-two p-14 justify-center">
       
       <form className="flex items-center">   
           <label htmlFor="simple-search" className="sr-only">Buscar eventos</label>
