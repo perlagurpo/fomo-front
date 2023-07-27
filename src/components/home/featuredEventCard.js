@@ -1,31 +1,25 @@
-
 'use client';
 import React from 'react';
 
-const FeaturedEventCard = ({ event }) => {
+const FeaturedEventCard = ({ event_id, event_name, event_img, start_date, event_location, ticket_price }) => {
   
+  const startDate = start_date.split(" ");
 
   return (
-    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mt-8 mx-auto">
-      <div key={event.id} className="p-5">
-        <a href="#">
-          <img className="rounded-t-lg" src="https://m.media-amazon.com/images/I/51D23PS0-+L._UXNaN_FMjpg_QL85_.jpg" alt="" />
-        </a>
-        <div className="p-2">
-          <a href="#">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{event.event}</h5>
-          </a>
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{event.event_description}</p>
-          <a
-            href="#"
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Leer Mas
-          </a>
+    <div className="max-w-sm max-h-sm bg-white rounded-lg drop-shadow-md hover:scale-102 cursor-pointer transition-all transition-400" key={event_id}>
+        <div className="flex-col justify-start items-start gap-2 flex">
+          <img className="w-[480px] h-[250.58px] rounded-tl-lg rounded-tr-lg object-cover" src={event_img} />
         </div>
-      </div>
+        <div className="px-2 pt-3 pb-1"> 
+          <h5 className="px-1 mb-2 text-2xl font-bold tracking-tight text-fomo-sec-two">{event_name}</h5>
+          <p className="px-1 font-normal text-fomo-sec-two">{startDate[0] + ", " + startDate[1]}</p>
+          <div className="flex flex-row justify-start py-1">
+            <img className='max-h-6' src="/img/icons/location-icon.png" />
+            <p className="font-bold text-fomo-sec-two pl-1">{event_location}</p>
+          </div>
+          <p className="px-1 font-normal text-fomo-sec-two">{ticket_price === 0 ? "Gratis" : "$ " + ticket_price}</p>
+        </div>
     </div>
-    
   );
 }
 
