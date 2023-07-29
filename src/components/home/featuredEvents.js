@@ -2,7 +2,6 @@
 import EventService from '../../app/api/event.service';
 import React, { useEffect, useState } from 'react';
 import FeaturedEventCard from './featuredEventCard';
-import SearchBar from "@/components/home/searchBar";
 
 export default function FeaturedEvents ({ mockTest = false }) {
 
@@ -53,8 +52,8 @@ export default function FeaturedEvents ({ mockTest = false }) {
   return(
     <div className="flex flex-col justify-center items-center p-10 gap-x-10">
 
-      <SearchBar events={events} setFilteredEvents={setFilteredEvents}/>
-      <div className="flex flex-col min-w-9/10 pt-10">
+      {/* <SearchBar events={events} setFilteredEvents={setFilteredEvents}/> */}
+      <div className="flex flex-col min-w-9/10">
         <h3 className="text-left text-xl font-bold text-fomo-sec-two pb-5">
           Descubrí eventos
         </h3>
