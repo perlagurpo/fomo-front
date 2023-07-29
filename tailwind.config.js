@@ -22,7 +22,7 @@ module.exports = {
         "fomo-pri-two": "#ed6e2f",
         "fomo-sec-one": "#3a9299",
         "fomo-sec-two": "#3c3c3b",
-        "fomo-sec-three": "#efefef"
+        "fomo-sec-white": "#efefef"
       }
     },
   },
