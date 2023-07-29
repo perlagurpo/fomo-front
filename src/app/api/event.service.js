@@ -1,18 +1,20 @@
 export default {
   async getEvents(data) {
+    var url;
     if(data) {
-      const url = 'https://d78f-190-191-120-247.ngrok-free.app/event/event/?event_name=' + data
+      url = ' http://18.231.76.133/event/event/' + data
     } else {
-      const url = 'https://d78f-190-191-120-247.ngrok-free.app/event/event/'
+      url = 'http://18.231.76.133/event/event/'
     }
     const rawResponse = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-  });
-  const content = await rawResponse.json();
-  return content;
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    });
+
+    const content = await rawResponse.json();
+    return content;
   }
 }

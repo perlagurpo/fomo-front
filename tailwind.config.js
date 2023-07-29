@@ -8,6 +8,19 @@ module.exports = {
   theme: {
     
     extend: {
+      maxWidth: {
+        '4/5': '80%',
+        '9/10': '90vw',
+      },
+      minWidth: {
+        '4/5': '80%',
+        '9/10': '90%',
+      },
+      maxHeight: {
+        '1/2': '50%',
+        '4/5': '80%',
+        '9/10': '90%',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -23,6 +36,10 @@ module.exports = {
         "fomo-sec-one": "#3a9299",
         "fomo-sec-two": "#3c3c3b",
         "fomo-sec-white": "#efefef"
+      },
+      scale: {
+        '101': '1.01',
+        '102': '1.02'
       }
     },
   },
