@@ -1,5 +1,6 @@
 export default {
   async getEvents(data) {
+    console.log(data);
     var url;
     if(data) {
       url = ' http://18.231.76.133/event/event/' + data
