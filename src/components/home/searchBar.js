@@ -23,7 +23,7 @@ export default function SearchBar ({ onToggleFilters, onSearch, showFilters }) {
     <div className="w-full max-w-screen-xl mx-auto p-4 sm:pt-6 md:pt-8 md:pb-4 xl:px-72 lg:px-60 flex pt-8 md:px-48 sm:px-36 xs:px-24  justify-center">
       <div className="flex flex-col w-full">
         {showFilters && 
-        <div className="relative">
+        <div className="relative pb-3">
           <button onClick={backToHome} className="text-black">
             <svg
               className="w-5 h-5 text-#ED6E2F"
@@ -41,9 +41,10 @@ export default function SearchBar ({ onToggleFilters, onSearch, showFilters }) {
             </svg>
           </button>
         </div>}
+        {!showFilters && 
         <div className="relative">
-          <p className="text-black text-center pb-6">Encontrar un evento para vos nunca fue tan fácil*</p>
-        </div>
+          <p className="text-black text-center pb-3">Encontrar un evento para vos nunca fue tan fácil*</p>
+        </div>}
         <div className="relative w-full">
           {showFilters ? 
             <input

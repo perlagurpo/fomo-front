@@ -1,9 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Datepicker from "react-tailwindcss-datepicker"; 
-import { registerLocale, setDefaultLocale } from  "react-datepicker";
-import es from 'date-fns/locale/es';
-registerLocale('es', es);
 
 export default function SearchFilters ({ filters, onFiltersChange }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -128,9 +125,9 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
           <h5 className="text-left font-bold text-fomo-sec-two pb-4">
             Categorías
           </h5>
-          <div className="grid grid-cols-4 pb-4">
+          <div className="flex flex-wrap gap-2 justify-start pb-4">
             <button
-              className={`inline-block p-2 rounded-lg border ${
+              className={`min-w-[123px] inline-block p-2 rounded-lg border ${
                 isFilterActive('category', 'musica') ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
               } shadow-sm mr-2 cursor-pointer text-black`}
               onClick={() => handleFilterChange('category', 'musica')}
@@ -138,7 +135,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
               Música
             </button>
             <button
-              className={`inline-block p-2 rounded-lg border ${
+              className={`min-w-[123px] inline-block p-2 rounded-lg border ${
                 isFilterActive('category', 'teatro') ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
               } shadow-sm mr-2 cursor-pointer text-black`}
               onClick={() => handleFilterChange('category', 'teatro')}
@@ -146,7 +143,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
               Teatro
             </button>
             <button
-              className={`inline-block p-2 rounded-lg border ${
+              className={`min-w-[123px] inline-block p-2 rounded-lg border ${
                 isFilterActive('category', 'gastronomia') ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
               } shadow-sm mr-2 cursor-pointer text-black`}
               onClick={() => handleFilterChange('category', 'gastronomia')}
@@ -157,9 +154,9 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
           <h5 className="text-left font-bold text-fomo-sec-two pb-4">
             Formato
           </h5>
-          <div className="grid grid-cols-4 pb-4">
+          <div className="flex flex-wrap gap-2 justify-start pb-4">
             <button
-              className={`inline-block p-2 rounded-lg border ${
+              className={`min-w-[123px] inline-block p-2 rounded-lg border ${
                 isFilterActive('format', 'festival') ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
               } shadow-sm mr-2 cursor-pointer text-black`}
               onClick={() => handleFilterChange('format', 'festival')}
@@ -167,7 +164,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
               Festival
             </button>
             <button
-              className={`inline-block p-2 rounded-lg border ${
+              className={`min-w-[123px] inline-block p-2 rounded-lg border ${
                 isFilterActive('format', 'clase') ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
               } shadow-sm mr-2 cursor-pointer text-black`}
               onClick={() => handleFilterChange('format', 'clase')}
@@ -175,7 +172,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
               Clase
             </button>
             <button
-              className={`inline-block p-2 rounded-lg border ${
+              className={`min-w-[123px] inline-block p-2 rounded-lg border ${
                 isFilterActive('format', 'conferencia') ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
               } shadow-sm mr-2 cursor-pointer text-black`}
               onClick={() => handleFilterChange('format', 'conferencia')}
