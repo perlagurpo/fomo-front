@@ -12,7 +12,7 @@ export default function FeaturedEvents({ searchQuery }) {
       const fetchedEvents = await EventService.getEvents(searchQuery);
       setEvents(fetchedEvents);
     };
-
+    
     fetchEvents();
   }, [searchQuery]);
 
