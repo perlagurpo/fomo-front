@@ -82,19 +82,33 @@ export default function FeaturedEvents({ searchQuery }) {
             'Descubrí Eventos'
           )}
         </h3>
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-3">
-          {events.map(event => (
-            <FeaturedEventCard
-              key={event.id}
-              event_id={event.id}
-              event_name={event.event_name}
-              event_img={event.event_img}
-              start_date={event.start_date}
-              event_location={event.event_location}
-              ticket_price={event.ticket_price}
-            />
-          ))}
-        </div>
+        
+        {
+          events.length > 0 ? 
+            <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-3">
+              {
+                events.map(event => (
+                  <FeaturedEventCard
+                    key={event.id}
+                    event_id={event.id}
+                    event_name={event.event_name}
+                    event_img={event.event_img}
+                    start_date={event.start_date}
+                    event_location={event.event_location}
+                    ticket_price={event.ticket_price}
+                  />
+                  )
+                )
+              }
+            </div>
+          :
+          (
+            <div className='flex flex-column items-center max-w-[70vw]'>
+              <img src='/img/home/banner_busqueda_fail.png' />
+            </div>
+          )  
+        }
+        
       </div>
     </div>
   );
