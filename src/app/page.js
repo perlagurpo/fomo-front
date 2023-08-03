@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import HomeBanner from '@/components/home/homeBanner';
 import SearchBar from '@/components/home/searchBar';
 import SearchFilters from '@/components/home/searchFilters';
@@ -21,6 +21,8 @@ export default function Home() {
   };
 
   const handleSearch = (searchValue) => {
+    console.log(searchValue)
+    console.log(searchFilters)
     const queryStringWithFilters = buildQueryString(searchValue, searchFilters);
     setSearchQuery(queryStringWithFilters);
   };
@@ -33,30 +35,37 @@ export default function Home() {
     const { category, format, event_type, start_date, end_date } = filters;
     const queryParams = [];
   
-    if (searchValue) {
-      queryParams.push(`search=${encodeURIComponent(searchValue)}`);
-    }
-    if (category) {
-      queryParams.push(`category=${encodeURIComponent(category)}`);
-    }
-    if (format) {
-      queryParams.push(`format=${encodeURIComponent(format)}`);
-    }
-    if (event_type) {
-      queryParams.push(`event_type=${encodeURIComponent(event_type)}`);
-    }
+    // GET l  http://18.231.76.133/event/event?start_date=25-07-2022&event_name=test&end_date=27-07-2023
+    /*
+      if (searchValue) {
+        queryParams.push(`search=${encodeURIComponent(searchValue)}`);
+      }
+      if (category) {
+        queryParams.push(`category=${encodeURIComponent(category)}`);
+      }
+      if (format) {
+        queryParams.push(`format=${encodeURIComponent(format)}`);
+      }
+      if (event_type) {
+        queryParams.push(`event_type=${encodeURIComponent(event_type)}`);
+      }
+    */
+    console.log(filters)
     if (start_date) {
       queryParams.push(`start_date=${encodeURIComponent(start_date)}`);
+    }
+    if (searchValue) {
+      queryParams.push(`event_name=${encodeURIComponent(searchValue)}`);
     }
     if (end_date) {
       queryParams.push(`end_date=${encodeURIComponent(end_date)}`);
     }
-  
+    
     return queryParams.join('&');
   }
 
   return (
-    <main className="flex flex-col items-center justify-between bg-fomo-sec-white font-poppins">
+    <main className="flex flex-col items-center justify-start min-h-screen bg-fomo-sec-white font-poppins">
       {showFilters ? '' : <HomeBanner />}
       <SearchBar onToggleFilters={toggleFilters} onSearch={handleSearch} showFilters={showFilters} />
       {showFilters ? (

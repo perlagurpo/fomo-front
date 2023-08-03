@@ -1,6 +1,7 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Datepicker from "react-tailwindcss-datepicker"; 
+import EventService from '@/app/api/event.service';
 
 export default function SearchFilters ({ filters, onFiltersChange }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -14,9 +15,24 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
     event_type: ''
   });
 
+  const [categories, setCategories] = useState(null);
+
+  useState(
+    () => {
+      async function fetchCategories(){
+        const fetchedCategories = await EventService.getCategories();
+        setCategories(fetchedCategories);
+        return fetchedCategories;
+      }
+      fetchCategories();
+    }
+  ,[]);
+
+
   const handleFilterChange = (key, value) => {
     const filterArray = filters[key].split(',').map((item) => item.trim());
     if (filterArray.includes(value)) {
+      // Remuevo filtro existente
       const updatedFilters = filterArray.filter((item) => item !== value);
       const updatedValue = updatedFilters.join(',');
       onFiltersChange({ ...filters, [key]: updatedValue });
@@ -25,6 +41,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
         [key]: updatedFilters.join(',')
       }));
     } else {
+      // Agrego nuevo filtro a filtros previos
       const updatedValue = filters[key] ? `${filters[key]},${value}` : value;
       onFiltersChange({ ...filters, [key]: updatedValue });
       setFilter(prevFilter => ({
@@ -32,6 +49,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
         [key]: prevFilter[key] ? `${prevFilter[key]},${value}` : value
       }));
     }
+    
   };
 
   const isFilterActive = (key, value) => {
@@ -115,7 +133,9 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
       start_date: startDate ? startDate : '',
       end_date: endDate ? endDate : ''
     });
-    console.log(filter);
+    console.log(startDate);
+    onFiltersChange({ ...filters, ["start_date"]: startDate });
+    onFiltersChange({ ...filters, ["end_date"]: endDate });
   };
 
   return(
@@ -126,30 +146,27 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
             Categorías
           </h5>
           <div className="flex flex-wrap gap-2 justify-start pb-4">
-            <button
-              className={`min-w-[123px] inline-block p-2 rounded-lg border ${
-                isFilterActive('category', 'musica') ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
-              } shadow-sm mr-2 cursor-pointer text-black`}
-              onClick={() => handleFilterChange('category', 'musica')}
-            >
-              Música
-            </button>
-            <button
-              className={`min-w-[123px] inline-block p-2 rounded-lg border ${
-                isFilterActive('category', 'teatro') ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
-              } shadow-sm mr-2 cursor-pointer text-black`}
-              onClick={() => handleFilterChange('category', 'teatro')}
-            >
-              Teatro
-            </button>
-            <button
-              className={`min-w-[123px] inline-block p-2 rounded-lg border ${
-                isFilterActive('category', 'gastronomia') ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
-              } shadow-sm mr-2 cursor-pointer text-black`}
-              onClick={() => handleFilterChange('category', 'gastronomia')}
-            >
-              Gastronomía
-            </button>
+            {
+              categories &&(
+                categories.map(
+                  (category, i) => {
+                    const name = category['name'];
+
+                    return(
+                      <button   key={i}
+                                className={`min-w-[123px] inline-block p-2 rounded-lg border ${
+                                  isFilterActive('category', name) ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
+                                } shadow-sm mr-2 cursor-pointer text-black`}
+                                onClick={() => handleFilterChange('category', name)}
+                      >
+                        { name }
+                      </button>
+                    );
+                  }
+                )
+              )
+            }
+            
           </div>
           <h5 className="text-left font-bold text-fomo-sec-two pb-4">
             Formato
