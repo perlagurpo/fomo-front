@@ -82,7 +82,7 @@ export default function FeaturedEvents({ searchQuery }) {
             'Descubrí Eventos'
           )}
         </h3>
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-3">
           {events.map(event => (
             <FeaturedEventCard
               key={event.id}
