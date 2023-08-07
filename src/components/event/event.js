@@ -4,22 +4,22 @@ import { CalendarIcon, ClockIcon, LocationIcon, TicketIcon } from "../icons/icon
 export default function Event({ name, date, location, description, duration, ticketType, ticketPrice, ticketURL, imageURL }) {
 
   return(
-    <div className='flex flex-col items-center text-fomo-sec-two md:max-w-[60%] border border-red'>
+    <div className='flex flex-col items-center justify-center text-fomo-sec-two px-4 md:max-w-[60%]'>
       <img src={imageURL} alt='event_img' />
       
       <div className='flex flex-col items-center gap-4 mt-6'>
-        <h1 className='text-4xl font-bold py-6'>
+        <h1 className='text-4xl font-bold py-6 text-center'>
           { name }
         </h1>
-        <div className='flex flex-col md:flex-row md:justify-between md:w-[80%] md:py-8'>
-          <div className='flex flex-row items-center md:gap-4'>
+        <div className='flex flex-col pb-4 gap-5 md:flex-row md:justify-between md:w-[80%] md:py-8 md:gap-0'>
+          <div className='flex flex-row items-center gap-4'>
             <CalendarIcon />
             <div className='flex flex-col items-start'>
               <h2 className='font-bold text-lg'>Fecha y Hora</h2>
               <p>{ date }</p>
             </div>
           </div>
-          <div className='flex flex-row items-center md:gap-4'>
+          <div className='flex flex-row items-center gap-6 md:gap-4'>
             <LocationIcon />
             <div className='flex flex-col items-start'>
               <h2 className='font-bold text-lg'>Ubicación</h2>
@@ -28,7 +28,7 @@ export default function Event({ name, date, location, description, duration, tic
           </div>
         </div>
 
-        <div className='flex flex-column gap-20 md:flex-row md:justify-between md:align-center md:w-[80%] md:py-5 md:basis-6/12'>
+        <div className='flex flex-col gap-12 md:gap-20 md:flex-row md:justify-between md:align-center md:w-[80%] md:py-5 md:basis-6/12'>
           <EventDescription description={description} duration={duration} ticketType={ticketType} />
           <EventTickets ticketPrice={ticketPrice} ticketURL={ticketURL} />
         </div>
