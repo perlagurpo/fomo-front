@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import { useState } from 'react';
 import HomeBanner from '@/components/home/homeBanner';
 import SearchBar from '@/components/home/searchBar';
 import SearchFilters from '@/components/home/searchFilters';
