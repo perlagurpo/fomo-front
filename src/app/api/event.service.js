@@ -4,9 +4,9 @@ export default {
   async getEvents(data) {
     var url;
     if(data) {
-      url = ' http://18.231.76.133/event/event/?' + data
+      url = ' http://18.231.76.133/event/?' + data;
     } else {
-      url = 'http://18.231.76.133/event/event/'
+      url = 'http://18.231.76.133/event/';
     }
     const rawResponse = await fetch(url, {
       method: 'GET',
@@ -21,7 +21,7 @@ export default {
   },
 
   async getEvent(id) {
-    const url = "http://18.231.76.133/event/event/" + id;
+    const url = "http://18.231.76.133/event/" + id;
     const rawResponse = await fetch( url, {
         method: 'GET',
         headers: {

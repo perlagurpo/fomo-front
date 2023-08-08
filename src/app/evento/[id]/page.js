@@ -9,36 +9,48 @@ import Event from "@/components/event/event";
 export default function Evento({ params }) {
   const pathParams = useParams();
   const [eventData, setEventData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  
   /*
-    Hacer consulta en un useEffect o traer data de un Context
+    Fetch data del evento requerido consultando el parámetro de la URL actual
   */
   useEffect(
     () => {
       async function fetchEvent(id) {
         const fetchedEvent = await EventService.getEvent(id);
         setEventData(fetchedEvent);
-        console.log(fetchedEvent);
+        setLoading(false);
       }
+      setLoading(true);
       const id = pathParams["id"];
       fetchEvent(id);
     }
     ,[]);
 
+
   return(
-    // date, location, description, duration, ticketType, ticketPrice, ticketURL
     <div className='flex flex-col min-h-screen bg-fomo-sec-white justify-center items-center py-20'>
-      
+      {
+        loading && <LoadingSpinner size={12} />
+      }
       {
         eventData &&
           <Event  name={eventData.event_name}
-                  date="23 Agosto 12:00"
+                  startDate={eventData.start_date}
+                  startDay={eventData.day_name_start}
+                  endDate={eventData.end_date}
+                  endDay={eventData.day_name_end}
                   location={eventData.event_location}
-                  imageURL={eventData.event_img}
-                  description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
                   duration={"3 horas"}
+                  hasTicket={eventData.has_ticket}
                   ticketType={"Entrada electrónica"}
                   ticketPrice={eventData.ticket_price}
-                  ticketURL={"/"}
+                  ticketURL={eventData.buy_tickets}
+                  ticketsAvailable={eventData.tickets_available}
+                  eventLink={eventData.event_link}
+                  imageURL={eventData.event_img}
+                  description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
+                  category={eventData.category}
                   />
       }
     </div>
