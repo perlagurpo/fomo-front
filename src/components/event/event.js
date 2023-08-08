@@ -4,7 +4,7 @@ import { CalendarIcon, ClockIcon, LocationIcon, TicketIcon } from "../icons/icon
 export default function Event({ name, date, location, description, duration, ticketType, ticketPrice, ticketURL, imageURL }) {
 
   return(
-    <div className='flex flex-col items-center justify-center text-fomo-sec-two px-4 md:max-w-[60%]'>
+    <div className='flex flex-col items-center justify-center text-fomo-sec-two px-4 lg:max-w-[60%]'>
       <img src={imageURL} alt='event_img' />
       
       <div className='flex flex-col items-center gap-4 mt-6'>

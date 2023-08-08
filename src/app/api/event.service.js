@@ -1,3 +1,5 @@
+// Agregamos manejadores de excepciones en las respuestas?
+
 export default {
   async getEvents(data) {
     var url;
@@ -14,6 +16,20 @@ export default {
       },
     });
 
+    const content = await rawResponse.json();
+    return content;
+  },
+
+  async getEvent(id) {
+    const url = "http://18.231.76.133/event/event/" + id;
+    const rawResponse = await fetch( url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      }
+    );
     const content = await rawResponse.json();
     return content;
   },
