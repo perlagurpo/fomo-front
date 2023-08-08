@@ -9,16 +9,19 @@ import Event from "@/components/event/event";
 export default function Evento({ params }) {
   const pathParams = useParams();
   const [eventData, setEventData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  
   /*
-    Hacer consulta en un useEffect o traer data de un Context
+    Fetch data del evento requerido consultando el parámetro de la URL actual
   */
   useEffect(
     () => {
       async function fetchEvent(id) {
         const fetchedEvent = await EventService.getEvent(id);
         setEventData(fetchedEvent);
-        console.log(fetchedEvent);
+        setLoading(false);
       }
+      setLoading(true);
       const id = pathParams["id"];
       fetchEvent(id);
     }
@@ -27,7 +30,9 @@ export default function Evento({ params }) {
   return(
     // date, location, description, duration, ticketType, ticketPrice, ticketURL
     <div className='flex flex-col min-h-screen bg-fomo-sec-white justify-center items-center py-20'>
-      
+      {
+        loading && <LoadingSpinner size={12} />
+      }
       {
         eventData &&
           <Event  name={eventData.event_name}

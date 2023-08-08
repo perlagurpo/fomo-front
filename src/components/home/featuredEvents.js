@@ -1,6 +1,6 @@
 'use client';
-import EventService from '../../app/api/event.service';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import EventService from '@/app/api/event.service';
 import FeaturedEventCard from './featuredEventCard';
 
 export default function FeaturedEvents({ searchQuery }) {
@@ -10,6 +10,7 @@ export default function FeaturedEvents({ searchQuery }) {
   useEffect(() => {
     const fetchEvents = async () => {
       const fetchedEvents = await EventService.getEvents(searchQuery);
+      console.log(fetchedEvents)
       setEvents(fetchedEvents);
     };
     
