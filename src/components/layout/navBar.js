@@ -10,7 +10,7 @@ export default function Navbar() {
     <nav className="bg-fomo-sec-white border-gray-200 dark:fomo-pri-one">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link href="/" className="flex items-center">
-            <img src="img/logos/Recurso 23_SVG.svg" className="h-8 mr-3" alt="Fomo Agenda Logo" />
+            <img src="/img/logos/Recurso 23_SVG.svg" className="h-8 mr-3" alt="Fomo Agenda Logo" />
         </Link>
         <button onClick={() => setMenuOpened(!menuOpened)}
                 type="button" 
