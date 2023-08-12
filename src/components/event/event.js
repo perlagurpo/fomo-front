@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { CalendarIcon, ClockIcon, LocationIcon, TicketIcon } from "../icons/icons";
 import { diaAString, mesAString } from '../utils/dateOperations';
 
@@ -24,7 +24,7 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
   }
 
   return(
-    <div className='flex flex-col items-center justify-center text-fomo-sec-two px-4 lg:max-w-[60%]'>
+    <div className='flex flex-col items-center justify-center text-fomo-sec-two'>
       <img src={imageURL} alt='event_img' />
       
       <div className='flex flex-col items-center gap-4 mt-6'>
@@ -33,15 +33,15 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
         </h1>
         <h2 className='text-md font-bold pb-3'> { category.toUpperCase() } </h2>  
 
-        <div className='flex flex-col pb-4 gap-5 md:flex-row md:justify-between md:py-8 md:gap-0 md:px-6 lg:w-[80%]'>
-          <div className='flex flex-row items-center gap-4'>
+        <div className='flex flex-col pb-4 gap-5 w-full  md:flex-row md:justify-between md:py-8'>
+          <div className='flex flex-row items-center gap-4 basis-6/12'>
             <CalendarIcon />
             <div className='flex flex-col items-start'>
               <h2 className='font-bold text-lg'>Fecha y Hora</h2>
               <p>{ formatDate(displayedStartDate) }</p>
             </div>
           </div>
-          <div className='flex flex-row items-center gap-6 md:gap-4'>
+          <div className='flex flex-row items-center basis-6/12 gap-6 md:gap-4'>
             <LocationIcon />
             <div className='flex flex-col items-start'>
               <h2 className='font-bold text-lg'>Ubicación</h2>
@@ -49,11 +49,14 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
             </div>
           </div>
         </div>
-
-        <div className='flex flex-col gap-12 md:gap-20 md:flex-row md:justify-between md:align-center md:px-6 md:py-5 md:basis-6/12 lg:w-[80%] lg:px-0'>
-          <EventDescription description={description} duration={duration} ticketType={ticketType} />
-          { hasTicket && <EventTickets ticketPrice={ticketPrice} ticketURL={ticketURL} ticketsLeft={ticketsAvailable} />}
+        <div className='md:py-5'>
+          <h2 className='text-xl font-bold pb-3'>Acerca del Evento</h2>
+          <div className='flex flex-col gap-12 w-full md:gap-20 md:flex-row md:justify-between md:items-start '>
+            <EventDescription description={description} duration={duration} ticketType={ticketType} />
+            { hasTicket && <EventTickets ticketPrice={ticketPrice} ticketURL={ticketURL} ticketsLeft={ticketsAvailable} />}
+          </div>
         </div>
+
       </div>
     </div>    
   );
@@ -63,8 +66,8 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
 
 function EventDescription({ description, duration, ticketType }){
   return(
-    <div className='flex flex-col items-start'>
-      <h2 className='text-xl font-bold pb-3'>Acerca del Evento</h2>
+    <div className='flex flex-col items-start basis-8/12'>
+      
       <div className='flex flex-col items-start gap-4 bg-fomo-sec-one/[.10] rounded-md py-3 px-4'>
         <p>
           { description }
@@ -88,7 +91,7 @@ function EventDescription({ description, duration, ticketType }){
 
 function EventTickets({ ticketPrice, ticketURL="/", ticketsLeft }) {
   return(
-    <div className='flex flex-col items-center justify-between gap-6 border border-4 border-gris-custom rounded-lg text-left p-3 md:min-w-[30%] md:self-center'>
+    <div className='flex flex-col items-center justify-between gap-6 basis-4/12 border border-4 border-gris-custom rounded-lg text-left p-3 md:min-w-[30%] '>
       <div className='flex flex-col min-w-[100%] gap-2'>
         <h3 className='text-lg font-bold'>Ver entradas</h3>
         <p >{"$" + ticketPrice }</p>
