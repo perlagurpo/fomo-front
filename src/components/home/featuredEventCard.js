@@ -12,11 +12,11 @@ const FeaturedEventCard = ({ event_id, event_name, event_img, start_date, event_
             <img className="w-[480px] h-[250.58px] rounded-tl-lg rounded-tr-lg object-cover" src={event_img} />
           </div>
           <div className="px-2 pt-3 pb-1"> 
-            <h5 className="px-1 mb-2 text-2xl font-bold tracking-tight text-fomo-sec-two">{event_name}</h5>
+            <h5 className="px-1 mb-2 text-2xl font-bold tracking-tight text-fomo-sec-two line-clamp-1">{event_name}</h5>
             <p className="px-1 font-normal text-fomo-sec-two">{startDate[0] + ", " + startDate[1]}</p>
             <div className="flex flex-row justify-start py-1">
               <img className='max-h-6' src="/img/icons/location-icon.png" />
-              <p className="font-bold text-fomo-sec-two pl-1">{event_location}</p>
+              <p className="font-bold text-fomo-sec-two pl-1 line-clamp-1">{event_location}</p>
             </div>
             <p className="px-1 font-normal text-fomo-sec-two">{ticket_price === 0 ? "Gratis" : "$ " + ticket_price}</p>
           </div>
