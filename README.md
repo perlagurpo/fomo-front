@@ -6,7 +6,7 @@ Antes de correr la aplicación por primera vez, ejecutar el siguiente comando en
 npm install
 ```
 
-Para correr la aplicación en local, ejecutar el comando `app/page.js`. Abrir [http://localhost:3000](http://localhost:3000) en el navegador para ver el resultado.
+Para correr la aplicación en local, ejecutar el comando `npm run dev`. Abrir [http://localhost:3000](http://localhost:3000) en el navegador para ver el resultado.
 
 ## Estructura de directorios del proyecto
 
