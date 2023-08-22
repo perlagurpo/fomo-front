@@ -35,7 +35,7 @@ export default {
   },
 
   async getCategories() {
-    const url = "http://18.231.76.133/category/category";
+    const url = "http://18.231.76.133/category";
     const rawResponse = await fetch(url, {
       method: 'GET',
       headers: {
@@ -44,6 +44,7 @@ export default {
       },
     });
     const categories = await rawResponse.json();
+    console.log(categories);
     return categories;
   }
 

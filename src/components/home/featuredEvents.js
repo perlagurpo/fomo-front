@@ -2,10 +2,11 @@
 import { useEffect, useState } from 'react';
 import EventService from '@/app/api/event.service';
 import FeaturedEventCard from './featuredEventCard';
+import moment from 'moment';
 
 export default function FeaturedEvents({ searchQuery }) {
   const [events, setEvents] = useState([]);
-  const [filters, setFilters] = useState({ category: "", format: "", event_type: "", start_date: "" });
+  const [filters, setFilters] = useState({ category: "", format: "", event_type: "", start_date: "", end_date: "" });
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -21,8 +22,11 @@ export default function FeaturedEvents({ searchQuery }) {
     const updatedFilters = { ...filters };
     if (index !== null && Array.isArray(updatedFilters[filterKey])) {
       updatedFilters[filterKey].splice(index, 1);
+      if (updatedFilters[filterKey].length === 0) {
+        delete updatedFilters[filterKey];
+      }
     } else {
-      updatedFilters[filterKey] = "";
+      delete updatedFilters[filterKey];
     }
     setFilters(updatedFilters);
 
@@ -43,22 +47,43 @@ export default function FeaturedEvents({ searchQuery }) {
     setFilters(parsedFilters);
   }, [searchQuery]);
 
+  const filterFormat = filter => {
+    if (filter == 'category') {
+      return 'Categoría';
+    }
+    if (filter == 'start_date') {
+      return 'Desde';
+    }
+    if (filter == 'end_date') {
+      return 'Hasta';
+    }
+  };
+
+  const valueFormat = (filter, value) => {
+    if (filter == 'start_date' || filter == 'end_date') {
+      const spanishMonths = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+      const formattedDate = moment(value, "DD-MM-YYYY").format(`DD [${spanishMonths[moment(value, "DD-MM-YYYY").month()]}] YYYY`);
+      return formattedDate;
+    }
+    return value;
+  };
+
   return (
     <div className="flex flex-col justify-center items-center p-10 gap-x-10">
       <div className="flex flex-col min-w-9/10">
         <h3 className="text-left text-xl font-bold text-fomo-sec-two pb-5">
           {Object.values(filters).some(filter => filter) ? (
             Object.entries(filters).map(([filterKey, filterValue]) => {
-              if(filterKey == 'search') {
+              if(filterKey == 'event_name') {
                 return null;
               }
               if (filterValue) {
                 return Array.isArray(filterValue) ? (
                   filterValue.map((value, index) => (
                     <span key={`${filterKey}-${index}`} className="inline-flex flex-col bg-fomo-pri-one rounded-lg px-3 py-1 text-white mr-2">
-                      <span style={{fontSize: '10px', lineHeight: '1.6'}}>{filterKey}</span>
+                      <span style={{fontSize: '10px', lineHeight: '1.6'}}>{ filterFormat(filterKey) }</span>
                       <span style={{fontSize: '18px', lineHeight: '1.6'}}>
-                        {value}
+                        { valueFormat(filterKey, value) }
                         <button className="text-sm ml-2 text-fomo-pri-two" onClick={() => removeFilter(filterKey, index)}>
                           X
                         </button>
@@ -67,9 +92,9 @@ export default function FeaturedEvents({ searchQuery }) {
                   ))
                 ) : (
                   <span key={filterKey} className="inline-flex flex-col bg-fomo-pri-one rounded-lg px-3 py-1 text-white mr-2">
-                    <span style={{fontSize: '10px', lineHeight: '1.6'}}>{filterKey}</span>
+                    <span style={{fontSize: '10px', lineHeight: '1.6'}}>{ filterFormat(filterKey) }</span>
                     <span style={{fontSize: '18px', lineHeight: '1.6'}}>
-                      {filterValue}
+                      { valueFormat(filterKey, filterValue) }
                       <button className="text-sm ml-2 text-fomo-pri-two" onClick={() => removeFilter(filterKey)}>
                         X
                       </button>

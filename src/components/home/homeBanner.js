@@ -51,33 +51,54 @@ return (
         className={`absolute w-full h-221 transform transition-transform ${
           index === activeIndex ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'
         }`}
-        style={{ backgroundImage: `url(${
-              window.innerWidth < 768 ? 'http://18.231.76.133' + item.image_short_mobile : 'http://18.231.76.133' + item.image_short
-            })`, zIndex: index === activeIndex ? 1 : 0, minHeight: `${defaultHeight}px`, maxHeight: `${defaultHeight}px` }}
+        style={{
+          backgroundImage: `url(${
+            window.innerWidth < 768 ? 'http://18.231.76.133' + item.image_short_mobile : 'http://18.231.76.133' + item.image_short
+          })`,
+          zIndex: index === activeIndex ? 1 : 0,
+          minHeight: `${defaultHeight}px`,
+          maxHeight: `${defaultHeight}px`,
+        }}
       >
         <img
           src={window.innerWidth < 768 ? 'http://18.231.76.133' + item.image_short_mobile : 'http://18.231.76.133' + item.image_short}
           alt="Banner"
           className="h-221 w-full object-cover"
-          style={{minHeight: `${defaultHeight}px`, maxHeight: `${defaultHeight}px` }}
+          style={{ minHeight: `${defaultHeight}px`, maxHeight: `${defaultHeight}px` }}
         />
       </a>
     ))}
 
-    <button
-      className="absolute top-1/2 transform -translate-y-1/2 left-4 bg-gray-500 text-white p-2 rounded-full opacity-75 z-10"
-      onClick={() => setActiveIndex((activeIndex + 1) % carouselData.length)}
-    >
-      &#60;
-    </button>
-    <button
-      className="absolute top-1/2 transform -translate-y-1/2 right-4 bg-gray-500 text-white p-2 rounded-full opacity-75 z-10"
-      onClick={() => setActiveIndex((activeIndex - 1 + carouselData.length) % carouselData.length)}
-    >
-      &#62;
-    </button>
-  </div>
-);
+    {carouselData.length > 1 && (
+      <button
+        className="absolute top-1/2 transform -translate-y-1/2 left-4 text-white p-2 rounded-full opacity-75 z-10 hover:bg-gray-500 transition-colors duration-300"
+        onClick={() => setActiveIndex((activeIndex - 1 + carouselData.length) % carouselData.length)}
+      >
+        &#60;
+      </button>
+    )}
+
+    {carouselData.length > 1 && (
+      <button
+        className="absolute top-1/2 transform -translate-y-1/2 right-4 text-white p-2 rounded-full opacity-75 z-10 hover:bg-gray-500 transition-colors duration-300"
+        onClick={() => setActiveIndex((activeIndex + 1) % carouselData.length)}
+      >
+        &#62;
+      </button>
+    )}
+
+    {carouselData.length > 1 && (
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+        {carouselData.map((_, index) => (
+          <button
+            key={index}
+            className={`h-2 w-6 rounded-full ${activeIndex === index ? 'bg-white' : 'bg-gray-400'}`}
+            onClick={() => setActiveIndex(index)}
+          />
+        ))}
+      </div>
+    )}
+  </div>);
 };
 
 export default HomeBanner;

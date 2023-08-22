@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import Datepicker from "react-tailwindcss-datepicker"; 
 import EventService from '@/app/api/event.service';
+import moment from 'moment';
 
 export default function SearchFilters ({ filters, onFiltersChange }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -9,6 +10,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
   const [endDate, setEndDate] = useState(null);
   const [filter, setFilter] = useState({
     start_date: '',
+    end_date: '',
     price: '',
     category: '',
     format: '',
@@ -28,28 +30,37 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
     }
   ,[]);
 
+  const handleFilterChange = (key, value, dateFilters = null) => {
+    if (dateFilters != null) {
+      onFiltersChange(dateFilters);
+      setFilter((prevFilter) => ({
+        ...prevFilter,
+        ...dateFilters,
+      }));
+      return;
+    }
 
-  const handleFilterChange = (key, value) => {
     const filterArray = filters[key].split(',').map((item) => item.trim());
+    let updatedValue;
+
     if (filterArray.includes(value)) {
       // Remuevo filtro existente
       const updatedFilters = filterArray.filter((item) => item !== value);
-      const updatedValue = updatedFilters.join(',');
-      onFiltersChange({ ...filters, [key]: updatedValue });
-      setFilter(prevFilter => ({
-        ...prevFilter,
-        [key]: updatedFilters.join(',')
-      }));
+      updatedValue = updatedFilters.join(',');
     } else {
       // Agrego nuevo filtro a filtros previos
-      const updatedValue = filters[key] ? `${filters[key]},${value}` : value;
-      onFiltersChange({ ...filters, [key]: updatedValue });
-      setFilter(prevFilter => ({
-        ...prevFilter,
-        [key]: prevFilter[key] ? `${prevFilter[key]},${value}` : value
-      }));
+      if (key === 'start_date' || key === 'end_date') {
+        updatedValue = value;
+      } else {
+        updatedValue = filters[key] ? `${filters[key]},${value}` : value;
+      }
     }
-    
+
+    onFiltersChange({ ...filters, [key]: updatedValue });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      [key]: updatedValue,
+    }));
   };
 
   const isFilterActive = (key, value) => {
@@ -57,85 +68,49 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
     return filterArray.includes(value);
   };
 
-  const handleDateChange = e => {
+  const handleDateChange = (e) => {
     const value = e.target.value;
+    setShowDatePicker(false);
+    setStartDate(null);
+    setEndDate(null);
+    const updatedFilters = { ...filters };
+
     if (value === 'today') {
-      setShowDatePicker(false);
-      const today = new Date();
-      setFilter({
-        ...filter,
-        start_date: formatDate(today),
-        end_date: formatDate(today)
-      });
+      const today = moment().format('DD-MM-YYYY');
+      updatedFilters['start_date'] = today;
+      updatedFilters['end_date'] = today;
     } else if (value === 'this weekend') {
-      setShowDatePicker(false);
-      const nextSaturday = getNextDayOfWeek(6);
-      const nextSunday = getNextDayOfWeek(0);
-      setFilter({
-        ...filter,
-        start_date: formatDate(nextSaturday),
-        end_date: formatDate(nextSunday)
-      });
+      const today = moment();
+      const startOfWeekend = today.clone().day(5).format('DD-MM-YYYY'); // viernes
+      const endOfWeekend = today.clone().day(7).format('DD-MM-YYYY'); // domingo
+      updatedFilters['start_date'] = startOfWeekend;
+      updatedFilters['end_date'] = endOfWeekend;
     } else if (value === 'next week') {
-      setShowDatePicker(false);
-      const nextMonday = getNextDayOfWeek(1);
-      const nextFriday = getNextDayOfWeek(5);
-      setFilter({
-        ...filter,
-        start_date: formatDate(nextMonday),
-        end_date: formatDate(nextFriday)
-      });
-    } else if (value === 'pick a date') {
-      setShowDatePicker(true);
-      setFilter({
-        ...filter,
-        start_date: '',
-        end_date: ''
-      });
+      const today = moment();
+      const startOfNextWeek = today.clone().add(1, 'weeks').startOf('isoWeek').format('DD-MM-YYYY');
+      const endOfNextWeek = today.clone().add(1, 'weeks').endOf('isoWeek').format('DD-MM-YYYY');
+      updatedFilters['start_date'] = startOfNextWeek;
+      updatedFilters['end_date'] = endOfNextWeek;
     }
-    console.log(filter);
+
+    handleFilterChange(null, null, updatedFilters);
   };
 
-  const formatDate = date => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+  const handleShowDatePickerChange = (e) => {
+    setShowDatePicker(e.target.checked);
+
+    if (!e.target.checked) {
+      setStartDate(null);
+      setEndDate(null);
+    }
   };
 
-  const getNextDayOfWeek = dayOfWeek => {
-    const today = new Date();
-    const targetDay = (dayOfWeek - today.getDay() + 7) % 7;
-    today.setDate(today.getDate() + targetDay);
-    return today;
-  };
+  const handleDatePickerChange = ({ startDate, endDate }) => {
+    const updatedFilters = { ...filters };
+    updatedFilters['start_date'] = moment(startDate).format('DD-MM-YYYY');
+    updatedFilters['end_date'] = moment(endDate).format('DD-MM-YYYY');
 
- /* 
- datepicker viejo
- const handleDatePickerChange = (dates) => {
-    console.log(dates)
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-    setFilter({
-      ...filter,
-      start_date: start ? formatDate(start) : '',
-      end_date: end ? formatDate(end) : ''
-    });
-    console.log(filter);
-  }; */
-/* datepicker en tailwind para endpoint solo con start_date aunq mande end_date tambien */
-  const handleDatePickerChange = ({startDate, endDate}) => {
-    setStartDate(startDate);
-    setEndDate(endDate);
-    setFilter({
-      ...filter,
-      start_date: startDate ? startDate : '',
-      end_date: endDate ? endDate : ''
-    });
-    console.log(startDate);
-    onFiltersChange({ ...filters, ["start_date"]: startDate });
-    onFiltersChange({ ...filters, ["end_date"]: endDate });
+    handleFilterChange(null, null, updatedFilters);
   };
 
   return(
@@ -159,7 +134,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
                                 } shadow-sm mr-2 cursor-pointer text-black`}
                                 onClick={() => handleFilterChange('category', name)}
                       >
-                        { name }
+                        {name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}
                       </button>
                     );
                   }
@@ -168,7 +143,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
             }
             
           </div>
-          <h5 className="text-left font-bold text-fomo-sec-two pb-4">
+         {/*  <h5 className="text-left font-bold text-fomo-sec-two pb-4">
             Formato
           </h5>
           <div className="flex flex-wrap gap-2 justify-start pb-4">
@@ -196,7 +171,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
             >
               Conferencia
             </button>
-          </div>
+          </div> */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <h5 className="text-left font-bold text-fomo-sec-two pb-4">
@@ -246,7 +221,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
                       type="radio"
                       name="date"
                       value="pick a date"
-                      onChange={handleDateChange}
+                      onChange={handleShowDatePickerChange}
                     />
                     Elegir una fecha...
                   </label>
@@ -255,8 +230,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
                 <li>
                   <Datepicker
                     locale="es"
-                    useRange={false} 
-                    asSingle={true} 
+                    useRange={true} 
                     startFrom={new Date()} 
                     minDate={new Date()} 
                     i18n={"es"} 
