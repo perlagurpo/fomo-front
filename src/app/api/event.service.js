@@ -56,6 +56,7 @@ export default {
    * @returns {json}
    */
   async getCategories() {
+    // comment
     const url = "http://18.231.76.133/category/";
     var rawResponse, categories = null;
     try {
