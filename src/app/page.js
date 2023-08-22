@@ -13,21 +13,21 @@ export default function Home() {
     format: '',
     event_type: '',
     start_date: '',
+    end_date: ''
   });
 
   const toggleFilters = () => {
     setShowFilters(!showFilters);
-    setSearchFilters({category: '', format: '', event_type: '', start_date: ''});
+    setSearchFilters({category: '', format: '', event_type: '', start_date: '', end_date: ''});
   };
 
   const handleSearch = (searchValue) => {
-    console.log(searchValue)
-    console.log(searchFilters)
     const queryStringWithFilters = buildQueryString(searchValue, searchFilters);
     setSearchQuery(queryStringWithFilters);
   };
 
   const handleFiltersChange = (newFilters) => {
+    console.log(newFilters);
     setSearchFilters(newFilters);
   };
 
@@ -35,27 +35,20 @@ export default function Home() {
     const { category, format, event_type, start_date, end_date } = filters;
     const queryParams = [];
   
-    // GET l  http://18.231.76.133/event/event?start_date=25-07-2022&event_name=test&end_date=27-07-2023
-    /*
-      if (searchValue) {
-        queryParams.push(`search=${encodeURIComponent(searchValue)}`);
-      }
-      if (category) {
-        queryParams.push(`category=${encodeURIComponent(category)}`);
-      }
-      if (format) {
-        queryParams.push(`format=${encodeURIComponent(format)}`);
-      }
-      if (event_type) {
-        queryParams.push(`event_type=${encodeURIComponent(event_type)}`);
-      }
-    */
-    console.log(filters)
-    if (start_date) {
-      queryParams.push(`start_date=${encodeURIComponent(start_date)}`);
-    }
     if (searchValue) {
       queryParams.push(`event_name=${encodeURIComponent(searchValue)}`);
+    }
+    if (category) {
+      queryParams.push(`category=${encodeURIComponent(category)}`);
+    }
+/*     if (format) {
+      queryParams.push(`format=${encodeURIComponent(format)}`);
+    } */
+/*     if (event_type) {
+      queryParams.push(`event_type=${encodeURIComponent(event_type)}`);
+    } */
+    if (start_date) {
+      queryParams.push(`start_date=${encodeURIComponent(start_date)}`);
     }
     if (end_date) {
       queryParams.push(`end_date=${encodeURIComponent(end_date)}`);
