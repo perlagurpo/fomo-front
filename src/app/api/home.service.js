@@ -1,6 +1,8 @@
+const baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL;
+
 export default {
   async getCarouselData() {
-    var url = 'http://18.231.76.133/carousel/';
+    var url = baseURL + 'carousel/';
     const rawResponse = await fetch(url, {
       method: 'GET',
       headers: {
