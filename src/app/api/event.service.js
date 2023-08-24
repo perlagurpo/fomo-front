@@ -1,3 +1,5 @@
+const baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL;
+
 /**
    * Retorna un todos los eventos traídos del endpoint.
    * En caso de error retorna null.
@@ -6,7 +8,7 @@
    */
 export default {
   async getEvents(data) {
-    var url = "http://18.231.76.133/event/";
+    var url = baseURL + "event/";
     if(data) {
       url = url + "?" + data;
     }
@@ -33,7 +35,7 @@ export default {
    * @returns {json}
    */
   async getEvent(id) {
-    const url = "http://18.231.76.133/event/" + id;
+    const url = baseURL + "event/" + id;
     var rawResponse, content = null;
     try {
       rawResponse = await fetch( url, {
@@ -56,7 +58,7 @@ export default {
    * @returns {json}
    */
   async getCategories() {
-    const url = "http://18.231.76.133/category/";
+    const url = baseURL + "category/";
     var rawResponse, categories = null;
     try {
       rawResponse = await fetch(url, {
@@ -72,5 +74,4 @@ export default {
     }
     return categories;
   }
-
 }
