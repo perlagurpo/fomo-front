@@ -1,6 +1,5 @@
 'use client';
 import Link from 'next/link';
-import React from 'react';
 
 const FeaturedEventCard = ({ event_id, event_name, event_img, start_date, event_location, ticket_price }) => {
   
