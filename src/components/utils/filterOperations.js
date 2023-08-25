@@ -5,15 +5,9 @@ function buildQueryString (searchValue, filters) {
     if (searchValue) {
       queryParams.push(`event_name=${encodeURIComponent(searchValue)}`);
     }
-    if (category) {
+    if (category.length > 0) {
       queryParams.push(`category=${encodeURIComponent(category)}`);
     }
-/*     if (format) {
-      queryParams.push(`format=${encodeURIComponent(format)}`);
-    } */
-/*     if (event_type) {
-      queryParams.push(`event_type=${encodeURIComponent(event_type)}`);
-    } */
     if (start_date) {
       queryParams.push(`start_date=${encodeURIComponent(start_date)}`);
     }
@@ -25,3 +19,13 @@ function buildQueryString (searchValue, filters) {
 }
 
 export { buildQueryString };
+
+
+// Parámetros para el futuro
+
+/*     if (format) {
+      queryParams.push(`format=${encodeURIComponent(format)}`);
+    } */
+/*     if (event_type) {
+      queryParams.push(`event_type=${encodeURIComponent(event_type)}`);
+    } */
