@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import EventService from '@/app/api/event.service';
 import Datepicker from 'react-tailwindcss-datepicker';
 import moment from 'moment';
+import { SettingsIcon } from '@/components/icons/icons';
+
 
 const Sidebar = ({ filters, setFilters }) => {
 
@@ -13,6 +15,7 @@ const Sidebar = ({ filters, setFilters }) => {
       endDate: null 
     }
   );
+  const [showFilters, setShowFilters] = useState(false);
 
   useEffect(
     () => {
@@ -80,12 +83,13 @@ const Sidebar = ({ filters, setFilters }) => {
   };
 
   return (
-    <div className="fixed flex flex-col sidebar min-w-[17%] min-h-screen text-left">
-      <div className="flex flex-row min-w-full items-start justify-around mt-[40%] transition duration-300">
-        <div className="flex flex-col min-h-max pl-12 pr-4 py-2 text-fomo-sec-two">
-          
+    <div className="flex flex-col md:fixed md:sidebar min-w-[17%] md:min-h-screen text-left">
+      <CellphoneMenu showFilters={showFilters} setShowFilters={setShowFilters} />
+      <div className="flex flex-col items-center md:flex-row min-w-full md:items-start md:justify-around md:mt-[30%]">
+
+        <div className={`${showFilters ? "flex" : "hidden"} md:flex flex-col min-h-max py-7 md:py-2 md:pl-12 md:pr-4 text-fomo-sec-two border-b-2 border-fomo-pri-two md:border-0`}>
           <h2 className="text-2xl font-bold mb-2 text-fomo-pri-two">Filtros de búsqueda</h2>
-          
+      
           <h2 className="text-xl font-bold mb-2 mt-6">Fecha</h2>
           <ul className="list-none space-y-2">
             <li>
@@ -131,7 +135,7 @@ const Sidebar = ({ filters, setFilters }) => {
                   type="radio"
                   name="date"
                   value="pick a date"
-                  onChange={() => { setShowDatePicker(true)}}
+                  onChange={() => { setShowDatePicker(!showDatePicker)}}
                 />
                 <p className="pl-1">Elegir una fecha</p>
               </label>
@@ -139,18 +143,20 @@ const Sidebar = ({ filters, setFilters }) => {
             
               
             <li>
-              <div className={`${showDatePicker ? "opacity-100" : "opacity-0"}`}>
+              <div className={`${showDatePicker ? "opacity-100" : "opacity-0"} ${showDatePicker ? "max-h-fit" : "max-h-0"} relative transition duration-400`}>
+                
                 <Datepicker
-                  locale="es"
-                  useRange={true} 
-                  startFrom={new Date()} 
-                  minDate={new Date()} 
-                  i18n={"es"} 
-                  primaryColor={"orange"} 
-                  selected={dateValue.startDate}
-                  value={dateValue}
-                  onChange={(newValue)  => handleDatePickerChange(newValue)}
+                locale="es"
+                useRange={true} 
+                startFrom={new Date()} 
+                minDate={new Date()} 
+                i18n={"es"} 
+                primaryColor={"orange"} 
+                selected={dateValue.startDate}
+                value={dateValue}
+                onChange={(newValue)  => handleDatePickerChange(newValue)}
                 />
+                
               </div>
             </li>
           </ul>
@@ -180,12 +186,23 @@ const Sidebar = ({ filters, setFilters }) => {
             
           </ul>
         </div>
-        {/* divisor */}
-        <div className="min-h-[30em] border border-fomo-pri-two pt-8">     
-        </div>
+        {/* divisores */}
+        <div className="hidden md:flex min-h-[30em] border border-fomo-pri-two pt-8"></div>
       </div>
     </div>
   );
 };
+
+function CellphoneMenu({ showFilters, setShowFilters }) {
+  return(
+    <div className="flex flex-col sm:block md:hidden min-w-screen items-left px-4">
+      <button className="flex flex-row gap-4 rounded-full px-6 py-3 bg-fomo-pri-two" onClick={() => setShowFilters(!showFilters)}>
+        <SettingsIcon />
+        <p className="text-fomo-sec-white font-semibold text-lg">Filtros</p>
+      </button>
+    </div>
+  );
+}
+
 
 export default Sidebar;
