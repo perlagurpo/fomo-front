@@ -20,19 +20,14 @@ export default function Navbar() {
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
           <ul className="flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-fomo-pri-white dark:bg-fomo-pri-white md:dark:bg-fomo-sec-white font-semibold text-fomo-pri-one dark:text-fomo-pri-two dark:text-fomo-pri-two dark:text-fomo-pri-two">
             <li>
-              <Link href="/eventos" className="block py-2 pl-3 pr-4 rounded md:border-0 md:hover:text-orange-700 md:p-0  md:dark:hover:text-fomo-pri-one dark:hover:text-fomo-pri-one">
+              <Link href="/eventos" className="block py-2 pl-3 pr-4 rounded md:border-0 md:hover:text-orange-700 md:p-0  md:dark:hover:text-fomo-pri-one dark:hover:text-fomo-pri-one transition duration-300">
                 Eventos
               </Link>
             </li>
             
             <li>
-              <Link href="/" className="block py-2 pl-3 pr-4 rounded md:border-0 md:hover:text-orange-700 md:p-0  md:dark:hover:text-fomo-pri-one dark:hover:text-fomo-pri-one">
+              <Link href="/" className="block py-2 pl-3 pr-4 rounded md:border-0 md:hover:text-orange-700 md:p-0  md:dark:hover:text-fomo-pri-one dark:hover:text-fomo-pri-one transition duration-300">
                 Nosotros
-              </Link>
-            </li>
-            <li>
-              <Link href="/" className="block py-2 pl-3 pr-4 rounded md:border-0 md:hover:text-orange-700 md:p-0  md:dark:hover:text-fomo-pri-one dark:hover:text-fomo-pri-one">
-                Contacto
               </Link>
             </li>
           </ul>
@@ -49,11 +44,6 @@ export default function Navbar() {
             <li>
               <Link href="/" className="block py-2 pl-3 pr-4 rounded md:border-0 md:hover:text-orange-700 md:p-0  md:dark:hover:text-fomo-pri-one dark:hover:text-fomo-pri-one">
                 Nosotros
-              </Link>
-            </li>
-            <li>
-              <Link href="/" className="block py-2 pl-3 pr-4 rounded md:border-0 md:hover:text-orange-700 md:p-0  md:dark:hover:text-fomo-pri-one dark:hover:text-fomo-pri-one">
-                Contacto
               </Link>
             </li>
           </ul>
