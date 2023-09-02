@@ -172,7 +172,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
               Conferencia
             </button>
           </div> */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid gap-4">
             <div>
               <h5 className="text-left font-bold text-fomo-sec-two pb-4">
                 Fecha
@@ -226,8 +226,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
                     Elegir una fecha...
                   </label>
                 </li>
-                {showDatePicker && (
-                <li>
+                <li className="max-w-xs">
                   <Datepicker
                     locale="es"
                     useRange={true} 
@@ -239,9 +238,9 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
                     startDate={startDate}
                     endDate={endDate}
                     onChange={handleDatePickerChange}
+                    disabled={!showDatePicker} 
                   />
                 </li>
-                )}
               </ul>
             </div>
           </div>

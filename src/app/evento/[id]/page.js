@@ -29,7 +29,7 @@ export default function Evento({ params }) {
 
 
   return(
-    <div className='flex flex-col min-h-screen bg-fomo-sec-white justify-center items-center py-[10%] px-8 md:px-[10%] lg:px-[15%] xl:px-[20%] 2xl:px-[20%]'>
+    <div className='flex flex-col min-h-screen bg-fomo-sec-white justify-center items-center py-4 px-8 md:px-[10%] lg:px-[15%] xl:px-[20%] 2xl:px-[20%]'>
       {
         loading && <LoadingSpinner size={12} />
       }
