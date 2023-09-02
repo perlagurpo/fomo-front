@@ -22,12 +22,15 @@ export default function Home() {
   };
 
   const handleSearch = (searchValue) => {
+    if (!searchValue && Object.values(searchFilters).every(value => value === "")) {
+      return "Debés establecer al menos una búsqueda o agregar un filtro";
+    }
     const queryStringWithFilters = buildQueryString(searchValue, searchFilters);
     setSearchQuery(queryStringWithFilters);
+    toggleFilters();
   };
 
   const handleFiltersChange = (newFilters) => {
-    console.log(newFilters);
     setSearchFilters(newFilters);
   };
 

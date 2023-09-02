@@ -11,7 +11,6 @@ export default function FeaturedEvents({ searchQuery }) {
   useEffect(() => {
     const fetchEvents = async () => {
       const fetchedEvents = await EventService.getEvents(searchQuery);
-      console.log(fetchedEvents)
       setEvents(fetchedEvents);
     };
     
@@ -129,7 +128,7 @@ export default function FeaturedEvents({ searchQuery }) {
             </div>
           :
           (
-            <div className='flex flex-column items-center max-w-[70vw]'>
+            <div className='flex flex-column items-center'>
               <img src='/img/home/banner_busqueda_fail.png' />
             </div>
           )  
