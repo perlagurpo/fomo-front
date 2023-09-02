@@ -68,7 +68,7 @@ export default function FeaturedEvents({ searchQuery }) {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center p-10 gap-x-10">
+    <div className="flex flex-col justify-center items-center px-10 pb-10 gap-x-10">
       <div className="flex flex-col min-w-9/10">
         <h3 className="text-left text-xl font-bold text-fomo-sec-two pb-5">
           {Object.values(filters).some(filter => filter) ? (

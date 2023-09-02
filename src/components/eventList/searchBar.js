@@ -15,7 +15,7 @@ export default function SearchBar ({ onSearch }) {
   };
 
   return (
-    <div className="w-full max-w-screen-xl mx-auto p-4 sm:pt-6 md:pt-8 md:pb-4 xl:px-72 lg:px-60 flex pt-8 md:px-48 sm:px-36 xs:px-24  justify-center">
+    <div className="w-full max-w-screen-xl mx-auto sm:pt-6 md:pt-8 xl:px-72 lg:px-60 flex pt-8 md:px-48 sm:px-36 xs:px-24  justify-center">
       <div className="flex flex-col w-full">
         
         <div className="relative w-full">

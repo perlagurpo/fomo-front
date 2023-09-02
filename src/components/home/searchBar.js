@@ -26,7 +26,7 @@ export default function SearchBar ({ onToggleFilters, onSearch, showFilters }) {
   }
 
   return (
-    <div className="w-full max-w-screen-xl mx-auto p-4 md:pb-4 lg:px-36 md:px-24 sm:px-16 xs:px-8 justify-center">
+    <div className="w-full max-w-screen-xl mx-auto p-4 md:pb-4 xl:px-72 lg:px-60 flex md:px-48 sm:px-36 xs:px-24 justify-center">
       <div className="flex flex-col w-full">
         {showFilters && 
         <div className="relative pb-3">
@@ -95,9 +95,11 @@ export default function SearchBar ({ onToggleFilters, onSearch, showFilters }) {
             </button>
           </div>
         </div>
-        <p className={`text-red-300 ${validationMessage ? 'block' : 'hidden'}`}>
-          {validationMessage}
-        </p>
+        {validationMessage ?
+          <p className={`text-red-400 ${validationMessage ? 'visible' : 'hidden'}`}>
+            {validationMessage}
+          </p> :
+          <div style={{ height: '24px'}}></div>}
       </div>
     </div>
   );

@@ -19,6 +19,12 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
 
   const [categories, setCategories] = useState(null);
 
+  // este state solo para hacer andar el placeholder del datepicker
+  const [value, setValue] = useState({ 
+    startDate: null, 
+    endDate: null 
+  }); 
+
   useState(
     () => {
       async function fetchCategories(){
@@ -69,6 +75,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
   };
 
   const handleDateChange = (e) => {
+    setValue({ startDate: null, endDate: null })
     const value = e.target.value;
     setShowDatePicker(false);
     setStartDate(null);
@@ -106,6 +113,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
   };
 
   const handleDatePickerChange = ({ startDate, endDate }) => {
+    setValue({ startDate, endDate }); 
     const updatedFilters = { ...filters };
     updatedFilters['start_date'] = moment(startDate).format('DD-MM-YYYY');
     updatedFilters['end_date'] = moment(endDate).format('DD-MM-YYYY');
@@ -114,7 +122,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
   };
 
   return(
-    <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8 flex flex-col justify-center items-center py-8 px-10 gap-x-10">
+    <div className="w-full max-w-screen-xl mx-auto flex flex-col justify-center items-center px-10 gap-x-10">
       <div className="flex flex-col md:flex-row xl:px-48 lg:px-36 md:px-24 sm:px-12 xs:px-0">
         <div className="grid w-full">
           <h5 className="text-left font-bold text-fomo-sec-two pb-4">
@@ -239,6 +247,9 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
                     endDate={endDate}
                     onChange={handleDatePickerChange}
                     disabled={!showDatePicker} 
+                    displayFormat={"DD/MM/YYYY"}
+                    placeholder={"DD/MM/AAAA - DD/MM/AAAA"}
+                    value={value} 
                   />
                 </li>
               </ul>
