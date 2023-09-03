@@ -22,11 +22,14 @@ export default function Home() {
   };
 
   const handleSearch = (searchValue) => {
-    if (!searchValue && Object.values(searchFilters).every(value => value === "")) {
-      return "Debés establecer al menos una búsqueda o agregar un filtro";
+    if (searchValue === false) {
+      const queryStringWithFilters = buildQueryString('', { category: '', format: '', event_type: '', start_date: '', end_date: '' });
+      setSearchQuery(queryStringWithFilters);
+    } else {
+      const queryStringWithFilters = buildQueryString(searchValue, searchFilters);
+      setSearchQuery(queryStringWithFilters);
     }
-    const queryStringWithFilters = buildQueryString(searchValue, searchFilters);
-    setSearchQuery(queryStringWithFilters);
+    
     toggleFilters();
   };
 
@@ -67,7 +70,7 @@ export default function Home() {
       {showFilters ? (
         <SearchFilters filters={searchFilters} onFiltersChange={handleFiltersChange} />
       ) : (
-        <FeaturedEvents searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <FeaturedEvents searchQuery={searchQuery} />
       )}
     </main>
   );

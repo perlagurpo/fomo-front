@@ -47,6 +47,9 @@ export default function FeaturedEvents({ searchQuery }) {
   }, [searchQuery]);
 
   const filterFormat = filter => {
+    if (filter == 'event_name') {
+      return 'Término de Búsqueda';
+    }
     if (filter == 'category') {
       return 'Categoría';
     }
@@ -70,12 +73,9 @@ export default function FeaturedEvents({ searchQuery }) {
   return (
     <div className="flex flex-col justify-center items-center px-10 pb-10 gap-x-10">
       <div className="flex flex-col min-w-9/10">
-        <h3 className="text-left text-xl font-bold text-fomo-sec-two pb-5">
+        <div className="pb-5">
           {Object.values(filters).some(filter => filter) ? (
             Object.entries(filters).map(([filterKey, filterValue]) => {
-              if(filterKey == 'event_name') {
-                return null;
-              }
               if (filterValue) {
                 return Array.isArray(filterValue) ? (
                   filterValue.map((value, index) => (
@@ -91,8 +91,8 @@ export default function FeaturedEvents({ searchQuery }) {
                   ))
                 ) : (
                   <span key={filterKey} className="inline-flex flex-col bg-fomo-pri-one rounded-lg px-3 py-1 text-white mr-2">
-                    <span style={{fontSize: '10px', lineHeight: '1.6'}}>{ filterFormat(filterKey) }</span>
-                    <span style={{fontSize: '18px', lineHeight: '1.6'}}>
+                    <span style={{fontSize: '10px', lineHeight: '1.6', fontWeight: 'bold'}}>{ filterFormat(filterKey) }</span>
+                    <span style={{fontSize: '18px', lineHeight: '1.6', fontWeight: 'bold'}}>
                       { valueFormat(filterKey, filterValue) }
                       <button className="text-sm ml-2 text-fomo-pri-two" onClick={() => removeFilter(filterKey)}>
                         X
@@ -104,9 +104,9 @@ export default function FeaturedEvents({ searchQuery }) {
               return null;
             })
           ) : (
-            'Descubrí Eventos'
+            <h3 className='text-left text-xl font-bold text-fomo-sec-two'>Descubrí Eventos</h3>
           )}
-        </h3>
+        </div>
         
         {
           events.length > 0 ? 

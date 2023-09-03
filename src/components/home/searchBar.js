@@ -5,10 +5,12 @@ export default function SearchBar ({ onToggleFilters, onSearch, showFilters }) {
   const [searchValue, setSearchValue] = useState('');
   const [validationMessage, setValidationMessage] = useState('');
 
-
   const handleInputChange = (event) => {
     setSearchValue(event.target.value);
-    setValidationMessage('');
+    if (validationMessage != '') {
+      setSearchValue('');
+      setValidationMessage('');
+    }
   };
 
   const handleSearch = () => {
@@ -16,13 +18,17 @@ export default function SearchBar ({ onToggleFilters, onSearch, showFilters }) {
     if (valMessage) {
       setValidationMessage('No hay criterios seleccionados para realizar la búsqueda');
     } else {
+      setSearchValue('');
       setValidationMessage('');
     }
   };
 
   const backToHome = () => {
-    onToggleFilters();
-    setValidationMessage('');
+    onSearch(false);
+    if (validationMessage != '') {
+      setSearchValue('');
+      setValidationMessage('');
+    }
   }
 
   return (
