@@ -32,21 +32,21 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
         <h1 className='text-4xl font-bold py-6 text-center'>
           { name }
         </h1>
-        <h2 className='text-md font-bold pb-3'> { category.toUpperCase() } </h2>  
+        <h2 className='text-md font-bold pb-3'> { category && category.toUpperCase() } </h2>  
 
         <div className='flex flex-col pb-4 gap-5 w-full  md:flex-row md:justify-between md:py-8'>
           <div className='flex flex-row items-center gap-4 basis-6/12'>
             <CalendarIcon />
             <div className='flex flex-col items-start'>
               <h2 className='font-bold text-lg'>Fecha y Hora</h2>
-              <p>{ formatDate(displayedStartDate) }</p>
+              <p>{ startDate ? formatDate(displayedStartDate) : "Sin datos" }</p>
             </div>
           </div>
           <div className='flex flex-row items-center basis-6/12 gap-6 md:gap-4'>
             <LocationIcon />
             <div className='flex flex-col items-start'>
               <h2 className='font-bold text-lg'>Ubicación</h2>
-              <p>{ location }</p>
+              <p>{ location ? location : "Sin datos" }</p>
             </div>
           </div>
         </div>
@@ -71,13 +71,13 @@ function EventDescription({ description, duration, ticketType }){
       
       <div className='flex flex-col items-start gap-4 bg-fomo-sec-one/[.10] rounded-md py-3 px-4'>
         <p>
-          { description }
+          { description ? description : "Evento sin descripción" }
         </p>
         <div className='flex flex-row min-w-[100%] justify-between align-center pr-2'>
           <div className='flex flex-row gap-10'>
             <div className='flex flex-row gap-2'>
               <ClockIcon />
-              <p>{ duration }</p>
+              <p>{ duration ? duration : "-" }</p>
             </div>
             <div className='flex flex-row gap-2'>
               <TicketIcon />

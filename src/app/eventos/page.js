@@ -22,7 +22,7 @@ function Eventos() {
     () => {
       async function getEvents(searchQuery) {
         const fetchedEvents = await EventService.getEvents(searchQuery);
-        setEvents(fetchedEvents);
+        setEvents(fetchedEvents.results);
         setLoading(false);
       }
       setLoading(true);
@@ -59,7 +59,7 @@ function Eventos() {
               </h2>
           )
       }
-      <div className="flex flex-col px-6 py-10 md:px-[20%] md:py-[5%] z-10">
+      <div className="flex flex-col px-6 py-10 md:px-[30%] md:py-[5%] z-5">
         <EventList events={events} />
       </div>
     </div>

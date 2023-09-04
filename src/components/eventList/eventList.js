@@ -4,7 +4,7 @@ export default function EventList({ events=[] }) {
 
   return(
     <div>
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-2 md:gap-20 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-2 md:gap-10 lg:grid-cols-2">
               {
                 events &&(
                   events.map((event, i) => (
