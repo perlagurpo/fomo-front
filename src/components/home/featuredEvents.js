@@ -11,7 +11,7 @@ export default function FeaturedEvents({ searchQuery }) {
   useEffect(() => {
     const fetchEvents = async () => {
       const fetchedEvents = await EventService.getEvents(searchQuery);
-      setEvents(fetchedEvents);
+      setEvents(fetchedEvents.results);
     };
     
     fetchEvents();
