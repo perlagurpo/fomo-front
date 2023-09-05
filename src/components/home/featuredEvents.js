@@ -121,6 +121,7 @@ export default function FeaturedEvents({ searchQuery }) {
                     start_date={event.start_date}
                     event_location={event.event_location}
                     ticket_price={event.ticket_price}
+                    event_slug={event.slug}
                   />
                   )
                 )
