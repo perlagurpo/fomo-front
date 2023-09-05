@@ -16,13 +16,13 @@ export default function Evento({ params }) {
   */
   useEffect(
     () => {
-      async function fetchEvent(id) {
-        const fetchedEvent = await EventService.getEvent(id);
+      async function fetchEvent(slug) {
+        const fetchedEvent = await EventService.getEventBySlug(slug);
         setEventData(fetchedEvent);
         setLoading(false);
       }
       setLoading(true);
-      const id = pathParams["id"];
+      const id = pathParams["slug"];
       fetchEvent(id);
     }
     ,[]);
@@ -40,7 +40,7 @@ export default function Evento({ params }) {
                   startDay={eventData.day_name_start}
                   endDate={eventData.end_date}
                   endDay={eventData.day_name_end}
-                  location={eventData.event_location}
+                  location={eventData.location_event}
                   duration={"3 horas"}
                   hasTicket={eventData.has_ticket}
                   ticketType={eventData.ticket_type}
