@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CalendarIcon, ClockIcon, LocationIcon, TicketIcon } from "../icons/icons";
 import { diaAString, mesAString } from '../utils/dateOperations';
+import Link from 'next/link';
 
 
 export default function Event({ name, startDate, startDay, endDate, endDay, location, duration,
@@ -42,12 +43,22 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
               <p>{ startDate ? formatDate(displayedStartDate) : "Sin datos" }</p>
             </div>
           </div>
-          <div className='flex flex-row items-center basis-6/12 gap-6 md:gap-4'>
-            <LocationIcon />
-            <div className='flex flex-col items-start'>
-              <h2 className='font-bold text-lg'>Ubicación</h2>
-              <p>{ location ? location : "Sin datos" }</p>
-            </div>
+          <div className='basis-6/12'>
+            <Link href={location ? location.google_maps_link : "#"} target={location ? '_blank' : '_top'}>
+              <div className='flex flex-row items-center gap-6 md:gap-4'>
+                <LocationIcon />
+                <div className='flex flex-col items-start'>
+                  <h2 className='font-bold text-lg'>Ubicación</h2>
+                  {
+                    location ? (
+                      <p>{ location.name + " - " + location.address }</p>
+                    )
+                    : <p>"Sin datos"</p>
+                  }
+                  
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
         <div className='md:py-5'>

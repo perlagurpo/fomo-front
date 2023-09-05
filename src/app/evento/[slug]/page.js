@@ -40,7 +40,7 @@ export default function Evento({ params }) {
                   startDay={eventData.day_name_start}
                   endDate={eventData.end_date}
                   endDay={eventData.day_name_end}
-                  location={eventData.event_location}
+                  location={eventData.location_event}
                   duration={"3 horas"}
                   hasTicket={eventData.has_ticket}
                   ticketType={eventData.ticket_type}

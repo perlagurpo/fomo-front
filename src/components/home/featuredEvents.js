@@ -119,7 +119,7 @@ export default function FeaturedEvents({ searchQuery }) {
                     event_name={event.event_name}
                     event_img={event.event_img}
                     start_date={event.start_date}
-                    event_location={event.event_location}
+                    event_location={event.location_event}
                     ticket_price={event.ticket_price}
                     event_slug={event.slug}
                   />
