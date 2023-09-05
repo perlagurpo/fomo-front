@@ -15,7 +15,9 @@ const FeaturedEventCard = ({ event_id, event_name, event_img, start_date, event_
             <p className="px-1 font-normal text-fomo-sec-two">{ startDate && (startDate[0] + ", " + startDate[1]) }</p>
             <div className="flex flex-row justify-start py-1">
               <img className='max-h-6' src="/img/icons/location-icon.png" />
-              <p className="font-bold text-fomo-sec-two pl-1 line-clamp-1">{ event_location ? event_location : "-" }</p>
+              <p className="font-bold text-fomo-sec-two pl-1 line-clamp-1">
+                { event_location ? event_location.name : "-" }
+              </p>
             </div>
             <p className="px-1 font-normal text-fomo-sec-two">
               { ticket_price ? (ticket_price === 0 ? "Gratis" : "$ " + ticket_price) : "$ consultar" }
