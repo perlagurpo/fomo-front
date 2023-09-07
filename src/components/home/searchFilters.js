@@ -37,6 +37,8 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
   ,[]);
 
   const handleFilterChange = (key, value, dateFilters = null) => {
+    console.log(value);
+    console.log(filters);
     if (dateFilters != null) {
       onFiltersChange(dateFilters);
       setFilter((prevFilter) => ({

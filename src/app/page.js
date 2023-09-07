@@ -4,8 +4,13 @@ import HomeBanner from '@/components/home/homeBanner';
 import SearchBar from '@/components/home/searchBar';
 import SearchFilters from '@/components/home/searchFilters';
 import FeaturedEvents from '@/components/home/featuredEvents';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 
 export default function Home() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFilters, setSearchFilters] = useState({
@@ -22,15 +27,17 @@ export default function Home() {
   };
 
   const handleSearch = (searchValue) => {
+    let queryStringWithFilters = '';
     if (searchValue === false) {
-      const queryStringWithFilters = buildQueryString('', { category: '', format: '', event_type: '', start_date: '', end_date: '' });
+      queryStringWithFilters = buildQueryString('', { category: '', format: '', event_type: '', start_date: '', end_date: '' });
       setSearchQuery(queryStringWithFilters);
     } else {
-      const queryStringWithFilters = buildQueryString(searchValue, searchFilters);
+      queryStringWithFilters = buildQueryString(searchValue, searchFilters);
       setSearchQuery(queryStringWithFilters);
     }
-    
-    toggleFilters();
+
+    router.push(`/eventos?${queryStringWithFilters}`);
+    // toggleFilters();
   };
 
   const handleFiltersChange = (newFilters) => {
@@ -70,7 +77,7 @@ export default function Home() {
       {showFilters ? (
         <SearchFilters filters={searchFilters} onFiltersChange={handleFiltersChange} />
       ) : (
-        <FeaturedEvents searchQuery={searchQuery} />
+        <FeaturedEvents />
       )}
     </main>
   );

@@ -6,6 +6,7 @@ import SearchBar from '@/components/eventList/searchBar';
 import Sidebar from '@/components/eventList/sideBar';
 import EventList from '@/components/eventList/eventList';
 import { LoadingSpinner } from '@/components/icons/icons';
+import { useSearchParams } from 'next/navigation';
 
 function Eventos() {
   const [events, setEvents] = useState([]);
@@ -18,17 +19,41 @@ function Eventos() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(
-    () => {
-      async function getEvents(searchQuery) {
-        const fetchedEvents = await EventService.getEvents(searchQuery);
-        setEvents(fetchedEvents.results);
-        setLoading(false);
-      }
-      setLoading(true);
-      getEvents(searchQuery);
+  const searchParams = useSearchParams();
+
+
+  useEffect(() => {
+    const eventName = searchParams.get('event_name');
+    const category = searchParams.get('category'); 
+    const startDate = searchParams.get('start_date');
+    const endDate = searchParams.get('end_date');
+
+    // Set the filters based on the decoded parameters
+    setFilters({
+      start_date: startDate || '',
+      end_date: endDate || '',
+      category: category || []
+    });
+
+    // Build the searchQuery with the decoded event_name and filters
+    const queryStringWithFilters = buildQueryString(eventName, {
+      start_date: startDate || '',
+      end_date: endDate || '',
+      category: category || []
+    });
+
+    setName(eventName);
+    setLoading(true);
+
+    // Call the API with the searchQuery
+    async function getEvents() {
+      const fetchedEvents = await EventService.getEvents(queryStringWithFilters);
+      setEvents(fetchedEvents.results);
+      setLoading(false);
     }
-  ,[searchQuery]);
+
+    getEvents();
+  }, [searchParams]);
 
   const handleSearch = (searchValue) => {
     var adaptedFilters = {...filters};

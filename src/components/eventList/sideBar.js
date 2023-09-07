@@ -71,15 +71,29 @@ const Sidebar = ({ filters, setFilters }) => {
     setFilters(updatedFilters);
   }
 
-  const handleCategoryChange = (value) => {
-    var newCategories;
-    if(filters.category.includes(value)){
-      newCategories = filters.category.filter((c) => c != value);
+  const handleCategoryChange = (key, value, dateFilters = null) => {
+    console.log(value);
+    console.log(filters);
+    const filterArray = filters[key].split(',').map((item) => item.trim());
+    let updatedValue;
+
+    if (filterArray.includes(value)) {
+      // Remuevo filtro existente
+      const updatedFilters = filterArray.filter((item) => item !== value);
+      updatedValue = updatedFilters.join(',');
     } else {
-      newCategories = [...filters.category];
-      newCategories.push(value);
+      // Agrego nuevo filtro a filtros previos
+      if (key === 'start_date' || key === 'end_date') {
+        updatedValue = value;
+      } else {
+        updatedValue = filters[key] ? `${filters[key]},${value}` : value;
+      }
     }
-    setFilters(prevFilter => ({ ...prevFilter, category: newCategories }));
+
+    setFilters((prevFilter) => ({
+      ...prevFilter,
+      [key]: updatedValue,
+    }));
   };
 
   return (
@@ -162,29 +176,28 @@ const Sidebar = ({ filters, setFilters }) => {
           </ul>
           
           <h2 className="text-xl font-bold mb-2 mt-6">Categoría</h2>
-          <ul className="list-none space-y-2">
-            {
-              categories.map(
-                (category, i) => {
+          <div className="flex flex-wrap gap-2 justify-start pb-4">
+            {categories.map(
+              (category, i) => {
+                
+                const name = category['name'];
+                console.log(name);
                   return(
-                    <li key={i}>
-                      <label className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          name="category"
-                          value={category.name}
-                          checked={filters.category.includes(category.name)}
-                          onChange={(e) => handleCategoryChange(e.target.value)}
-                        />
-                        <p className="pl-1">{category.name}</p>
-                      </label>
-                    </li>
+                        <button   key={i}
+                                className={`min-w-[123px] inline-block p-2 rounded-lg border ${
+                                  filters.category.split(',').includes(category.name) ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
+                                } shadow-sm mr-2 cursor-pointer text-black`}
+                                onClick={() => handleCategoryChange('category', name)}
+                        >
+                           {name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}
+                      </button>
+                      
                   );
                 }
               )
             }
             
-          </ul>
+          </div>
         </div>
         {/* divisores */}
         <div className="hidden md:flex min-h-[30em] border border-fomo-pri-two pt-8"></div>
