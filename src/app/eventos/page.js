@@ -12,6 +12,7 @@ function Eventos() {
   const [events, setEvents] = useState([]);
   const [name, setName] = useState("");
   const [filters, setFilters] = useState({
+    event_name: '',
     start_date: '',
     end_date: '',
     category: []
@@ -21,20 +22,31 @@ function Eventos() {
 
   const searchParams = useSearchParams();
 
-
   useEffect(() => {
-    const eventName = searchParams.get('event_name');
-    const category = searchParams.get('category'); 
-    const startDate = searchParams.get('start_date');
-    const endDate = searchParams.get('end_date');
+    urlUsage(searchParams);
+  }, [searchParams]);
+
+  const urlUsage = (params) => {
+    if (typeof params === 'string') {
+      console.log('typeof!');
+      params = new URLSearchParams(params);
+    }
+    
+    const eventName = params.get('event_name');
+    const category = params.get('category'); 
+    const startDate = params.get('start_date');
+    const endDate = params.get('end_date');
+    console.log(category);
 
     // Set the filters based on the decoded parameters
     setFilters({
+      event_name: eventName || '',
       start_date: startDate || '',
       end_date: endDate || '',
       category: category || []
     });
 
+    handleSearch(eventName);
     // Build the searchQuery with the decoded event_name and filters
     const queryStringWithFilters = buildQueryString(eventName, {
       start_date: startDate || '',
@@ -42,7 +54,6 @@ function Eventos() {
       category: category || []
     });
 
-    setName(eventName);
     setLoading(true);
 
     // Call the API with the searchQuery
@@ -53,14 +64,17 @@ function Eventos() {
     }
 
     getEvents();
-  }, [searchParams]);
+  }
 
   const handleSearch = (searchValue) => {
-    var adaptedFilters = {...filters};
-    adaptedFilters["category"] = adaptedFilters["category"].join(','); // array a string
-    const queryStringWithFilters = buildQueryString(searchValue, filters);
-    setName(searchValue);
-    setSearchQuery(queryStringWithFilters);
+    let queryStringWithFilters = '';
+    if (searchValue === false) {
+      queryStringWithFilters = buildQueryString('', filters);
+      setSearchQuery(queryStringWithFilters);
+    } else {
+      queryStringWithFilters = buildQueryString(searchValue, filters);
+      setSearchQuery(queryStringWithFilters);
+    }
   };
 
   return(
@@ -68,7 +82,7 @@ function Eventos() {
       
       <SearchBar onSearch={handleSearch} />
       <div className="z-20">
-        <Sidebar filters={filters} setFilters={setFilters} />
+        <Sidebar filters={filters} setFilters={setFilters} urlUsage={urlUsage} />
       </div>
       
       {

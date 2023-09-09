@@ -4,10 +4,10 @@ import EventService from '@/app/api/event.service';
 import Datepicker from 'react-tailwindcss-datepicker';
 import moment from 'moment';
 import { SettingsIcon } from '@/components/icons/icons';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { buildQueryString } from '../utils/filterOperations';
 
-
-const Sidebar = ({ filters, setFilters }) => {
-
+const Sidebar = ({ filters, setFilters, urlUsage }) => {
   const [categories, setCategories] = useState([]);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dateValue, setDateValue]  = useState({ 
@@ -16,6 +16,9 @@ const Sidebar = ({ filters, setFilters }) => {
     }
   );
   const [showFilters, setShowFilters] = useState(false);
+  const [previousQueryString, setPreviousQueryString] = useState('');
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(
     () => {
@@ -71,10 +74,26 @@ const Sidebar = ({ filters, setFilters }) => {
     setFilters(updatedFilters);
   }
 
+  useEffect(() => {
+    const queryStringWithFilters = buildQueryString(
+      filters['event_name'] ? filters['event_name'] : '',
+      filters
+    );
+
+    // Check if the query string has changed before updating.
+    if (queryStringWithFilters !== previousQueryString) {
+      setPreviousQueryString(queryStringWithFilters);
+      //urlUsage(queryStringWithFilters);
+      router.push(`/eventos?${queryStringWithFilters}`);
+      // Update the previousQueryString here.
+    }
+  }, [filters]);
+
   const handleCategoryChange = (key, value, dateFilters = null) => {
-    console.log(value);
-    console.log(filters);
-    const filterArray = filters[key].split(',').map((item) => item.trim());
+     const filterArray =
+    typeof filters[key] === 'string'
+      ? filters[key].split(',').map((item) => item.trim())
+      : [];
     let updatedValue;
 
     if (filterArray.includes(value)) {
@@ -176,26 +195,30 @@ const Sidebar = ({ filters, setFilters }) => {
           </ul>
           
           <h2 className="text-xl font-bold mb-2 mt-6">Categoría</h2>
-          <div className="flex flex-wrap gap-2 justify-start pb-4">
-            {categories.map(
-              (category, i) => {
-                
-                const name = category['name'];
-                console.log(name);
-                  return(
-                        <button   key={i}
-                                className={`min-w-[123px] inline-block p-2 rounded-lg border ${
-                                  filters.category.split(',').includes(category.name) ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
-                                } shadow-sm mr-2 cursor-pointer text-black`}
-                                onClick={() => handleCategoryChange('category', name)}
-                        >
-                           {name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}
-                      </button>
-                      
-                  );
-                }
-              )
-            }
+          <div className="flex-column justify-start">
+            {categories.map((category, i) => {
+              const name = category['name'];
+
+              const categoryFilter =
+                typeof filters.category === 'string' ? filters.category : '';
+
+              return (
+                <div className="mb-3">
+                  <button
+                    key={i}
+                    className={`min-w-[123px] block p-2 rounded-lg border ${
+                      categoryFilter.split(',').includes(category.name)
+                        ? 'bg-fomo-pri-two text-white'
+                        : 'border-fomo-pri-two'
+                    } shadow-sm mr-2 cursor-pointer text-black`}
+                    onClick={() => handleCategoryChange('category', name)}
+                  >
+                    {name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}
+                  </button>
+                </div>
+              );
+            })}
+
             
           </div>
         </div>
