@@ -71,7 +71,9 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center min-h-screen bg-fomo-sec-white font-poppins">
       {showFilters ? '' : <HomeBanner />}
-      <SearchBar onToggleFilters={toggleFilters} onSearch={handleSearch} showFilters={showFilters} />
+      <div className="w-full max-w-screen-xl mx-auto p-4 md:pb-4 xl:px-72 lg:px-60 flex md:px-48 sm:px-36 xs:px-24 justify-center">
+        <SearchBar onToggleFilters={toggleFilters} onSearch={handleSearch} showFilters={showFilters} />
+      </div>
       {showFilters ? (
         <SearchFilters filters={searchFilters} onFiltersChange={handleFiltersChange} />
       ) : (

@@ -4,7 +4,7 @@ import EventService from '@/app/api/event.service';
 import Datepicker from 'react-tailwindcss-datepicker';
 import moment from 'moment';
 import { SettingsIcon } from '@/components/icons/icons';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { buildQueryString } from '../utils/filterOperations';
 
 const Sidebar = ({ filters, setFilters, urlUsage }) => {
@@ -18,7 +18,28 @@ const Sidebar = ({ filters, setFilters, urlUsage }) => {
   const [showFilters, setShowFilters] = useState(false);
   const [previousQueryString, setPreviousQueryString] = useState('');
   const router = useRouter();
-  const searchParams = useSearchParams();
+  
+  useEffect(() => {
+    // Function to update the showFilters state based on window width
+    function handleWindowResize() {
+      if (window.innerWidth < 767) {
+        setShowFilters(false);
+      } else {
+        setShowFilters(true);
+      }
+    }
+
+    // Initial check when the component mounts
+    handleWindowResize();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleWindowResize);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
 
   useEffect(
     () => {
@@ -116,83 +137,84 @@ const Sidebar = ({ filters, setFilters, urlUsage }) => {
   };
 
   return (
-    <div className="flex flex-col md:fixed md:sidebar min-w-[17%] md:min-h-screen text-left">
-      <CellphoneMenu showFilters={showFilters} setShowFilters={setShowFilters} />
-      <div className="flex flex-col items-center md:flex-row min-w-full md:items-start md:justify-around md:mt-[30%]">
-
-        <div className={`${showFilters ? "flex" : "hidden"} md:flex flex-col min-h-max py-7 md:py-2 md:pl-12 md:pr-4 text-fomo-sec-two border-b-2 border-fomo-pri-two md:border-0`}>
-          <h2 className="text-2xl font-bold mb-2 text-fomo-pri-two">Filtros de búsqueda</h2>
-      
-          <h2 className="text-xl font-bold mb-2 mt-6">Fecha</h2>
-          <ul className="list-none space-y-2">
-            <li>
-              <label className="flex items-center space-x-2">
-                <input
-                  className="cursor-pointer"
-                  type="radio"
-                  name="date"
-                  value="today"
-                  onChange={handleDateChange}
-                />
-                <p className="pl-1">Hoy</p>
-              </label>
-            </li>
-            <li>
-              <label className="flex items-center space-x-2">
-                <input
-                  className="cursor-pointer"
-                  type="radio"
-                  name="date"
-                  value="tomorrow"
-                  onChange={handleDateChange}
-                />
-                <p className="pl-1">Mañana</p>
-              </label>
-            </li>
-            <li>
-              <label className="flex items-center space-x-2">
-                <input
-                  className="cursor-pointer"
-                  type="radio"
-                  name="date"
-                  value="this weekend"
-                  onChange={handleDateChange}
-                />
-                <p className="pl-1">Este fin de semana</p>
-              </label>
-            </li>
-            <li>
-              <label className="flex items-center space-x-2">
-                <input
-                  className="cursor-pointer"
-                  type="radio"
-                  name="date"
-                  value="pick a date"
-                  onChange={() => { setShowDatePicker(!showDatePicker)}}
-                />
-                <p className="pl-1">Elegir una fecha</p>
-              </label>
-            </li>
-            
+    <div className="flex flex-col md:sidebar min-w-[17%] md:min-h-screen text-left">
+        <div className={`flex md:fixed md:flex flex-col min-h-max md:pr-4 text-fomo-sec-two border-b-2 border-fomo-pri-two md:border-0`}>
+        {window.innerWidth > 767 ? <h2 className="text-2xl font-bold mb-2 text-fomo-pri-two">Filtros de búsqueda</h2> :
+          <button className="flex flex-row gap-4 rounded-full px-6 py-3 bg-fomo-pri-two" onClick={() => setShowFilters(!showFilters)}>
+            <SettingsIcon />
+            <p className="text-fomo-sec-white font-semibold text-lg">Filtros de búsqueda</p>
+          </button>}
+          <div className={`${showFilters ? "" : "hidden"}`}>
+            <h2 className="text-xl font-bold mb-2 mt-6">Fecha</h2>
+            <ul className="list-none space-y-2">
+              <li>
+                <label className="flex items-center space-x-2">
+                  <input
+                    className="cursor-pointer"
+                    type="radio"
+                    name="date"
+                    value="today"
+                    onChange={handleDateChange}
+                  />
+                  <p className="pl-1">Hoy</p>
+                </label>
+              </li>
+              <li>
+                <label className="flex items-center space-x-2">
+                  <input
+                    className="cursor-pointer"
+                    type="radio"
+                    name="date"
+                    value="tomorrow"
+                    onChange={handleDateChange}
+                  />
+                  <p className="pl-1">Mañana</p>
+                </label>
+              </li>
+              <li>
+                <label className="flex items-center space-x-2">
+                  <input
+                    className="cursor-pointer"
+                    type="radio"
+                    name="date"
+                    value="this weekend"
+                    onChange={handleDateChange}
+                  />
+                  <p className="pl-1">Este fin de semana</p>
+                </label>
+              </li>
+              <li>
+                <label className="flex items-center space-x-2">
+                  <input
+                    className="cursor-pointer"
+                    type="radio"
+                    name="date"
+                    value="pick a date"
+                    onChange={() => { setShowDatePicker(!showDatePicker)}}
+                  />
+                  <p className="pl-1">Elegir una fecha</p>
+                </label>
+              </li>
               
-            <li>
-              <div className={`${showDatePicker ? "opacity-100" : "opacity-0"} ${showDatePicker ? "max-h-fit" : "max-h-0"} relative transition duration-400`}>
                 
-                <Datepicker
-                locale="es"
-                useRange={true} 
-                startFrom={new Date()} 
-                minDate={new Date()} 
-                i18n={"es"} 
-                primaryColor={"orange"} 
-                selected={dateValue.startDate}
-                value={dateValue}
-                onChange={(newValue)  => handleDatePickerChange(newValue)}
-                />
-                
-              </div>
-            </li>
-          </ul>
+              <li>
+                <div className={`${showDatePicker ? "opacity-100" : "opacity-0"} ${showDatePicker ? "max-h-fit" : "max-h-0"} relative transition duration-400`}>
+                  
+                  <Datepicker
+                  locale="es"
+                  useRange={true} 
+                  startFrom={new Date()} 
+                  minDate={new Date()} 
+                  i18n={"es"} 
+                  primaryColor={"orange"} 
+                  selected={dateValue.startDate}
+                  value={dateValue}
+                  onChange={(newValue)  => handleDatePickerChange(newValue)}
+                  />
+                  
+                </div>
+              </li>
+            </ul>
           
           <h2 className="text-xl font-bold mb-2 mt-6">Categoría</h2>
           <div className="flex-column justify-start">
@@ -219,26 +241,15 @@ const Sidebar = ({ filters, setFilters, urlUsage }) => {
               );
             })}
 
+          </div>
             
           </div>
         </div>
         {/* divisores */}
-        <div className="hidden md:flex min-h-[30em] border border-fomo-pri-two pt-8"></div>
-      </div>
+        <div className="hidden md:flex min-h-[30em] pt-8"></div>
     </div>
   );
 };
-
-function CellphoneMenu({ showFilters, setShowFilters }) {
-  return(
-    <div className="flex flex-col sm:block md:hidden min-w-screen items-left px-4">
-      <button className="flex flex-row gap-4 rounded-full px-6 py-3 bg-fomo-pri-two" onClick={() => setShowFilters(!showFilters)}>
-        <SettingsIcon />
-        <p className="text-fomo-sec-white font-semibold text-lg">Filtros</p>
-      </button>
-    </div>
-  );
-}
 
 
 export default Sidebar;
