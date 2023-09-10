@@ -7,7 +7,7 @@ import { SettingsIcon } from '@/components/icons/icons';
 import { useRouter } from 'next/navigation';
 import { buildQueryString } from '../utils/filterOperations';
 
-const Sidebar = ({ filters, setFilters, urlUsage }) => {
+const Sidebar = ({ filters, setFilters }) => {
   const [categories, setCategories] = useState([]);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dateValue, setDateValue]  = useState({ 
@@ -104,7 +104,6 @@ const Sidebar = ({ filters, setFilters, urlUsage }) => {
     // Check if the query string has changed before updating.
     if (queryStringWithFilters !== previousQueryString) {
       setPreviousQueryString(queryStringWithFilters);
-      //urlUsage(queryStringWithFilters);
       router.push(`/eventos?${queryStringWithFilters}`);
       // Update the previousQueryString here.
     }
@@ -137,8 +136,7 @@ const Sidebar = ({ filters, setFilters, urlUsage }) => {
   };
 
   return (
-    <div className="flex flex-col md:sidebar min-w-[17%] md:min-h-screen text-left">
-        <div className={`flex md:fixed md:flex flex-col min-h-max md:pr-4 text-fomo-sec-two border-b-2 border-fomo-pri-two md:border-0`}>
+        <div>
         {window.innerWidth > 767 ? <h2 className="text-2xl font-bold mb-2 text-fomo-pri-two">Filtros de búsqueda</h2> :
           <button className="flex flex-row gap-4 rounded-full px-6 py-3 bg-fomo-pri-two" onClick={() => setShowFilters(!showFilters)}>
             <SettingsIcon />
@@ -243,11 +241,11 @@ const Sidebar = ({ filters, setFilters, urlUsage }) => {
 
           </div>
             
-          </div>
-        </div>
-        {/* divisores */}
+      </div>
+              {/* divisores */}
         <div className="hidden md:flex min-h-[30em] pt-8"></div>
-    </div>
+        </div>
+
   );
 };
 

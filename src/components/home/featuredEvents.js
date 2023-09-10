@@ -113,6 +113,7 @@ export default function FeaturedEvents({ searchQuery }) {
             <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-3">
               {
                 events.map(event => (
+                  event.highlighted == true && 
                   <FeaturedEventCard
                     key={event.id}
                     event_id={event.id}

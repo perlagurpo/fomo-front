@@ -1,5 +1,5 @@
 function buildQueryString (searchValue, filters) {
-    const { category, format, event_type, start_date, end_date } = filters;
+    const { category, format, event_type, start_date, end_date, page } = filters;
     const queryParams = [];
   
     if (searchValue) {
@@ -13,6 +13,9 @@ function buildQueryString (searchValue, filters) {
     }
     if (end_date) {
       queryParams.push(`end_date=${encodeURIComponent(end_date)}`);
+    }
+    if (page) {
+      queryParams.push(`page=${encodeURIComponent(page)}`);
     }
     
     return queryParams.join('&');

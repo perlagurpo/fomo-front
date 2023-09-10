@@ -1,8 +1,8 @@
 import EventCard from "./eventCard";
 
-export default function EventList({ events=[] }) {
+export default function EventList({ events=[], currentPage, handlePrevPage, handleNextPage, totalPages }) {
 
-  return(
+  return (
     <div>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-2 md:gap-10 lg:grid-cols-2">
         {
@@ -24,7 +24,22 @@ export default function EventList({ events=[] }) {
             )
           )
         }
-        </div>
     </div>
+     <div className="flex justify-center mt-4">
+        <button
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          className="mr-2 px-4 py-2 border rounded-lg"
+        >
+          Previous
+        </button>
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 border rounded-lg"
+        >
+          Next
+        </button>
+      </div></div>
   );
 }
