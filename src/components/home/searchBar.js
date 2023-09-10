@@ -1,9 +1,15 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function SearchBar ({ onToggleFilters, onSearch, showFilters }) {
+export default function SearchBar ({ onToggleFilters, onSearch, showFilters, activateSearch, searchValueEventName }) {
   const [searchValue, setSearchValue] = useState('');
   const [validationMessage, setValidationMessage] = useState('');
+
+  useEffect(() => {
+    if (searchValueEventName) {
+      setSearchValue(searchValueEventName)
+    }
+  }, [searchValueEventName]);
 
   const handleInputChange = (event) => {
     setSearchValue(event.target.value);
@@ -34,7 +40,7 @@ export default function SearchBar ({ onToggleFilters, onSearch, showFilters }) {
   return (
     <div className="w-full max-w-screen-xl mx-auto p-4 md:pb-4 xl:px-72 lg:px-60 flex md:px-48 sm:px-36 xs:px-24 justify-center">
       <div className="flex flex-col w-full">
-        {showFilters && 
+        {(showFilters || activateSearch) && 
         <div className="relative pb-3">
           <button onClick={backToHome} className="text-black">
             <svg
@@ -53,12 +59,12 @@ export default function SearchBar ({ onToggleFilters, onSearch, showFilters }) {
             </svg>
           </button>
         </div>}
-        {!showFilters && 
+        {(!showFilters || !activateSearch) && 
         <div className="relative">
           <p className="text-black text-center pb-3">Encontrar un evento para vos nunca fue tan fácil*</p>
         </div>}
         <div className="relative w-full">
-          {showFilters ? 
+          {(showFilters || activateSearch) ? 
             <input
               type="text"
               className="bg-transparent text-black w-full pl-14 pr-4 py-2 rounded-lg border-2 focus:outline-none focus:border-blue-500"

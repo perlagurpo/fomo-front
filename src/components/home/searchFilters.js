@@ -257,7 +257,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
               </ul>
             </div>
           </div>
-        </div> 
+        </div>
       </div>
     </div>
   );

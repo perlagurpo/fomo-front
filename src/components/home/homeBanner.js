@@ -40,7 +40,7 @@ const HomeBanner = () => {
           target="_blank"
           rel="noopener noreferrer"
           className={`absolute inset-0 transform transition-transform ${
-            index === activeIndex ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'
+            index === activeIndex ? 'opacity-100 translate-x-0' : 'hidden opacity-0 translate-x-full'
           }`}
           style={{
             backgroundImage: `url(http://18.231.76.133${handleImageSrc(item)})`,

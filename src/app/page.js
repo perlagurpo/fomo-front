@@ -4,12 +4,10 @@ import HomeBanner from '@/components/home/homeBanner';
 import SearchBar from '@/components/home/searchBar';
 import SearchFilters from '@/components/home/searchFilters';
 import FeaturedEvents from '@/components/home/featuredEvents';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -71,7 +69,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-start min-h-screen bg-fomo-sec-white font-poppins">
+    <main className="flex flex-col items-center min-h-screen bg-fomo-sec-white font-poppins">
       {showFilters ? '' : <HomeBanner />}
       <SearchBar onToggleFilters={toggleFilters} onSearch={handleSearch} showFilters={showFilters} />
       {showFilters ? (
