@@ -111,45 +111,59 @@ function Eventos() {
 };
 
   return(
-    <div className="relative flex flex-col min-h-screen bg-fomo-sec-white text-fomo-sec-two">
+    <div className="relative flex flex-col min-h-screen bg-fomo-sec-white text-fomo-sec-two pt-1 pb-6">
       
-      <div className="mx-auto px-8">
+            
+      <div className="flex flex-col mx-auto">
+              
         <div className="max-w-screen-xl flex justify-center">
-<div className="grid gap-4 grid-cols-1 md:grid-cols-3">
-  
-            <div className="md:col-span-1 ">
-               <div className="flex flex-col md:sidebar min-w-[17%] md:min-h-screen text-left">
-        <div className={`flex md:fixed md:flex flex-col min-h-max md:pr-4 text-fomo-sec-two border-b-2 border-fomo-pri-two md:border-0`}>
-    <SearchBar onSearch={handleSearch} activateSearch={true} searchValueEventName={searchValueFromUrl} />
-    <Sidebar filters={filters} setFilters={setFilters} />
-  </div>
-  </div>
-  </div>
-  <div className="col-span-1 md:col-span-2">
-    {loading ? (
-      <div className="my-[15%]">
-        <LoadingSpinner size={12} />
-      </div>
-    ) : (
-      events.length == 0 && (
-        <h2 className="text-2xl text-center py-4 px-4 md:px-0">
-          {events.length > 0
-            ? `Eventos que coinciden con tu búsqueda "${name}"`
-            : "¡Lo sentimos! no hay eventos que coincidan con tu búsqueda"}
-        </h2>
-      )
-    )}
-    <EventList events={events}   currentPage={currentPage}
-  handlePrevPage={handlePrevPage}
-  handleNextPage={handleNextPage} totalPages={totalPages} />
-  </div>
-</div>
+          <div className="grid gap-4 grid-cols-1 md:grid-cols-3 min-w-[80vw]">
+
+            <div className="flex flex-col text-left col-span-1 md:sidebar md:min-h-screen ">
+              <div className={`flex flex-col items-center pb-4 px-4 md:items-start md:sticky min-h-max md:pr-4 text-fomo-sec-two border-fomo-pri-two md:border-0`}>
+                <SearchBar onSearch={handleSearch} activateSearch={true} searchValueEventName={searchValueFromUrl} />
+                <Sidebar filters={filters} setFilters={setFilters} />
+              </div>
+            </div>
+            
+            <div className=" col-span-1 md:col-span-2">
+              <div className='flex flex-col min-w-full items-center'>
+              { loading ?
+                  (
+                    <div className="my-[15%]">
+                      <LoadingSpinner size={12} />
+                    </div>
+                  ) :
+                  (
+                    <div className='col-span-2'>
+                      {
+                        events.length == 0 && (
+                            <h2 className="text-2xl text-center py-4 px-4 md:px-0">
+                              {/* {events.length > 0
+                                ? `Eventos que coinciden con tu búsqueda "${name}"`
+                                : "¡Lo sentimos! no hay eventos que coincidan con tu búsqueda"} */}
+                              ¡Lo sentimos! no hay eventos que coincidan con tu búsqueda
+                            </h2>
+                          )
+                      }
+                      <EventList  events={events}
+                          currentPage={currentPage}
+                          handlePrevPage={handlePrevPage}
+                          handleNextPage={handleNextPage}
+                          totalPages={totalPages}
+                          />
+                    </div>  
+                     
+                  )
+              }
+              </div>
+            </div>
+          </div>
 
         </div>
       </div>
     </div>
   );
-
 }
 
 export default Eventos;

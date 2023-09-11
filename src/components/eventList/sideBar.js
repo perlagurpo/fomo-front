@@ -137,11 +137,13 @@ const Sidebar = ({ filters, setFilters }) => {
 
   return (
         <div>
-        {window.innerWidth > 767 ? <h2 className="text-2xl font-bold mb-2 text-fomo-pri-two">Filtros de búsqueda</h2> :
-          <button className="flex flex-row gap-4 rounded-full px-6 py-3 bg-fomo-pri-two" onClick={() => setShowFilters(!showFilters)}>
-            <SettingsIcon />
-            <p className="text-fomo-sec-white font-semibold text-lg">Filtros de búsqueda</p>
-          </button>}
+        {
+          window.innerWidth > 767 ? <h2 className="text-2xl font-bold mb-2 text-fomo-pri-two">Filtros de búsqueda</h2> :
+            <button className="flex flex-row gap-4 rounded-full px-6 py-3 bg-fomo-pri-two" onClick={() => setShowFilters(!showFilters)}>
+              <SettingsIcon />
+              <p className="text-fomo-sec-white font-semibold text-lg">Filtros de búsqueda</p>
+            </button>
+        }
           <div className={`${showFilters ? "" : "hidden"}`}>
             <h2 className="text-xl font-bold mb-2 mt-6">Fecha</h2>
             <ul className="list-none space-y-2">
@@ -242,9 +244,10 @@ const Sidebar = ({ filters, setFilters }) => {
           </div>
             
       </div>
-              {/* divisores */}
-        <div className="hidden md:flex min-h-[30em] pt-8"></div>
-        </div>
+      {/* divisores */}
+      <div className="hidden md:flex min-h-[30em] pt-8"></div>
+      <div className={`${showFilters ? "block" : "hidden" } min-w-full px-2 py-2 border-b-2 border-fomo-pri-two md:hidden`}></div>
+    </div>
 
   );
 };
