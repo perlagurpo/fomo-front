@@ -119,10 +119,12 @@ function Eventos() {
         <div className="max-w-screen-xl flex justify-center">
           <div className="grid gap-4 grid-cols-1 md:grid-cols-3 min-w-[80vw]">
 
-            <div className="flex flex-col text-left col-span-1 md:sidebar md:min-h-screen ">
-              <div className={`flex flex-col items-center pb-4 px-4 md:items-start md:sticky min-h-max md:pr-4 text-fomo-sec-two border-fomo-pri-two md:border-0`}>
-                <SearchBar onSearch={handleSearch} activateSearch={true} searchValueEventName={searchValueFromUrl} />
-                <Sidebar filters={filters} setFilters={setFilters} />
+            <div className="col-span-1">
+              <div className="flex flex-col text-left md:sidebar md:min-h-screen">
+                <div className="flex flex-col items-center pb-4 px-4 min-h-max md:fixed md:items-start md:pr-4 text-fomo-sec-two">
+                  <SearchBar onSearch={handleSearch} activateSearch={true} searchValueEventName={searchValueFromUrl} />
+                  <Sidebar filters={filters} setFilters={setFilters} />
+                </div>
               </div>
             </div>
             

@@ -25,20 +25,20 @@ export default function EventList({ events=[], currentPage, handlePrevPage, hand
           )
         }
     </div>
-     <div className="flex justify-center mt-4">
+     <div className="flex justify-center my-6 text-fomo-sec-white">
         <button
           onClick={handlePrevPage}
           disabled={currentPage === 1}
-          className="mr-2 px-4 py-2 border rounded-lg"
+          className={`mr-2 px-4 py-2 bg-fomo-pri-two border rounded-lg hover:opacity-50 transition duration-300 ${currentPage === 1 ? "cursor-not-allowed	" : "cursor-pointer"}`}
         >
-          Previous
+          {"<"}
         </button>
         <button
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 border rounded-lg"
+          className={`px-4 py-2 border rounded-lg bg-fomo-pri-two hover:opacity-50 transition duration-300 ${currentPage === totalPages ? "cursor-not-allowed	" : "cursor-pointer"}`}
         >
-          Next
+          {">"}
         </button>
       </div></div>
   );
