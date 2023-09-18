@@ -225,9 +225,8 @@ const Sidebar = ({ filters, setFilters }) => {
                 typeof filters.category === 'string' ? filters.category : '';
 
               return (
-                <div className="mb-3">
+                <div className="mb-3" key={i}>
                   <button
-                    key={i}
                     className={`min-w-[123px] block p-2 rounded-lg border ${
                       categoryFilter.split(',').includes(category.name)
                         ? 'bg-fomo-pri-two text-white'
