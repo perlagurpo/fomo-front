@@ -53,7 +53,7 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
                     location ? (
                       <p>{ location.name + " - " + location.address }</p>
                     )
-                    : <p>"Sin datos"</p>
+                    : <p>{"Sin datos"}</p>
                   }
                   
                 </div>
