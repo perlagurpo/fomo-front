@@ -109,31 +109,33 @@ export default function FeaturedEvents({ searchQuery }) {
         </div>
         
         {
-          events.length > 0 ? 
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-3">
-              {
-                events.map(event => (
-                  event.highlighted == true && 
-                  <FeaturedEventCard
-                    key={event.id}
-                    event_id={event.id}
-                    event_name={event.event_name}
-                    event_img={event.event_img}
-                    start_date={event.start_date}
-                    event_location={event.location_event}
-                    ticket_price={event.ticket_price}
-                    event_slug={event.slug}
-                  />
+          events && 
+            events.length > 0 ? 
+              <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-3">
+                {
+                  events.map(event => (
+                    event.highlighted == true && 
+                    <FeaturedEventCard
+                      key={event.id}
+                      event_id={event.id}
+                      event_name={event.event_name}
+                      event_img={event.event_img}
+                      start_date={event.start_date}
+                      event_location={event.location_event}
+                      ticket_price={event.ticket_price}
+                      event_slug={event.slug}
+                    />
+                    )
                   )
-                )
-              }
-            </div>
-          :
-          (
-            <div className='flex flex-column items-center'>
-              <img src='/img/home/banner_busqueda_fail.png' />
-            </div>
-          )  
+                }
+              </div>
+            :
+            (
+              <div className='flex flex-column items-center'>
+                <img src='/img/home/banner_busqueda_fail.png' />
+              </div>
+            )
+          
         }
         
       </div>

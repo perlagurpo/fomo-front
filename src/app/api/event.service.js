@@ -23,7 +23,7 @@ export default {
       });
       content = await rawResponse.json();
     } catch(err) {
-      alert(err);
+      content = [];
     }
     return content;
   },
@@ -47,7 +47,7 @@ export default {
       });
       content = await rawResponse.json();
     } catch(err) {
-      alert(err);
+      content = []
     }
     return content;
   },
@@ -71,7 +71,7 @@ export default {
       });
       content = await rawResponse.json();
     } catch(err) {
-      alert(err);
+      content = [];
     }
     return content;
   },
@@ -94,7 +94,7 @@ export default {
       });
       categories = await rawResponse.json();
     } catch(err) {
-      alert(err);
+      categories = [];
     }
     return categories;
   }
