@@ -3,19 +3,33 @@ import { useEffect, useState } from 'react';
 import EventService from '@/app/api/event.service';
 import FeaturedEventCard from './featuredEventCard';
 import moment from 'moment';
+import { LoadingSpinner } from '../icons/icons';
+
 
 export default function FeaturedEvents({ searchQuery }) {
   const [events, setEvents] = useState([]);
   const [filters, setFilters] = useState({ category: "", format: "", event_type: "", start_date: "", end_date: "" });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchEvents = async () => {
+      setLoading(true);
       const fetchedEvents = await EventService.getEvents(searchQuery);
-      setEvents(fetchedEvents.results);
+      setEvents(fetchedEvents);
+      setLoading(false);
     };
-    
+
+    const parsedFilters = {};
+    const params = new URLSearchParams(searchQuery);
+    for (let [key, value] of params.entries()) {
+      parsedFilters[key] = value.includes(',') ? value.split(',') : value;
+    }
+
+    setFilters(parsedFilters);
     fetchEvents();
+    
   }, [searchQuery]);
+
 
   const removeFilter = async (filterKey, index = null) => {
     const updatedFilters = { ...filters };
@@ -37,14 +51,6 @@ export default function FeaturedEvents({ searchQuery }) {
     return updatedFilters;
   };
 
-  useEffect(() => {
-    const parsedFilters = {};
-    const params = new URLSearchParams(searchQuery);
-    for (let [key, value] of params.entries()) {
-      parsedFilters[key] = value.includes(',') ? value.split(',') : value;
-    }
-    setFilters(parsedFilters);
-  }, [searchQuery]);
 
   const filterFormat = filter => {
     if (filter == 'event_name') {
@@ -109,35 +115,41 @@ export default function FeaturedEvents({ searchQuery }) {
         </div>
         
         {
-          events && 
-            events.length > 0 ? 
-              <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-3">
-                {
-                  events.map(event => (
-                    event.highlighted == true && 
-                    <FeaturedEventCard
-                      key={event.id}
-                      event_id={event.id}
-                      event_name={event.event_name}
-                      event_img={event.event_img}
-                      start_date={event.start_date}
-                      event_location={event.location_event}
-                      ticket_price={event.ticket_price}
-                      event_slug={event.slug}
-                    />
-                    )
-                  )
-                }
-              </div>
+          loading ?
+            <div className='flex flex-col items-center'>
+              <LoadingSpinner />
+            </div>
             :
             (
-              <div className='flex flex-column items-center'>
-                <img src='/img/home/banner_busqueda_fail.png' />
-              </div>
+              events &&
+                events.length > 0 ? 
+                  <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-3">
+                    {
+                      events.map(event => (
+                        event.highlighted == true && 
+                        <FeaturedEventCard
+                          key={event.id}
+                          event_id={event.id}
+                          event_name={event.event_name}
+                          event_img={event.event_img}
+                          start_date={event.start_date}
+                          event_location={event.location_event}
+                          ticket_price={event.ticket_price}
+                          event_slug={event.slug}
+                        />
+                        )
+                      )
+                    }
+                  </div>
+                :
+                (
+                  <div className='flex flex-column items-center'>
+                    {/* <h2 className='text-lg'> Por el momento no hay eventos destacados </h2> */}
+                    {/* <img src='/img/home/banner_busqueda_fail.png' /> */}
+                  </div>
+                ) 
             )
-          
         }
-        
       </div>
     </div>
   );
