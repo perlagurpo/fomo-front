@@ -68,7 +68,7 @@ function Eventos() {
     // Call the API with the searchQuery
     async function getEvents() {
       const fetchedEvents = await EventService.getEvents(queryStringWithFilters);
-      setEvents(fetchedEvents);
+      setEvents(fetchedEvents.results);
       setTotalEventsCount(fetchedEvents.count);
       setTotalPages(fetchedEvents.count_total_page);
       setCurrentPage(parseInt(fetchedEvents.actual_page));
