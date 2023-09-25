@@ -15,7 +15,7 @@ export default function FeaturedEvents({ searchQuery }) {
     const fetchEvents = async () => {
       setLoading(true);
       const fetchedEvents = await EventService.getEvents(searchQuery);
-      setEvents(fetchedEvents);
+      setEvents(fetchedEvents.results);
       setLoading(false);
     };
 
