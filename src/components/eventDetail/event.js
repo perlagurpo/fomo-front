@@ -64,8 +64,8 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
         <div className='md:py-5'>
           <h2 className='text-xl font-bold pb-3'>Acerca del Evento</h2>
           <div className='flex flex-col gap-12 w-full md:gap-20 md:flex-row md:justify-between md:items-start '>
-            <EventDescription description={description} duration={duration} ticketType={ticketType} />
-              <EventTickets hasTicket={hasTicket} ticketPrice={ticketPrice} ticketURL={ticketURL} ticketsLeft={ticketsAvailable} />
+            <EventDescription description={description} duration={duration} hasTicket={hasTicket} ticketType={ticketType} />
+            <EventTickets hasTicket={hasTicket} ticketPrice={ticketPrice} ticketURL={ticketURL} ticketsLeft={ticketsAvailable} />
           </div>
         </div>
 
@@ -76,7 +76,7 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
 }
 
 
-function EventDescription({ description, duration, ticketType }){
+function EventDescription({ description, duration, hasTicket, ticketType }){
   return(
     <div className='flex flex-col items-start basis-8/12'>
       
@@ -90,10 +90,17 @@ function EventDescription({ description, duration, ticketType }){
               <ClockIcon />
               <p>{ duration ? duration : "-" }</p>
             </div>
-            <div className='flex flex-row gap-2'>
-              <TicketIcon />
-              <p>{ ticketType }</p>   
-            </div>
+          
+            {
+              (hasTicket && (ticketType.length != 0)) &&
+                (
+                  <div className='flex flex-row gap-2'>
+                    <TicketIcon />
+                    <p>{ ticketType }</p>   
+                  </div>
+                )
+            }
+            
           </div>
         </div>
       </div>
