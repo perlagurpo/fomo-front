@@ -11,76 +11,74 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
   const[displayedStartDate, setDisplayedStartDate] = useState(new Date(startDate));
   const[displayedEndDate, setDisplayedEndDate] = useState(new Date(endDate));
 
-  function formatDate(date) {
-
-    return(
-      diaAString(date.getDay()) +
-      ", " +
-      date.getDate() +
-      ' de ' +
-      mesAString( date.getMonth()) +
-      " a las " +
-      date.toLocaleTimeString("es", { hour: "2-digit", minute: "2-digit", hour12: false })
-      + " hs"
-    );
-  }
+  
 
   return(
-    <div className='flex flex-col items-center justify-center text-fomo-sec-two'>
-      <img src={imageURL} alt='event_img' />
+    <div className='flex flex-col items-center justify-center text-fomo-sec-two mb-[20%]'>
+      <img src={imageURL} alt='event_img' className='cover' />
       
-      <div className='flex flex-col items-center gap-4 mt-6'>
-        <h1 className='text-4xl font-bold py-6 text-center'>
+      <div className='flex flex-col items-center gap-4 mt-6 min-w-full'>
+        
+        <p className='max-w-[90vw] overflow-hidden text-ellipsis text-4xl font-bold py-6 text-center'>
           { name }
-        </h1>
-        <h2 className='text-md font-bold pb-3'> { category && category.toUpperCase() } </h2>  
+        </p>
+        
+        
+        <h2 className='text-md font-bold pb-10 md:pb-3'> { category && category.toUpperCase() } </h2>  
 
-        <div className='flex flex-col pb-4 gap-5 w-full  md:flex-row md:justify-between md:py-8'>
-          <div className='flex flex-row items-center gap-4 basis-6/12'>
-            <CalendarIcon />
-            <div className='flex flex-col items-start'>
-              <h2 className='font-bold text-lg'>Fecha y Hora</h2>
-              <p>{ startDate ? formatDate(displayedStartDate) : "Sin datos" }</p>
-            </div>
-          </div>
-          <div className='basis-6/12'>
-            <Link href={location ? location.google_maps_link : "#"} target={location ? '_blank' : '_top'}>
-              <div className='flex flex-row items-center gap-6 md:gap-4'>
-                <LocationIcon />
-                <div className='flex flex-col items-start'>
-                  <h2 className='font-bold text-lg'>Ubicación</h2>
-                  {
-                    location ? (
-                      <p>{ location.name + " - " + location.address }</p>
-                    )
-                    : <p>{"Sin datos"}</p>
-                  }
-                  
-                </div>
-              </div>
-            </Link>
-          </div>
+        <div className='grid grid-cols-1 gap-x-10  gap-y-12 md:gap-y-20 min-w-full px-[5%] md:grid-cols-2'>
+          <Fecha startDate={startDate} displayedStartDate={displayedStartDate} />
+          <Ubicacion location={location} />
+          <EventDescription description={description} duration={duration} hasTicket={hasTicket} ticketType={ticketType} />
+          <EventTickets hasTicket={hasTicket} ticketPrice={ticketPrice} ticketURL={ticketURL} ticketsLeft={ticketsAvailable} />
         </div>
-        <div className='md:py-5'>
-          <h2 className='text-xl font-bold pb-3'>Acerca del Evento</h2>
-          <div className='flex flex-col gap-12 w-full md:gap-20 md:flex-row md:justify-between md:items-start '>
-            <EventDescription description={description} duration={duration} hasTicket={hasTicket} ticketType={ticketType} />
-            <EventTickets hasTicket={hasTicket} ticketPrice={ticketPrice} ticketURL={ticketURL} ticketsLeft={ticketsAvailable} />
-          </div>
-        </div>
-
       </div>
     </div>    
   );
 
 }
 
+function Fecha(props) {
+
+  return(
+    <div className='flex flex-row gap-4'>
+      <CalendarIcon />
+      <div className='flex flex-col items-start'>
+        <h2 className='font-bold text-lg'>Fecha y Hora</h2>
+        <p>{ props.startDate ? formatDate(props.displayedStartDate) : "Sin datos" }</p>
+      </div>
+    </div>
+  );
+}
+
+function Ubicacion(props) {
+
+  return(
+    <div>
+      <Link href={props.location ? props.location.google_maps_link : "#"} target={props.location ? '_blank' : '_top'}>
+        <div className='flex flex-row items-center gap-6 md:gap-4'>
+          <LocationIcon />
+          <div className='flex flex-col items-start'>
+            <h2 className='font-bold text-lg'>Ubicación</h2>
+            {
+              props.location ? (
+                <p>{ props.location.name + " - " + props.location.address }</p>
+              )
+              : <p>{"Sin datos"}</p>
+            }
+            
+          </div>
+        </div>
+      </Link>
+    </div>
+  );
+}
 
 function EventDescription({ description, duration, hasTicket, ticketType }){
   return(
-    <div className='flex flex-col items-start basis-8/12'>
-      
-      <div className='flex flex-col items-start gap-4 bg-fomo-sec-one/[.10] rounded-md py-3 px-4'>
+    <div className='flex flex-col items-start'>
+      <h2 className='text-xl font-bold pb-3'>Acerca del Evento</h2>
+      <div className='flex flex-col min-w-full items-start gap-4 bg-fomo-sec-one/[.10] rounded-md py-3 px-4'>
         <p>
           { description ? description : "Evento sin descripción" }
         </p>
@@ -110,7 +108,7 @@ function EventDescription({ description, duration, hasTicket, ticketType }){
 
 function EventTickets({ hasTicket, ticketPrice, ticketURL="/", ticketsLeft }) {
   return(
-    <div className='flex flex-col items-center justify-between gap-6 basis-4/12 border border-4 border-gris-custom rounded-lg text-left p-3 md:min-w-[30%] '>
+    <div className='flex flex-col items-center justify-between gap-6 border border-4 border-gris-custom rounded-lg text-left p-3 md:min-w-[30%] '>
       <div className='flex flex-col min-w-[100%] gap-2'>
         <h3 className='text-lg font-bold'>Ver entradas</h3>
         { hasTicket && <p >{"$" + ticketPrice }</p> }
@@ -132,3 +130,18 @@ function EventTickets({ hasTicket, ticketPrice, ticketURL="/", ticketsLeft }) {
     </div>
   );
 }
+
+
+function formatDate(date) {
+
+    return(
+      diaAString(date.getDay()) +
+      ", " +
+      date.getDate() +
+      ' de ' +
+      mesAString( date.getMonth()) +
+      " a las " +
+      date.toLocaleTimeString("es", { hour: "2-digit", minute: "2-digit", hour12: false })
+      + " hs"
+    );
+  }
