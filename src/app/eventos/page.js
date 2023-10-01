@@ -112,23 +112,23 @@ function Eventos() {
 
   return(
     <div className="relative flex flex-col min-h-screen bg-fomo-sec-white text-fomo-sec-two pt-1 pb-6">
-      
-            
+
       <div className="flex flex-col mx-auto">
-              
         <div className="max-w-screen-xl flex justify-center">
           <div className="grid gap-4 grid-cols-1 md:grid-cols-3 min-w-[80vw]">
 
             <div className="col-span-1">
               <div className="flex flex-col text-left md:sidebar md:min-h-screen">
                 <div className="flex flex-col items-center pb-4 px-4 min-h-max md:fixed md:items-start md:pr-4 text-fomo-sec-two">
-                  <SearchBar onSearch={handleSearch} activateSearch={true} searchValueEventName={searchValueFromUrl} />
-                  <Sidebar filters={filters} setFilters={setFilters} />
+                  <div className="flex flex-col items-center min-w-[20vw] md:absolute md:items-start z-20">
+                    <SearchBar onSearch={handleSearch} activateSearch={true} searchValueEventName={searchValueFromUrl} />
+                    <Sidebar filters={filters} setFilters={setFilters} />
+                  </div>
                 </div>
               </div>
             </div>
             
-            <div className=" col-span-1 md:col-span-2">
+            <div className="col-span-1 md:col-span-2">
               <div className='flex flex-col min-w-full items-center'>
               { loading ?
                   (
@@ -137,9 +137,9 @@ function Eventos() {
                     </div>
                   ) :
                   (
-                    <div className='col-span-2'>
+                    <div className='col-span-2 z-10'>
                       {
-                        events.length == 0 && (
+                        events && events.length == 0 && (
                             <h2 className="text-2xl text-center py-4 px-4 md:px-0">
                               {/* {events.length > 0
                                 ? `Eventos que coinciden con tu búsqueda "${name}"`
