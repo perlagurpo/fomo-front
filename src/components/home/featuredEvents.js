@@ -1,10 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
 import EventService from '@/app/api/event.service';
-import FeaturedEventCard from './featuredEventCard';
 import moment from 'moment';
-import { LoadingSpinner } from '../icons/icons';
-
+import EventCard from '@/components/eventCard/eventCard';
+import { LoadingSpinner } from '@/components/icons/icons';
 
 export default function FeaturedEvents({ searchQuery }) {
   const [events, setEvents] = useState([]);
@@ -127,7 +126,7 @@ export default function FeaturedEvents({ searchQuery }) {
                     {
                       events.map(event => (
                         event.highlighted == true && 
-                        <FeaturedEventCard
+                        <EventCard
                           key={event.id}
                           event_id={event.id}
                           event_name={event.event_name}

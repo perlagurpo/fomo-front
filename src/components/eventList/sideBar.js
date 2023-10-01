@@ -41,6 +41,20 @@ const Sidebar = ({ filters, setFilters }) => {
     };
   }, []);
 
+  useEffect(() => {
+    const queryStringWithFilters = buildQueryString(
+      filters['event_name'] ? filters['event_name'] : '',
+      filters
+    );
+
+    // Check if the query string has changed before updating.
+    if (queryStringWithFilters !== previousQueryString) {
+      setPreviousQueryString(queryStringWithFilters);
+      router.push(`/eventos?${queryStringWithFilters}`);
+      // Update the previousQueryString here.
+    }
+  }, [filters]);
+
   useEffect(
     () => {
       async function fetchCategories(){
@@ -80,6 +94,7 @@ const Sidebar = ({ filters, setFilters }) => {
     updateDate(startDate, endDate);
   };
 
+
   const handleDatePickerChange = (newValue) => {
     updateDate(
       moment(newValue.startDate).format('DD-MM-YYYY'),
@@ -93,21 +108,7 @@ const Sidebar = ({ filters, setFilters }) => {
     updatedFilters['start_date'] = startDate;
     updatedFilters['end_date'] = endDate;
     setFilters(updatedFilters);
-  }
-
-  useEffect(() => {
-    const queryStringWithFilters = buildQueryString(
-      filters['event_name'] ? filters['event_name'] : '',
-      filters
-    );
-
-    // Check if the query string has changed before updating.
-    if (queryStringWithFilters !== previousQueryString) {
-      setPreviousQueryString(queryStringWithFilters);
-      router.push(`/eventos?${queryStringWithFilters}`);
-      // Update the previousQueryString here.
-    }
-  }, [filters]);
+  } 
 
   const handleCategoryChange = (key, value, dateFilters = null) => {
      const filterArray =
@@ -198,19 +199,21 @@ const Sidebar = ({ filters, setFilters }) => {
               
                 
               <li>
-                <div className={`${showDatePicker ? "opacity-100" : "opacity-0"} ${showDatePicker ? "max-h-fit" : "max-h-0"} relative transition duration-400`}>
+                <div className={`${showDatePicker ? "opacity-100" : "opacity-0"} ${showDatePicker ? "max-h-fit" : "max-h-0"} relative transition duration-400 z-30`}>
                   
-                  <Datepicker
-                  locale="es"
-                  useRange={true} 
-                  startFrom={new Date()} 
-                  minDate={new Date()} 
-                  i18n={"es"} 
-                  primaryColor={"orange"} 
-                  selected={dateValue.startDate}
-                  value={dateValue}
-                  onChange={(newValue)  => handleDatePickerChange(newValue)}
-                  />
+                    <Datepicker
+                      locale="es"
+                      useRange={true} 
+                      startFrom={new Date()} 
+                      minDate={new Date()} 
+                      i18n={"es"} 
+                      primaryColor={"orange"} 
+                      selected={dateValue.startDate}
+                      value={dateValue}
+                      onChange={(newValue)  => handleDatePickerChange(newValue)}
+                      displayFormat={"DD/MM/YYYY"}
+                      placeholder={"DD/MM/AAAA - DD/MM/AAAA"}                   
+                    />
                   
                 </div>
               </li>

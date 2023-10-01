@@ -153,35 +153,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
             }
             
           </div>
-         {/*  <h5 className="text-left font-bold text-fomo-sec-two pb-4">
-            Formato
-          </h5>
-          <div className="flex flex-wrap gap-2 justify-start pb-4">
-            <button
-              className={`min-w-[123px] inline-block p-2 rounded-lg border ${
-                isFilterActive('format', 'festival') ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
-              } shadow-sm mr-2 cursor-pointer text-black`}
-              onClick={() => handleFilterChange('format', 'festival')}
-            >
-              Festival
-            </button>
-            <button
-              className={`min-w-[123px] inline-block p-2 rounded-lg border ${
-                isFilterActive('format', 'clase') ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
-              } shadow-sm mr-2 cursor-pointer text-black`}
-              onClick={() => handleFilterChange('format', 'clase')}
-            >
-              Clase
-            </button>
-            <button
-              className={`min-w-[123px] inline-block p-2 rounded-lg border ${
-                isFilterActive('format', 'conferencia') ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
-              } shadow-sm mr-2 cursor-pointer text-black`}
-              onClick={() => handleFilterChange('format', 'conferencia')}
-            >
-              Conferencia
-            </button>
-          </div> */}
+ 
           <div className="grid gap-4">
             <div>
               <h5 className="text-left font-bold text-fomo-sec-two pb-4">
@@ -243,7 +215,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
                     startFrom={new Date()} 
                     minDate={new Date()} 
                     i18n={"es"} 
-                    primaryColor={"violet"} 
+                    primaryColor={"orange"} 
                     selected={startDate}
                     startDate={startDate}
                     endDate={endDate}
@@ -262,19 +234,3 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
     </div>
   );
 }
-
-
-/**   SECCIÓN BÚSQUEDAS POPULARES
- *   <div className="grid md:w-1/4 w-full mt-4 md:mt-0 h-48">
-          <h5 className="text-left font-bold text-fomo-sec-two">
-            Busquedas Populares
-          </h5>
-          <ul className='text-fomo-sec-two'>
-            <li>Pablo y los Pablitos</li>
-            <li>Mario el Rockero</li>
-            <li>Hombre Merca</li>
-            <li>El Último Falopero</li>
-          </ul>
-        </div>
- * 
- */
