@@ -1,4 +1,4 @@
-import EventCard from "./eventCard";
+import EventCard from "@/components/eventCard/eventCard";
 
 export default function EventList({ events=[], currentPage, handlePrevPage, handleNextPage, totalPages }) {
 
