@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import EventService from '@/app/api/event.service';
+import HomeService from '@/app/api/home.service';
 import moment from 'moment';
 import EventCard from '@/components/eventCard/eventCard';
 import { LoadingSpinner } from '@/components/icons/icons';
@@ -13,7 +14,7 @@ export default function FeaturedEvents({ searchQuery }) {
   useEffect(() => {
     const fetchEvents = async () => {
       setLoading(true);
-      const fetchedEvents = await EventService.getEvents(searchQuery);
+      const fetchedEvents = await HomeService.getHighlightedEvents();
       setEvents(fetchedEvents.results);
       setLoading(false);
     };
