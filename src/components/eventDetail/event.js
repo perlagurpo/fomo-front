@@ -132,7 +132,7 @@ function EventTickets({ hasTicket, ticketPrice, ticketURL="/", ticketsLeft }) {
 }
 
 /**
- * Formatea la fecha proveniente de Javascript Date al formato "<Día>, <nroDía> de [Mes] a las [hora]"
+ * Formatea la fecha proveniente de Javascript Date al formato "<Día>, <nroDía> de <Mes> a las <hora>"
  * @param {*} date:Date 
  * @returns fecha:String
  */
