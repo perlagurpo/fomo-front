@@ -83,8 +83,16 @@ const Sidebar = ({ filters, setFilters }) => {
         endDate = today.add(1, 'days').format('DD-MM-YYYY');
         break;
       case 'this weekend':
-        startDate = today.clone().day(5).format('DD-MM-YYYY'); // viernes
-        endDate = today.clone().day(7).format('DD-MM-YYYY'); // domingo
+        const startOfWeekend = today.clone().day(5);
+        const endOfWeekend = today.clone().day(7);
+        
+        if (today.day() === 0) {
+          startDate = today.format('DD-MM-YYYY');
+          endDate = today.format('DD-MM-YYYY');
+        } else {
+          startDate = startOfWeekend.format('DD-MM-YYYY');
+          endDate = endOfWeekend.format('DD-MM-YYYY');
+        }
         break;
       case 'next week':
         startDate = today.clone().add(1, 'weeks').startOf('isoWeek').format('DD-MM-YYYY');
