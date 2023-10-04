@@ -11,7 +11,7 @@ return(
         <div className="flex flex-row justify-between md:items-center gap-2">
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium sm:mb-0">
             <li>
-              <a href="#" className="mr-4 text-md hover:text-fomo-pri-two transition duration-300">Nosotros</a>
+              <a href="/nosotros" className="mr-4 text-md hover:text-fomo-pri-two transition duration-300">Nosotros</a>
             </li>
           </ul>
           <div className="flex flex-row gap-2">
