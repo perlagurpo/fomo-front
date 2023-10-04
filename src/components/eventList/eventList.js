@@ -55,6 +55,7 @@ export default function EventList({ events=[], currentPage, handlePrevPage, hand
                       (pagina) => {
                         return  <h1 className={`cursor-pointer ${currentPage == pagina ? "text-fomo-pri-two" : "text-fomo-sec-two"} hover:scale-110 transition duration-200`}
                                     onClick={() => handlePageChange(pagina)}
+                                    key={pagina}
                                   >
                                   { pagina }
                                 </h1>
@@ -79,7 +80,7 @@ export default function EventList({ events=[], currentPage, handlePrevPage, hand
  */
 function generatePagesArray(length=6, current=1, total) {
   let paginas = Array.from({ length: total }, (_,value) => value + 1);
-  // Formateo lo que se muestra si hay más de seis páginas (my caberna)
+  // Formateo lo que se muestra si hay más de seis páginas (muy caverna)
   if(total > 6) {
     let inicio, fin
     if (current > 3) {
