@@ -94,7 +94,6 @@ function Eventos() {
     setCurrentPage(newPage);
     const updatedParams = new URLSearchParams(searchParams.toString());
     updatedParams.set('page', newPage.toString());
-
     urlUsage(updatedParams);
   };
 
@@ -149,10 +148,11 @@ function Eventos() {
                           )
                       }
                       <EventList  events={events}
-                          currentPage={currentPage}
-                          handlePrevPage={handlePrevPage}
-                          handleNextPage={handleNextPage}
-                          totalPages={totalPages}
+                                  currentPage={currentPage}
+                                  handlePrevPage={handlePrevPage}
+                                  handleNextPage={handleNextPage}
+                                  handlePageChange={handlePageChange}
+                                  totalPages={totalPages}
                           />
                     </div>  
                      
