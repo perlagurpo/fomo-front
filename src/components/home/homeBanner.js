@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import HomeService from '@/app/api/home.service';
+import useDeviceSize from '@/hooks/useDeviceSize';
 
 const HomeBanner = () => {
+  const [windowWidth, windowHeight] = useDeviceSize();
   const [carouselData, setCarouselData] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -27,12 +29,12 @@ const HomeBanner = () => {
   }
 
   const handleImageSrc = (item) => {
-    return window.innerWidth < 768 ? item.image_short_mobile : item.image_short;
+    return windowWidth < 768 ? item.image_short_mobile : item.image_short;
   };
 
   return (
     <div className="relative w-full max-w-screen-xl mx-auto">
-      <div className="w-full" style={{ paddingBottom: window.innerWidth < 768 ? `${(360 / 480) * 100}%` : `${(300 / 1280) * 100}%` }}>
+      <div className="w-full" style={{ paddingBottom: windowWidth < 768 ? `${(360 / 480) * 100}%` : `${(300 / 1280) * 100}%` }}>
       {carouselData.map((item, index) => (
         <a
           key={index}

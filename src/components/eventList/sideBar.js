@@ -6,8 +6,11 @@ import moment from 'moment';
 import { SettingsIcon } from '@/components/icons/icons';
 import { useRouter } from 'next/navigation';
 import { buildQueryString } from '../utils/filterOperations';
+import useDeviceSize from '@/hooks/useDeviceSize';
 
 const Sidebar = ({ filters, setFilters }) => {
+  const [windowWidth, windowHeight] = useDeviceSize();
+
   const [categories, setCategories] = useState([]);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dateValue, setDateValue]  = useState({ 
@@ -15,32 +18,10 @@ const Sidebar = ({ filters, setFilters }) => {
       endDate: null 
     }
   );
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFilters, setShowFilters] = useState(true);
   const [previousQueryString, setPreviousQueryString] = useState('');
   const [cualquierFechaChecked, setCualquierFechaChecked] = useState(false);
   const router = useRouter();
-  
-  useEffect(() => {
-    // Function to update the showFilters state based on window width
-    function handleWindowResize() {
-      if (window.innerWidth < 767) {
-        setShowFilters(false);
-      } else {
-        setShowFilters(true);
-      }
-    }
-
-    // Initial check when the component mounts
-    handleWindowResize();
-
-    // Add event listener for window resize
-    window.addEventListener('resize', handleWindowResize);
-
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, []);
 
   useEffect(() => {
     const queryStringWithFilters = buildQueryString(
@@ -55,6 +36,14 @@ const Sidebar = ({ filters, setFilters }) => {
       // Update the previousQueryString here.
     }
   }, [filters]);
+
+  useEffect(
+    () => {
+      if (windowWidth > 767) {
+        setShowFilters(true);
+      }
+    }
+  )
 
   useEffect(
     () => {
@@ -156,7 +145,7 @@ const Sidebar = ({ filters, setFilters }) => {
   return (
         <div>
         {
-          window.innerWidth > 767 ? <h2 className="text-2xl font-bold mb-2 text-fomo-pri-two">Filtros de búsqueda</h2> :
+          windowWidth > 767 ? <h2 className="text-2xl font-bold mb-2 text-fomo-pri-two">Filtros de búsqueda</h2> :
             <button className="flex flex-row gap-4 rounded-full px-6 py-3 bg-fomo-pri-two" onClick={() => setShowFilters(!showFilters)}>
               <SettingsIcon />
               <p className="text-fomo-sec-white font-semibold text-lg">Filtros de búsqueda</p>

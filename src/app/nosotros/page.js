@@ -1,20 +1,8 @@
 'use client';
-import { useEffect, useState } from 'react';
+import useDeviceSize from '@/hooks/useDeviceSize';
 
 function Nosotros() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const [windowWidth, windowHeight] = useDeviceSize();
 
   const spanStyle = {
     fontFamily: 'Stretch-pro',

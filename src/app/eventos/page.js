@@ -7,23 +7,10 @@ import Sidebar from '@/components/eventList/sideBar';
 import EventList from '@/components/eventList/eventList';
 import { LoadingSpinner } from '@/components/icons/icons';
 import { useRouter, useSearchParams } from 'next/navigation';
+import useDeviceSize from '@/hooks/useDeviceSize';
 
 function Eventos() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-      setWindowHeight(window.innerHeight);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const [windowWidth, windowHeight] = useDeviceSize();
 
   const [events, setEvents] = useState([]);
   const [name, setName] = useState("");
@@ -53,7 +40,6 @@ function Eventos() {
       console.log('typeof!');
       params = new URLSearchParams(params);
     }
-    console.log(params);
     
     const eventName = params.get('event_name');
     const category = params.get('category'); 
