@@ -42,7 +42,7 @@ export default function Navbar() {
             </li>
             
             <li>
-              <Link href="/" className="block py-2 pl-3 pr-4 rounded md:border-0 md:hover:text-orange-700 md:p-0  md:dark:hover:text-fomo-pri-one dark:hover:text-fomo-pri-one">
+              <Link href="/nosotros" className="block py-2 pl-3 pr-4 rounded md:border-0 md:hover:text-orange-700 md:p-0  md:dark:hover:text-fomo-pri-one dark:hover:text-fomo-pri-one">
                 Nosotros
               </Link>
             </li>
