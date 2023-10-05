@@ -89,15 +89,14 @@ function EventDescription({ description, duration, hasTicket, ticketType }){
               <p>{ duration ? duration : "-" }</p>
             </div>
           
-            {
-              (hasTicket && (ticketType.length != 0)) &&
-                (
-                  <div className='flex flex-row gap-2'>
-                    <TicketIcon />
-                    <p>{ ticketType }</p>   
-                  </div>
-                )
-            }
+            {ticketType !== null && (
+              hasTicket && ticketType.length !== 0 && (
+                <div className='flex flex-row gap-2'>
+                  <TicketIcon />
+                  <p>{ticketType}</p>   
+                </div>
+              )
+            )}
             
           </div>
         </div>
@@ -114,7 +113,7 @@ function EventTickets({ hasTicket, ticketPrice, ticketURL = "/", ticketsLeft }) 
       {hasTicket && (
         <div className='flex flex-row justify-between'>
           <h3 className='text-lg font-bold'>Valor de la entrada</h3>
-          <p className='text-lg font-bold'>{ticketPrice !== null ? "$" + ticketPrice : "Valor de entrada no informado"}</p>
+          <p className='text-lg font-bold'>{ticketPrice !== null ? "$" + ticketPrice : "No informado"}</p>
         </div>
       )}
       </div>
