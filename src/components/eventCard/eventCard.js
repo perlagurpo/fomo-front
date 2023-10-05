@@ -46,7 +46,7 @@ const EventCard = ({ event_id, event_name, event_img, start_date, event_location
               </p>
             </div>
             <p className="px-1 font-normal text-fomo-sec-two">
-              { ticket_price ? (ticket_price === 0 ? "Gratis" : "$ " + ticket_price) : "$ consultar" }
+              { ticket_price ? (ticket_price === 0 ? "Gratis" : "$ " + ticket_price) : "" }
             </p>
           </div>
       </div>
