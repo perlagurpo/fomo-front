@@ -33,7 +33,7 @@ const HomeBanner = () => {
   };
 
   return (
-    <div className="relative w-full max-w-screen-xl mx-auto">
+    <div className="relative w-full mx-auto" style={{maxWidth: '1248px'}}>
       <div className="w-full" style={{ paddingBottom: windowWidth < 768 ? `${(360 / 480) * 100}%` : `${(300 / 1280) * 100}%` }}>
       {carouselData.map((item, index) => (
         <a
@@ -41,7 +41,7 @@ const HomeBanner = () => {
           href={item.link_button}
           target="_blank"
           rel="noopener noreferrer"
-          className={`px-4 absolute inset-0 transform transition-transform ${
+          className={`absolute inset-0 transform transition-transform ${
             index === activeIndex ? 'opacity-100 translate-x-0' : 'hidden opacity-0 translate-x-full'
           }`}
           style={{
