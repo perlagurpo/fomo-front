@@ -110,7 +110,7 @@ export default function FeaturedEvents({ searchQuery }) {
               return null;
             })
           ) : (
-            <h3 className='text-left text-xl font-bold text-fomo-sec-two'>Descubrí Eventos</h3>
+            <h3 className='text-left text-xl font-bold text-fomo-sec-two'>Eventos Destacados</h3>
           )}
         </div>
         

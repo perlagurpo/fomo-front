@@ -6,8 +6,11 @@ import moment from 'moment';
 import { SettingsIcon } from '@/components/icons/icons';
 import { useRouter } from 'next/navigation';
 import { buildQueryString } from '../utils/filterOperations';
+import useDeviceSize from '@/hooks/useDeviceSize';
 
 const Sidebar = ({ filters, setFilters }) => {
+  const [windowWidth, windowHeight] = useDeviceSize();
+
   const [categories, setCategories] = useState([]);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dateValue, setDateValue]  = useState({ 
@@ -15,31 +18,10 @@ const Sidebar = ({ filters, setFilters }) => {
       endDate: null 
     }
   );
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFilters, setShowFilters] = useState(true);
   const [previousQueryString, setPreviousQueryString] = useState('');
+  const [cualquierFechaChecked, setCualquierFechaChecked] = useState(false);
   const router = useRouter();
-  
-  useEffect(() => {
-    // Function to update the showFilters state based on window width
-    function handleWindowResize() {
-      if (window.innerWidth < 767) {
-        setShowFilters(false);
-      } else {
-        setShowFilters(true);
-      }
-    }
-
-    // Initial check when the component mounts
-    handleWindowResize();
-
-    // Add event listener for window resize
-    window.addEventListener('resize', handleWindowResize);
-
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, []);
 
   useEffect(() => {
     const queryStringWithFilters = buildQueryString(
@@ -57,6 +39,14 @@ const Sidebar = ({ filters, setFilters }) => {
 
   useEffect(
     () => {
+      if (windowWidth > 767) {
+        setShowFilters(true);
+      }
+    }
+  )
+
+  useEffect(
+    () => {
       async function fetchCategories(){
         const fetchedCategories = await EventService.getCategories();
         setCategories(fetchedCategories);
@@ -68,27 +58,43 @@ const Sidebar = ({ filters, setFilters }) => {
   
   const handleDateChange = (e) => {
     const value = e.target.value;
-    var startDate = '', endDate = '';
+    var startDate = '',
+      endDate = '';
     const today = moment();
     setShowDatePicker(false);
     setDateValue({ startDate: null, endDate: null });
 
-    switch(value) {
+    switch (value) {
+      case 'any':
+        setCualquierFechaChecked(true);
+        break;
       case 'today':
         startDate = today.format('DD-MM-YYYY');
         endDate = today.format('DD-MM-YYYY');
+        setCualquierFechaChecked(false);
         break;
       case 'tomorrow':
         startDate = today.add(1, 'days').format('DD-MM-YYYY');
         endDate = today.add(1, 'days').format('DD-MM-YYYY');
+        setCualquierFechaChecked(false);
         break;
       case 'this weekend':
-        startDate = today.clone().day(5).format('DD-MM-YYYY'); // viernes
-        endDate = today.clone().day(7).format('DD-MM-YYYY'); // domingo
+        const startOfWeekend = today.clone().day(5);
+        const endOfWeekend = today.clone().day(7);
+
+        if (today.day() === 0) {
+          startDate = today.format('DD-MM-YYYY');
+          endDate = today.format('DD-MM-YYYY');
+        } else {
+          startDate = startOfWeekend.format('DD-MM-YYYY');
+          endDate = endOfWeekend.format('DD-MM-YYYY');
+        }
+        setCualquierFechaChecked(false);
         break;
       case 'next week':
         startDate = today.clone().add(1, 'weeks').startOf('isoWeek').format('DD-MM-YYYY');
         endDate = today.clone().add(1, 'weeks').endOf('isoWeek').format('DD-MM-YYYY');
+        setCualquierFechaChecked(false);
         break;
     }
     updateDate(startDate, endDate);
@@ -139,7 +145,7 @@ const Sidebar = ({ filters, setFilters }) => {
   return (
         <div>
         {
-          window.innerWidth > 767 ? <h2 className="text-2xl font-bold mb-2 text-fomo-pri-two">Filtros de búsqueda</h2> :
+          windowWidth > 767 ? <h2 className="text-2xl font-bold mb-2 text-fomo-pri-two">Filtros de búsqueda</h2> :
             <button className="flex flex-row gap-4 rounded-full px-6 py-3 bg-fomo-pri-two" onClick={() => setShowFilters(!showFilters)}>
               <SettingsIcon />
               <p className="text-fomo-sec-white font-semibold text-lg">Filtros de búsqueda</p>
@@ -148,6 +154,19 @@ const Sidebar = ({ filters, setFilters }) => {
           <div className={`${showFilters ? "" : "hidden"}`}>
             <h2 className="text-xl font-bold mb-2 mt-6">Fecha</h2>
             <ul className="list-none space-y-2">
+              <li>
+                <label className="flex items-center space-x-2">
+                  <input
+                    className="cursor-pointer"
+                    type="radio"
+                    name="date"
+                    value="any"
+                    onChange={handleDateChange}
+                    checked={cualquierFechaChecked} 
+                  />
+                  <p className="pl-1">Cualquier fecha</p>
+                </label>
+              </li>
               <li>
                 <label className="flex items-center space-x-2">
                   <input
@@ -193,7 +212,7 @@ const Sidebar = ({ filters, setFilters }) => {
                     value="pick a date"
                     onChange={() => { setShowDatePicker(!showDatePicker)}}
                   />
-                  <p className="pl-1">Elegir una fecha</p>
+                  <p className="pl-1">Elegir una fecha...</p>
                 </label>
               </li>
               
@@ -210,6 +229,7 @@ const Sidebar = ({ filters, setFilters }) => {
                       primaryColor={"orange"} 
                       selected={dateValue.startDate}
                       value={dateValue}
+                      popoverDirection="down"
                       onChange={(newValue)  => handleDatePickerChange(newValue)}
                       displayFormat={"DD/MM/YYYY"}
                       placeholder={"DD/MM/AAAA - DD/MM/AAAA"}                   
@@ -247,7 +267,6 @@ const Sidebar = ({ filters, setFilters }) => {
             
       </div>
       {/* divisores */}
-      <div className="hidden md:flex min-h-[30em] pt-8"></div>
       <div className={`${showFilters ? "block" : "hidden" } min-w-full px-2 py-2 border-b-2 border-fomo-pri-two md:hidden`}></div>
     </div>
 

@@ -25,6 +25,8 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
     endDate: null 
   }); 
 
+  const [cualquierFechaChecked, setCualquierFechaChecked] = useState(true);
+
   useState(
     () => {
       async function fetchCategories(){
@@ -37,8 +39,6 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
   ,[]);
 
   const handleFilterChange = (key, value, dateFilters = null) => {
-    console.log(value);
-    console.log(filters);
     if (dateFilters != null) {
       onFiltersChange(dateFilters);
       setFilter((prevFilter) => ({
@@ -84,22 +84,36 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
     setEndDate(null);
     const updatedFilters = { ...filters };
 
-    if (value === 'today') {
+    if (value === 'any') {
+      setCualquierFechaChecked(true);
+      updatedFilters['start_date'] = null;
+      updatedFilters['end_date'] = null;
+    } else if (value === 'today') {
       const today = moment().format('DD-MM-YYYY');
       updatedFilters['start_date'] = today;
       updatedFilters['end_date'] = today;
+      setCualquierFechaChecked(false);
     } else if (value === 'this weekend') {
       const today = moment();
-      const startOfWeekend = today.clone().day(5).format('DD-MM-YYYY'); // viernes
-      const endOfWeekend = today.clone().day(7).format('DD-MM-YYYY'); // domingo
+      let startOfWeekend = today.clone().day(5);
+      let endOfWeekend = today.clone().day(7);
+      if (today.day() === 0) {
+        startOfWeekend = today.format('DD-MM-YYYY');
+        endOfWeekend = today.format('DD-MM-YYYY');
+      } else {
+        startOfWeekend = startOfWeekend.format('DD-MM-YYYY');
+        endOfWeekend = endOfWeekend.format('DD-MM-YYYY');
+      }
       updatedFilters['start_date'] = startOfWeekend;
       updatedFilters['end_date'] = endOfWeekend;
+      setCualquierFechaChecked(false);
     } else if (value === 'next week') {
       const today = moment();
       const startOfNextWeek = today.clone().add(1, 'weeks').startOf('isoWeek').format('DD-MM-YYYY');
       const endOfNextWeek = today.clone().add(1, 'weeks').endOf('isoWeek').format('DD-MM-YYYY');
       updatedFilters['start_date'] = startOfNextWeek;
       updatedFilters['end_date'] = endOfNextWeek;
+      setCualquierFechaChecked(false);
     }
 
     handleFilterChange(null, null, updatedFilters);
@@ -160,6 +174,19 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
                 Fecha
               </h5>
               <ul className="list-none space-y-2">
+                <li>
+                  <label className="flex items-center space-x-2 text-black">
+                    <input
+                      className="mr-2 checked"
+                      type="radio"
+                      name="date"
+                      value="any"
+                      onChange={handleDateChange}
+                      checked={cualquierFechaChecked}
+                    />
+                    Cualquier fecha
+                  </label>
+                </li>
                 <li>
                   <label className="flex items-center space-x-2 text-black">
                     <input

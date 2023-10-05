@@ -7,7 +7,7 @@ export default function Navbar() {
   const [menuOpened, setMenuOpened] = useState(false);
 
   return(
-    <nav className="sticky top-0 z-10 bg-fomo-sec-white border-gray-200 dark:fomo-pri-one">
+    <nav className="sticky top-0 bg-fomo-sec-white border-gray-200 dark:fomo-pri-one" style={{ zIndex: '999' }}>
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link href="/" className="flex items-center">
             <img src="/img/logos/Recurso 23_SVG.svg" className="h-8 mr-3" alt="Fomo Agenda Logo" />
@@ -26,7 +26,7 @@ export default function Navbar() {
             </li>
             
             <li>
-              <Link href="/" className="block py-2 pl-3 pr-4 rounded md:border-0 md:hover:text-orange-700 md:p-0  md:dark:hover:text-fomo-pri-one dark:hover:text-fomo-pri-one transition duration-300">
+              <Link href="/nosotros" className="block py-2 pl-3 pr-4 rounded md:border-0 md:hover:text-orange-700 md:p-0  md:dark:hover:text-fomo-pri-one dark:hover:text-fomo-pri-one transition duration-300">
                 Nosotros
               </Link>
             </li>

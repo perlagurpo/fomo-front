@@ -11,7 +11,7 @@ return(
         <div className="flex flex-row justify-between md:items-center gap-2">
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium sm:mb-0">
             <li>
-              <a href="#" className="mr-4 text-md hover:text-fomo-pri-two transition duration-300">Nosotros</a>
+              <a href="/nosotros" className="mr-4 text-md hover:text-fomo-pri-two transition duration-300">Nosotros</a>
             </li>
           </ul>
           <div className="flex flex-row gap-2">
@@ -30,6 +30,9 @@ return(
       </div>
       <hr className="my-5 border-fomo-pri-two sm:mx-auto lg:my-5" />
       <span className="block text-sm sm:text-center ">© 2023 Grupo Fomo™. Todos los derechos reservados.</span>
+    </div>
+    <div className="h-8 text-black">
+      <a className="underline" href="https://perla.com.ar/"><p className="text-center pt-1 bg-fomo-pri-two" target="_blank" style={{fontWeight: '600'}}>Desarrollado por Perla Software - Soluciones Digitales</p></a>
     </div>
   </footer>
   )
