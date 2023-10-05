@@ -87,6 +87,7 @@ export default {
         },
       });
       content = await rawResponse.json();
+      console.log(content);
     } catch(err) {
       content = [];
     }
