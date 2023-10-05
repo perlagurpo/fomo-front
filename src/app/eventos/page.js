@@ -10,10 +10,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 function Eventos() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
+      setWindowHeight(window.innerHeight);
     };
 
     window.addEventListener('resize', handleResize);
@@ -136,14 +138,14 @@ function Eventos() {
   };
 
   return(
-    <div className="relative flex flex-col min-h-screen bg-fomo-sec-white text-fomo-sec-two pt-1 pb-6">
+    <div className="relative flex flex-col min-h-max bg-fomo-sec-white text-fomo-sec-two pt-1 pb-6" style={{minHeight: windowHeight - 270 + 'px'}}>
 
       <div className={`flex flex-col px-4 ${marginAuto}`}>
         <div className="max-w-screen-full flex justify-center">
           <div className="grid gap-4 grid-cols-1 md:grid-cols-3 min-w-full">
 
             <div className="col-span-1">
-              <div className="flex flex-col text-left md:sidebar md:min-h-screen">
+              <div className="flex flex-col text-left md:sidebar">
                 <div className="flex flex-col items-center pb-4 px-4 min-h-max md:items-start md:pr-4 text-fomo-sec-two">
                   <div className="flex flex-col items-center md:items-start z-20" style={searchBarWidth}>
                     <SearchBar onSearch={handleSearch} activateSearch={true} searchValueEventName={searchValueFromUrl} />
