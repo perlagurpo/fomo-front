@@ -14,7 +14,7 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
   
 
   return(
-    <div className='flex flex-col items-center justify-center text-fomo-sec-two mb-[20%]'>
+    <div className='flex flex-col items-center justify-center text-fomo-sec-two mb-4'>
       <img src={imageURL} alt='event_img' className='cover' />
       
       <div className='flex flex-col items-center gap-4 mt-6 min-w-full'>
@@ -26,7 +26,7 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
         
         <h2 className='text-md font-bold pb-10 md:pb-3'> { category && category.toUpperCase() } </h2>  
 
-        <div className='grid grid-cols-1 gap-x-10  gap-y-12 md:gap-y-20 min-w-full px-[5%] md:grid-cols-2'>
+        <div className='grid grid-cols-1 gap-x-10  gap-y-12 md:gap-y-20 min-w-full md:grid-cols-2'>
           <Fecha startDate={startDate} displayedStartDate={displayedStartDate} />
           <Ubicacion location={location} />
           <EventDescription description={description} duration={duration} hasTicket={hasTicket} ticketType={ticketType} />

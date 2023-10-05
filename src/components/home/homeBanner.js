@@ -41,7 +41,7 @@ const HomeBanner = () => {
           href={item.link_button}
           target="_blank"
           rel="noopener noreferrer"
-          className={`absolute inset-0 transform transition-transform ${
+          className={`px-4 absolute inset-0 transform transition-transform ${
             index === activeIndex ? 'opacity-100 translate-x-0' : 'hidden opacity-0 translate-x-full'
           }`}
           style={{
