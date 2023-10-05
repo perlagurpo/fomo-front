@@ -18,7 +18,7 @@ const Sidebar = ({ filters, setFilters }) => {
       endDate: null 
     }
   );
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
   const [previousQueryString, setPreviousQueryString] = useState('');
   const [cualquierFechaChecked, setCualquierFechaChecked] = useState(false);
   const router = useRouter();
@@ -143,12 +143,12 @@ const Sidebar = ({ filters, setFilters }) => {
   };
 
   return (
-        <div>
+        <div class="flex flex-col w-full">
         {
           windowWidth > 767 ? <h2 className="text-2xl font-bold mb-2 text-fomo-pri-two">Filtros de búsqueda</h2> :
-            <button className="flex flex-row gap-4 rounded-full px-6 py-3 bg-fomo-pri-two" onClick={() => setShowFilters(!showFilters)}>
+            <button className="flex flex-row gap-4 rounded-full px-6 py-3 bg-fomo-pri-two items-center justify-around" onClick={() => setShowFilters(!showFilters)}>
               <SettingsIcon />
-              <p className="text-fomo-sec-white font-semibold text-lg">Filtros de búsqueda</p>
+              <p className="text-fomo-sec-white font-semibold text-lg ml-3">Filtros de búsqueda</p>
             </button>
         }
           <div className={`${showFilters ? "" : "hidden"}`}>
