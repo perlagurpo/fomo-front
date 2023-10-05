@@ -111,24 +111,30 @@ function EventTickets({ hasTicket, ticketPrice, ticketURL = "/", ticketsLeft }) 
     <div className='flex flex-col items-center justify-between gap-6 border border-4 border-gris-custom rounded-lg text-left p-3 md:min-w-[30%] '>
       <div className='flex flex-col min-w-[100%] gap-2'>
         
-        {hasTicket &&
-          <div className='flex flex-row justify-between'>
-            <h3 className='text-lg font-bold'>Valor de la entrada</h3>
-            <p className='text-lg font-bold'>{"$" + ticketPrice}</p>
-          </div>}
+      {hasTicket && (
+        <div className='flex flex-row justify-between'>
+          <h3 className='text-lg font-bold'>Valor de la entrada</h3>
+          <p className='text-lg font-bold'>{ticketPrice !== null ? "$" + ticketPrice : "Valor de entrada no informado"}</p>
+        </div>
+      )}
       </div>
       {
         hasTicket ? 
+        (
+          ticketsLeft > 0 ? 
           (
-            ticketsLeft > 0 ? 
+            ticketURL !== null ? 
+            (
               <a href={ticketURL.includes("http://") || ticketURL.includes("https://") ? new URL(ticketURL) : "/"} target='blank'>
                 <button className='bg-fomo-pri-two rounded-md min-w-[80%] py-2 px-7 text-lg font-bold text-white'>Reserva tu Entrada</button>
               </a>
-              :
-              <h3 className='text-md font-bold'>Tickets agotados</h3>
+            ) : null
           )
           :
-          <h3 className='text-lg font-bold text-fomo-pri-two'>Evento sin entrada</h3>
+          <h3 className='text-md font-bold'>Tickets agotados</h3>
+        )
+        :
+        <h3 className='text-lg font-bold text-fomo-pri-two'>Evento sin entrada</h3>
       }
         
     </div>
