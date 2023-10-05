@@ -113,7 +113,7 @@ function EventTickets({ hasTicket, ticketPrice, ticketURL = "/", ticketsLeft }) 
       {hasTicket && (
         <div className='flex flex-row justify-between'>
           <h3 className='text-lg font-bold'>Valor de la entrada</h3>
-          <p className='text-lg font-bold'>{ticketPrice !== null ? "$" + ticketPrice : "No informado"}</p>
+          <p className='text-lg font-bold'>{ticketPrice !== null ? "$" + ticketPrice : "Consultar"}</p>
         </div>
       )}
       </div>
