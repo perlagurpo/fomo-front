@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 
 export default function Event({ name, startDate, startDay, endDate, endDay, location, duration,
-                                hasTicket, ticketType, ticketPrice, ticketURL, ticketsAvailable,
+                                hasTicket, ticketType, ticketPrice, ticketURL, ticketsLeft,
                                 eventLink, imageURL, description, category }) {
 
   const[displayedStartDate, setDisplayedStartDate] = useState(new Date(startDate));
@@ -30,7 +30,7 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
           <Fecha startDate={startDate} displayedStartDate={displayedStartDate} />
           <Ubicacion location={location} />
           <EventDescription description={description} duration={duration} hasTicket={hasTicket} ticketType={ticketType} />
-          <EventTickets hasTicket={hasTicket} ticketPrice={ticketPrice} ticketURL={ticketURL} ticketsLeft={ticketsAvailable} />
+          <EventTickets hasTicket={hasTicket} ticketPrice={ticketPrice} ticketURL={ticketURL} ticketsLeft={ticketsLeft} />
         </div>
       </div>
     </div>    
@@ -89,15 +89,14 @@ function EventDescription({ description, duration, hasTicket, ticketType }){
               <p>{ duration ? duration : "-" }</p>
             </div>
           
-            {
-              (hasTicket && (ticketType.length != 0)) &&
-                (
-                  <div className='flex flex-row gap-2'>
-                    <TicketIcon />
-                    <p>{ ticketType }</p>   
-                  </div>
-                )
-            }
+            {ticketType !== null && (
+              hasTicket && ticketType.length !== 0 && (
+                <div className='flex flex-row gap-2'>
+                  <TicketIcon />
+                  <p>{ticketType}</p>   
+                </div>
+              )
+            )}
             
           </div>
         </div>
@@ -111,24 +110,30 @@ function EventTickets({ hasTicket, ticketPrice, ticketURL = "/", ticketsLeft }) 
     <div className='flex flex-col items-center justify-between gap-6 border border-4 border-gris-custom rounded-lg text-left p-3 md:min-w-[30%] '>
       <div className='flex flex-col min-w-[100%] gap-2'>
         
-        {hasTicket &&
-          <div className='flex flex-row justify-between'>
-            <h3 className='text-lg font-bold'>Valor de la entrada</h3>
-            <p className='text-lg font-bold'>{"$" + ticketPrice}</p>
-          </div>}
+      {hasTicket && (
+        <div className='flex flex-row justify-between'>
+          <h3 className='text-lg font-bold'>Valor de la entrada</h3>
+          <p className='text-lg font-bold'>{ticketPrice !== null ? "$" + ticketPrice : "Consultar"}</p>
+        </div>
+      )}
       </div>
       {
         hasTicket ? 
+        (
+          ticketsLeft ? 
           (
-            ticketsLeft > 0 ? 
+            ticketURL !== null ? 
+            (
               <a href={ticketURL.includes("http://") || ticketURL.includes("https://") ? new URL(ticketURL) : "/"} target='blank'>
                 <button className='bg-fomo-pri-two rounded-md min-w-[80%] py-2 px-7 text-lg font-bold text-white'>Reserva tu Entrada</button>
               </a>
-              :
-              <h3 className='text-md font-bold'>Tickets agotados</h3>
+            ) : <h3 className='text-md font-bold'>Consultar en el lugar por entradas</h3>
           )
           :
-          <h3 className='text-lg font-bold text-fomo-pri-two'>Evento sin entrada</h3>
+          <h3 className='text-md font-bold'>Tickets agotados</h3>
+        )
+        :
+        <h3 className='text-lg font-bold text-fomo-pri-two'>Evento sin entrada</h3>
       }
         
     </div>
