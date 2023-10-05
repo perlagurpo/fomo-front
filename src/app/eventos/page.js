@@ -9,6 +9,20 @@ import { LoadingSpinner } from '@/components/icons/icons';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 function Eventos() {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const [events, setEvents] = useState([]);
   const [name, setName] = useState("");
   const [filters, setFilters] = useState({
@@ -98,28 +112,40 @@ function Eventos() {
   };
 
   const handlePrevPage = () => {
-  if (currentPage > 1) {
-    handlePageChange(currentPage - 1);
-  }
-};
+    if (currentPage > 1) {
+      handlePageChange(currentPage - 1);
+    }
+  };
 
   const handleNextPage = () => {
-  if (currentPage < totalPages) {
-    handlePageChange(currentPage + 1);
+    if (currentPage < totalPages) {
+      handlePageChange(currentPage + 1);
+    }
+  };
+  
+  const searchBarWidth = {
+    minWidth: windowWidth > 300 ? '240px' : ''
   }
-};
+
+  const marginAuto = windowWidth > 1300 ? 'mx-auto' : '';
+
+  const eventsContainerPadding = windowWidth > 768 ? 'pl-4' : 'px-4';
+
+  const eventsContainerMinWidth = {
+    minWidth: windowWidth > 1300 ? '832px' : '0px'
+  };
 
   return(
     <div className="relative flex flex-col min-h-screen bg-fomo-sec-white text-fomo-sec-two pt-1 pb-6">
 
-      <div className="flex flex-col mx-auto">
-        <div className="max-w-screen-xl flex justify-center">
-          <div className="grid gap-4 grid-cols-1 md:grid-cols-3 min-w-[80vw]">
+      <div className={`flex flex-col px-4 ${marginAuto}`}>
+        <div className="max-w-screen-full flex justify-center">
+          <div className="grid gap-4 grid-cols-1 md:grid-cols-3 min-w-full">
 
             <div className="col-span-1">
               <div className="flex flex-col text-left md:sidebar md:min-h-screen">
-                <div className="flex flex-col items-center pb-4 px-4 min-h-max md:fixed md:items-start md:pr-4 text-fomo-sec-two">
-                  <div className="flex flex-col items-center min-w-[20vw] md:absolute md:items-start z-20">
+                <div className="flex flex-col items-center pb-4 px-4 min-h-max md:items-start md:pr-4 text-fomo-sec-two">
+                  <div className="flex flex-col items-center md:items-start z-20" style={searchBarWidth}>
                     <SearchBar onSearch={handleSearch} activateSearch={true} searchValueEventName={searchValueFromUrl} />
                     <Sidebar filters={filters} setFilters={setFilters} />
                   </div>
@@ -127,7 +153,7 @@ function Eventos() {
               </div>
             </div>
             
-            <div className="col-span-1 md:col-span-2">
+            <div className="col-span-1 md:col-span-2" style={eventsContainerMinWidth}>
               <div className='flex flex-col min-w-full items-center'>
               { loading ?
                   (
@@ -136,14 +162,14 @@ function Eventos() {
                     </div>
                   ) :
                   (
-                    <div className='col-span-2 z-10'>
+                    <div className={`col-span-2 z-10 ${eventsContainerPadding}`}>
                       {
                         events && events.length == 0 && (
                             <h2 className="text-2xl text-center py-4 px-4 md:px-0">
                               {/* {events.length > 0
                                 ? `Eventos que coinciden con tu búsqueda "${name}"`
                                 : "¡Lo sentimos! no hay eventos que coincidan con tu búsqueda"} */}
-                              ¡Lo sentimos! no hay eventos que coincidan con tu búsqueda
+                              No hay eventos que coincidan con tu búsqueda
                             </h2>
                           )
                       }

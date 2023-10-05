@@ -31,8 +31,8 @@ return(
       <hr className="my-5 border-fomo-pri-two sm:mx-auto lg:my-5" />
       <span className="block text-sm sm:text-center ">© 2023 Grupo Fomo™. Todos los derechos reservados.</span>
     </div>
-    <div className="bg-fomo-pri-two h-8 text-black">
-      <a className="underline" href="https://perla.com.ar/"><p className="text-center pt-1" target="__blank" style={{fontWeight: '600'}}>Desarrollado por Perla Software - Soluciones Digitales</p></a>
+    <div className="h-8 text-black">
+      <a className="underline" href="https://perla.com.ar/"><p className="text-center pt-1 bg-fomo-pri-two" target="_blank" style={{fontWeight: '600'}}>Desarrollado por Perla Software - Soluciones Digitales</p></a>
     </div>
   </footer>
   )

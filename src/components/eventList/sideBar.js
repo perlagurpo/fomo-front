@@ -17,6 +17,7 @@ const Sidebar = ({ filters, setFilters }) => {
   );
   const [showFilters, setShowFilters] = useState(false);
   const [previousQueryString, setPreviousQueryString] = useState('');
+  const [cualquierFechaChecked, setCualquierFechaChecked] = useState(false);
   const router = useRouter();
   
   useEffect(() => {
@@ -68,24 +69,30 @@ const Sidebar = ({ filters, setFilters }) => {
   
   const handleDateChange = (e) => {
     const value = e.target.value;
-    var startDate = '', endDate = '';
+    var startDate = '',
+      endDate = '';
     const today = moment();
     setShowDatePicker(false);
     setDateValue({ startDate: null, endDate: null });
 
-    switch(value) {
+    switch (value) {
+      case 'any':
+        setCualquierFechaChecked(true);
+        break;
       case 'today':
         startDate = today.format('DD-MM-YYYY');
         endDate = today.format('DD-MM-YYYY');
+        setCualquierFechaChecked(false);
         break;
       case 'tomorrow':
         startDate = today.add(1, 'days').format('DD-MM-YYYY');
         endDate = today.add(1, 'days').format('DD-MM-YYYY');
+        setCualquierFechaChecked(false);
         break;
       case 'this weekend':
         const startOfWeekend = today.clone().day(5);
         const endOfWeekend = today.clone().day(7);
-        
+
         if (today.day() === 0) {
           startDate = today.format('DD-MM-YYYY');
           endDate = today.format('DD-MM-YYYY');
@@ -93,10 +100,12 @@ const Sidebar = ({ filters, setFilters }) => {
           startDate = startOfWeekend.format('DD-MM-YYYY');
           endDate = endOfWeekend.format('DD-MM-YYYY');
         }
+        setCualquierFechaChecked(false);
         break;
       case 'next week':
         startDate = today.clone().add(1, 'weeks').startOf('isoWeek').format('DD-MM-YYYY');
         endDate = today.clone().add(1, 'weeks').endOf('isoWeek').format('DD-MM-YYYY');
+        setCualquierFechaChecked(false);
         break;
     }
     updateDate(startDate, endDate);
@@ -162,6 +171,19 @@ const Sidebar = ({ filters, setFilters }) => {
                     className="cursor-pointer"
                     type="radio"
                     name="date"
+                    value="any"
+                    onChange={handleDateChange}
+                    checked={cualquierFechaChecked} 
+                  />
+                  <p className="pl-1">Cualquier fecha</p>
+                </label>
+              </li>
+              <li>
+                <label className="flex items-center space-x-2">
+                  <input
+                    className="cursor-pointer"
+                    type="radio"
+                    name="date"
                     value="today"
                     onChange={handleDateChange}
                   />
@@ -201,7 +223,7 @@ const Sidebar = ({ filters, setFilters }) => {
                     value="pick a date"
                     onChange={() => { setShowDatePicker(!showDatePicker)}}
                   />
-                  <p className="pl-1">Elegir una fecha</p>
+                  <p className="pl-1">Elegir una fecha...</p>
                 </label>
               </li>
               
@@ -218,6 +240,7 @@ const Sidebar = ({ filters, setFilters }) => {
                       primaryColor={"orange"} 
                       selected={dateValue.startDate}
                       value={dateValue}
+                      popoverDirection="down"
                       onChange={(newValue)  => handleDatePickerChange(newValue)}
                       displayFormat={"DD/MM/YYYY"}
                       placeholder={"DD/MM/AAAA - DD/MM/AAAA"}                   
@@ -255,7 +278,6 @@ const Sidebar = ({ filters, setFilters }) => {
             
       </div>
       {/* divisores */}
-      <div className="hidden md:flex min-h-[30em] pt-8"></div>
       <div className={`${showFilters ? "block" : "hidden" } min-w-full px-2 py-2 border-b-2 border-fomo-pri-two md:hidden`}></div>
     </div>
 

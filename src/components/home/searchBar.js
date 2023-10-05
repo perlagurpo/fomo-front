@@ -61,7 +61,7 @@ export default function SearchBar ({ onToggleFilters, onSearch, showFilters, act
         </div>}
         {!showFilters || !activateSearch && 
         <div className="relative">
-          <p className="text-black text-center pb-3">Encontrar un evento para vos nunca fue tan fácil*</p>
+          <p className="text-black text-center pb-3">Consejo: Usá los filtros para refinar tu búsqueda</p>
         </div>}
         <div className="relative w-full">
           {(showFilters || activateSearch) ? 
