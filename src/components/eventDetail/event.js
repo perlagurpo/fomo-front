@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 
 export default function Event({ name, startDate, startDay, endDate, endDay, location, duration,
-                                hasTicket, ticketType, ticketPrice, ticketURL, ticketsAvailable,
+                                hasTicket, ticketType, ticketPrice, ticketURL, ticketsLeft,
                                 eventLink, imageURL, description, category }) {
 
   const[displayedStartDate, setDisplayedStartDate] = useState(new Date(startDate));
@@ -14,7 +14,7 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
   
 
   return(
-    <div className='flex flex-col items-center justify-center text-fomo-sec-two mb-[20%]'>
+    <div className='flex flex-col items-center justify-center text-fomo-sec-two mb-4'>
       <img src={imageURL} alt='event_img' className='cover' />
       
       <div className='flex flex-col items-center gap-4 mt-6 min-w-full'>
@@ -26,11 +26,11 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
         
         <h2 className='text-md font-bold pb-10 md:pb-3'> { category && category.toUpperCase() } </h2>  
 
-        <div className='grid grid-cols-1 gap-x-10  gap-y-12 md:gap-y-20 min-w-full px-[5%] md:grid-cols-2'>
+        <div className='grid grid-cols-1 gap-x-10  gap-y-12 md:gap-y-20 min-w-full md:grid-cols-2'>
           <Fecha startDate={startDate} displayedStartDate={displayedStartDate} />
           <Ubicacion location={location} />
           <EventDescription description={description} duration={duration} hasTicket={hasTicket} ticketType={ticketType} />
-          <EventTickets hasTicket={hasTicket} ticketPrice={ticketPrice} ticketURL={ticketURL} ticketsLeft={ticketsAvailable} />
+          <EventTickets hasTicket={hasTicket} ticketPrice={ticketPrice} ticketURL={ticketURL} ticketsLeft={ticketsLeft} />
         </div>
       </div>
     </div>    
@@ -89,15 +89,14 @@ function EventDescription({ description, duration, hasTicket, ticketType }){
               <p>{ duration ? duration : "-" }</p>
             </div>
           
-            {
-              (hasTicket && (ticketType.length != 0)) &&
-                (
-                  <div className='flex flex-row gap-2'>
-                    <TicketIcon />
-                    <p>{ ticketType }</p>   
-                  </div>
-                )
-            }
+            {ticketType !== null && (
+              hasTicket && ticketType.length !== 0 && (
+                <div className='flex flex-row gap-2'>
+                  <TicketIcon />
+                  <p>{ticketType}</p>   
+                </div>
+              )
+            )}
             
           </div>
         </div>
@@ -111,24 +110,30 @@ function EventTickets({ hasTicket, ticketPrice, ticketURL = "/", ticketsLeft }) 
     <div className='flex flex-col items-center justify-between gap-6 border border-4 border-gris-custom rounded-lg text-left p-3 md:min-w-[30%] '>
       <div className='flex flex-col min-w-[100%] gap-2'>
         
-        {hasTicket &&
-          <div className='flex flex-row justify-between'>
-            <h3 className='text-lg font-bold'>Valor de la entrada</h3>
-            <p className='text-lg font-bold'>{"$" + ticketPrice}</p>
-          </div>}
+      {hasTicket && (
+        <div className='flex flex-row justify-between'>
+          <h3 className='text-lg font-bold'>Valor de la entrada</h3>
+          <p className='text-lg font-bold'>{ticketPrice !== null ? "$" + ticketPrice : "Consultar"}</p>
+        </div>
+      )}
       </div>
       {
         hasTicket ? 
+        (
+          ticketsLeft ? 
           (
-            ticketsLeft > 0 ? 
+            ticketURL !== null ? 
+            (
               <a href={ticketURL.includes("http://") || ticketURL.includes("https://") ? new URL(ticketURL) : "/"} target='blank'>
                 <button className='bg-fomo-pri-two rounded-md min-w-[80%] py-2 px-7 text-lg font-bold text-white'>Reserva tu Entrada</button>
               </a>
-              :
-              <h3 className='text-md font-bold'>Tickets agotados</h3>
+            ) : <h3 className='text-md font-bold'>Consultar en el lugar por entradas</h3>
           )
           :
-          <h3 className='text-lg font-bold text-fomo-pri-two'>Evento sin entrada</h3>
+          <h3 className='text-md font-bold'>Tickets agotados</h3>
+        )
+        :
+        <h3 className='text-lg font-bold text-fomo-pri-two'>Evento sin entrada</h3>
       }
         
     </div>

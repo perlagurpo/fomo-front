@@ -143,7 +143,7 @@ function Eventos() {
 
             <div className="col-span-1">
               <div className="flex flex-col text-left md:sidebar">
-                <div className="flex flex-col items-center pb-4 px-4 min-h-max md:items-start md:pr-4 text-fomo-sec-two">
+                <div className="flex flex-col items-center pb-4 min-h-max md:items-start md:pr-4 text-fomo-sec-two">
                   <div className="flex flex-col items-center md:items-start z-20" style={searchBarWidth}>
                     <SearchBar onSearch={handleSearch} activateSearch={true} searchValueEventName={searchValueFromUrl} />
                     <Sidebar filters={filters} setFilters={setFilters} />

@@ -77,7 +77,7 @@ export default function FeaturedEvents({ searchQuery }) {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center px-10 pb-10 gap-x-10">
+    <div className="flex flex-col justify-center items-center px-4 pb-10 gap-x-10">
       <div className="flex flex-col min-w-9/10">
         <div className="pb-5">
           {Object.values(filters).some(filter => filter) ? (
@@ -123,7 +123,7 @@ export default function FeaturedEvents({ searchQuery }) {
             (
               events &&
                 events.length > 0 ? 
-                  <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-3">
+                  <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-12 lg:grid-cols-3">
                     {
                       events.map(event => (
                         event.highlighted == true && 
