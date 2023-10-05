@@ -22,7 +22,24 @@ export default {
         },
       });
       content = await rawResponse.json();
-    } catch(err) {
+      if (content.detail == "Página inválida.") {
+        if (url.includes("page=")) {
+          // Replace the "page=" parameter with "page=1"
+          url = url.replace(/page=\d+/, "page=1");
+        } else {
+          // If there is no "page=" parameter, add it to the URL
+          url = url + (url.includes("?") ? "&" : "?") + "page=1";
+        }
+        rawResponse = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        });
+        content = await rawResponse.json();
+      }
+    } catch (err) {
       content = [];
     }
     return content;

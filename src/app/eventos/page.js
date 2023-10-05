@@ -48,7 +48,6 @@ function Eventos() {
     const page = params.get('page');
     setSearchValueFromUrl(eventName);
 
-
     setFilters({
       event_name: eventName || '',
       start_date: startDate || '',
@@ -70,10 +69,27 @@ function Eventos() {
     // Call the API with the searchQuery
     async function getEvents() {
       const fetchedEvents = await EventService.getEvents(queryStringWithFilters);
+      console.log(fetchedEvents);
       setEvents(fetchedEvents.results);
       setTotalEventsCount(fetchedEvents.count);
       setTotalPages(fetchedEvents.count_total_page);
       setCurrentPage(parseInt(fetchedEvents.actual_page));
+
+      // parte del fix q se agregó a event service de buscar desde paginas distintas a 1
+      const currentParams = new URLSearchParams(searchParams.toString());
+      console.log(fetchedEvents.actual_page);
+      console.log(currentParams.get('page'))
+      if (fetchedEvents.actual_page != currentParams.get('page')) {
+        console.log('dale');
+        setFilters({
+          event_name: currentParams.get('event_name') || '',
+          start_date: currentParams.get('start_date') || '',
+          end_date: currentParams.get('end_date') || '',
+          category: currentParams.get('category') || '',
+          page: fetchedEvents.actual_page,
+        })
+      } 
+
       setLoading(false);
     }
 
