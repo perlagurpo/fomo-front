@@ -46,7 +46,7 @@ export default function Evento({ params }) {
                   ticketType={eventData.ticket_type}
                   ticketPrice={eventData.ticket_price}
                   ticketURL={eventData.buy_tickets}
-                  ticketsAvailable={eventData.tickets_available}
+                  ticketsLeft={eventData.tickets_left}
                   eventLink={eventData.event_link}
                   imageURL={eventData.event_img}
                   description={eventData.description}

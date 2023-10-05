@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 
 export default function Event({ name, startDate, startDay, endDate, endDay, location, duration,
-                                hasTicket, ticketType, ticketPrice, ticketURL, ticketsAvailable,
+                                hasTicket, ticketType, ticketPrice, ticketURL, ticketsLeft,
                                 eventLink, imageURL, description, category }) {
 
   const[displayedStartDate, setDisplayedStartDate] = useState(new Date(startDate));
@@ -30,7 +30,7 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
           <Fecha startDate={startDate} displayedStartDate={displayedStartDate} />
           <Ubicacion location={location} />
           <EventDescription description={description} duration={duration} hasTicket={hasTicket} ticketType={ticketType} />
-          <EventTickets hasTicket={hasTicket} ticketPrice={ticketPrice} ticketURL={ticketURL} ticketsLeft={ticketsAvailable} />
+          <EventTickets hasTicket={hasTicket} ticketPrice={ticketPrice} ticketURL={ticketURL} ticketsLeft={ticketsLeft} />
         </div>
       </div>
     </div>    
@@ -120,14 +120,14 @@ function EventTickets({ hasTicket, ticketPrice, ticketURL = "/", ticketsLeft }) 
       {
         hasTicket ? 
         (
-          ticketsLeft > 0 ? 
+          ticketsLeft ? 
           (
             ticketURL !== null ? 
             (
               <a href={ticketURL.includes("http://") || ticketURL.includes("https://") ? new URL(ticketURL) : "/"} target='blank'>
                 <button className='bg-fomo-pri-two rounded-md min-w-[80%] py-2 px-7 text-lg font-bold text-white'>Reserva tu Entrada</button>
               </a>
-            ) : null
+            ) : <h3 className='text-md font-bold'>Consultar en el lugar por entradas</h3>
           )
           :
           <h3 className='text-md font-bold'>Tickets agotados</h3>
