@@ -37,7 +37,6 @@ function Eventos() {
 
   const urlUsage = (params) => {
     if (typeof params === 'string') {
-      console.log('typeof!');
       params = new URLSearchParams(params);
     }
     
@@ -69,7 +68,6 @@ function Eventos() {
     // Call the API with the searchQuery
     async function getEvents() {
       const fetchedEvents = await EventService.getEvents(queryStringWithFilters);
-      console.log(fetchedEvents);
       setEvents(fetchedEvents.results);
       setTotalEventsCount(fetchedEvents.count);
       setTotalPages(fetchedEvents.count_total_page);
@@ -77,10 +75,7 @@ function Eventos() {
 
       // parte del fix q se agregó a event service de buscar desde paginas distintas a 1
       const currentParams = new URLSearchParams(searchParams.toString());
-      console.log(fetchedEvents.actual_page);
-      console.log(currentParams.get('page'))
       if (fetchedEvents.actual_page != currentParams.get('page')) {
-        console.log('dale');
         setFilters({
           event_name: currentParams.get('event_name') || '',
           start_date: currentParams.get('start_date') || '',
