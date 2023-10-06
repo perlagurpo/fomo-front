@@ -155,7 +155,7 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
                       <button   key={i}
                                 className={`min-w-[123px] inline-block p-2 rounded-lg border ${
                                   isFilterActive('category', name) ? 'bg-fomo-pri-two text-white' : 'border-fomo-pri-two'
-                                } shadow-sm mr-2 cursor-pointer text-black`}
+                                } shadow-sm mr-2 mb-2 cursor-pointer text-black`}
                                 onClick={() => handleFilterChange('category', name)}
                       >
                         {name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}

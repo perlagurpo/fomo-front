@@ -42,7 +42,8 @@ function Fecha(props) {
 
   return(
     <div className='flex flex-row gap-4'>
-      <CalendarIcon />
+      <div>
+      <CalendarIcon /></div>
       <div className='flex flex-col items-start'>
         <h2 className='font-bold text-lg'>Fecha y Hora</h2>
         <p>{ props.startDate ? formatDate(props.displayedStartDate) : "Sin datos" }</p>
@@ -56,8 +57,10 @@ function Ubicacion(props) {
   return(
     <div>
       <Link href={props.location ? props.location.google_maps_link : "#"} target={props.location ? '_blank' : '_top'}>
-        <div className='flex flex-row items-center gap-6 md:gap-4'>
-          <LocationIcon />
+        <div className='flex flex-row gap-4 items-start'>
+          <div>
+            <LocationIcon />
+          </div>
           <div className='flex flex-col items-start'>
             <h2 className='font-bold text-lg'>Ubicación</h2>
             {
