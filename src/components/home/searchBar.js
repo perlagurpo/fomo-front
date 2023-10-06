@@ -30,11 +30,11 @@ export default function SearchBar ({ onToggleFilters, onSearch, showFilters, act
   };
 
   const backToHome = () => {
-    onSearch(false);
     if (validationMessage != '') {
       setSearchValue('');
       setValidationMessage('');
     }
+    onToggleFilters();
   }
 
   return (
