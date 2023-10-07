@@ -8,7 +8,7 @@ export default function EventList({ events=[], currentPage, handlePrevPage, hand
         {
           events &&(
             events.map((event, i) => (
-              <div className="flex flex-col items-center" key={i}> 
+              <div className="flex flex-col items-center h-full" key={i}> 
                 <EventCard
                   key={event.id}
                   event_id={event.id}

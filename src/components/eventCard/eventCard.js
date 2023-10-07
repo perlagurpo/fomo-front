@@ -31,8 +31,8 @@ const EventCard = ({ event_id, event_name, event_img, start_date, event_location
 
   // const startDate = start_date.split(" ");
   return (
-    <Link href={`/evento/${event_slug}`}>
-      <div className="max-w-sm max-h-sm bg-white rounded-lg drop-shadow-md hover:scale-102 cursor-pointer transition-all transition-400 overflow-hidden" key={event_id}>
+    <Link href={`/evento/${event_slug}`} style={{height: 'inherit'}}>
+      <div className="max-w-sm bg-white rounded-lg drop-shadow-md hover:scale-102 cursor-pointer transition-all transition-400 overflow-hidden" style={{height: 'inherit'}} key={event_id}>
           <div className="flex-col justify-start items-start gap-2 flex">
             <img className="w-[480px] h-[250.58px] rounded-tl-lg rounded-tr-lg object-cover" src={event_img} />
           </div>
