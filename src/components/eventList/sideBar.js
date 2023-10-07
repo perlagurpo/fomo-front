@@ -143,7 +143,7 @@ const Sidebar = ({ filters, setFilters }) => {
   };
 
   return (
-        <div class="flex flex-col w-full">
+        <div className="flex flex-col w-full">
         {
           windowWidth > 767 ? <h2 className="text-2xl font-bold mb-2 text-fomo-pri-two">Filtros de búsqueda</h2> :
             <button className="flex flex-row gap-4 rounded-full px-6 py-3 bg-fomo-pri-two items-center justify-around" onClick={() => setShowFilters(!showFilters)}>

@@ -125,8 +125,9 @@ export default function FeaturedEvents({ searchQuery }) {
                 events.length > 0 ? 
                   <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-12 lg:grid-cols-3">
                     {
-                      events.map(event => (
+                      events.map((event, i) => (
                         event.highlighted == true && 
+                        <div className="flex flex-col items-center h-full" key={i}> 
                         <EventCard
                           key={event.id}
                           event_id={event.id}
@@ -136,7 +137,8 @@ export default function FeaturedEvents({ searchQuery }) {
                           event_location={event.location_event}
                           ticket_price={event.ticket_price}
                           event_slug={event.slug}
-                        />
+                            />
+                        </div>
                         )
                       )
                     }
