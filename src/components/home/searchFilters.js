@@ -93,6 +93,11 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
       updatedFilters['start_date'] = today;
       updatedFilters['end_date'] = today;
       setCualquierFechaChecked(false);
+    } else if (value === 'tomorrow') {
+      const today = moment();
+      updatedFilters['start_date'] = today.add(1, 'days').format('DD-MM-YYYY');
+      updatedFilters['end_date'] = today.add(1, 'days').format('DD-MM-YYYY');
+      setCualquierFechaChecked(false);
     } else if (value === 'this weekend') {
       const today = moment();
       let startOfWeekend = today.clone().day(5);
@@ -205,10 +210,10 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
                       className="mr-2"
                       type="radio"
                       name="date"
-                      value="this weekend"
+                      value="tomorrow"
                       onChange={handleDateChange}
                     />
-                    Este fin de semana
+                    Mañana
                   </label>
                 </li>
                 <li>
@@ -217,10 +222,10 @@ export default function SearchFilters ({ filters, onFiltersChange }) {
                       className="mr-2"
                       type="radio"
                       name="date"
-                      value="next week"
+                      value="this weekend"
                       onChange={handleDateChange}
                     />
-                    Próxima semana
+                    Este fin de semana
                   </label>
                 </li>
                 <li>

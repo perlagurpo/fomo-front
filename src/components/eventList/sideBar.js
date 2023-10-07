@@ -21,6 +21,10 @@ const Sidebar = ({ filters, setFilters }) => {
   const [showFilters, setShowFilters] = useState(false);
   const [previousQueryString, setPreviousQueryString] = useState('');
   const [cualquierFechaChecked, setCualquierFechaChecked] = useState(false);
+  const [hoyChecked, setHoyChecked] = useState(false);
+  const [mananaChecked, setMananaChecked] = useState(false);
+  const [finDeSemanaChecked, setFinDeSemanaChecked] = useState(false);
+  const [elegirUnaFechaChecked, setElegirUnaFechaChecked] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -56,6 +60,26 @@ const Sidebar = ({ filters, setFilters }) => {
     }
   ,[]);
   
+  useEffect(() => {
+    const startDate = filters.start_date != '' ? moment(filters.start_date, 'DD-MM-YYYY') : '';
+    const endDate = filters.end_date != '' ? moment(filters.end_date, 'DD-MM-YYYY') : '';
+    
+    const today = moment();
+
+    if (startDate == '' && endDate == '') {
+      setCualquierFechaChecked(true);
+    } else if (startDate.isSame(today, 'day') && endDate.isSame(today, 'day')) {
+      setHoyChecked(true);
+    } else if (startDate.isSame(today.clone().add(1, 'day'), 'day') && endDate.isSame(today.clone().add(2, 'day'), 'day')) {
+      setMananaChecked(true);
+    } else if (startDate.isSame(today.clone().day(5), 'day') && endDate.isSame(today.clone().day(7), 'day')) {
+      setFinDeSemanaChecked(true);
+    } else {
+      // si llego aca significa que tiene q ser elegi una fecha
+      setElegirUnaFechaChecked(true)
+    }
+  }, [filters]);
+    
   const handleDateChange = (e) => {
     const value = e.target.value;
     var startDate = '',
@@ -66,16 +90,28 @@ const Sidebar = ({ filters, setFilters }) => {
 
     switch (value) {
       case 'any':
+        setHoyChecked(false);
+        setMananaChecked(false);
+        setFinDeSemanaChecked(false);
+        setElegirUnaFechaChecked(false);
         setCualquierFechaChecked(true);
         break;
       case 'today':
         startDate = today.format('DD-MM-YYYY');
         endDate = today.format('DD-MM-YYYY');
+        setHoyChecked(true);
+        setMananaChecked(false);
+        setFinDeSemanaChecked(false);
+        setElegirUnaFechaChecked(false);
         setCualquierFechaChecked(false);
         break;
       case 'tomorrow':
         startDate = today.add(1, 'days').format('DD-MM-YYYY');
         endDate = today.add(1, 'days').format('DD-MM-YYYY');
+        setHoyChecked(false);
+        setMananaChecked(true);
+        setFinDeSemanaChecked(false);
+        setElegirUnaFechaChecked(false);
         setCualquierFechaChecked(false);
         break;
       case 'this weekend':
@@ -89,11 +125,10 @@ const Sidebar = ({ filters, setFilters }) => {
           startDate = startOfWeekend.format('DD-MM-YYYY');
           endDate = endOfWeekend.format('DD-MM-YYYY');
         }
-        setCualquierFechaChecked(false);
-        break;
-      case 'next week':
-        startDate = today.clone().add(1, 'weeks').startOf('isoWeek').format('DD-MM-YYYY');
-        endDate = today.clone().add(1, 'weeks').endOf('isoWeek').format('DD-MM-YYYY');
+        setHoyChecked(false);
+        setMananaChecked(false);
+        setFinDeSemanaChecked(true);
+        setElegirUnaFechaChecked(false);
         setCualquierFechaChecked(false);
         break;
     }
@@ -106,6 +141,11 @@ const Sidebar = ({ filters, setFilters }) => {
       moment(newValue.startDate).format('DD-MM-YYYY'),
       moment(newValue.endDate).format('DD-MM-YYYY')
     );
+    setHoyChecked(false);
+    setMananaChecked(false);
+    setFinDeSemanaChecked(true);
+    setElegirUnaFechaChecked(false);
+    setCualquierFechaChecked(true);
     setDateValue(newValue);
   }
 
@@ -175,6 +215,7 @@ const Sidebar = ({ filters, setFilters }) => {
                     name="date"
                     value="today"
                     onChange={handleDateChange}
+                    checked={hoyChecked} 
                   />
                   <p className="pl-1">Hoy</p>
                 </label>
@@ -187,6 +228,7 @@ const Sidebar = ({ filters, setFilters }) => {
                     name="date"
                     value="tomorrow"
                     onChange={handleDateChange}
+                    checked={mananaChecked} 
                   />
                   <p className="pl-1">Mañana</p>
                 </label>
@@ -199,6 +241,7 @@ const Sidebar = ({ filters, setFilters }) => {
                     name="date"
                     value="this weekend"
                     onChange={handleDateChange}
+                    checked={finDeSemanaChecked} 
                   />
                   <p className="pl-1">Este fin de semana</p>
                 </label>
@@ -210,7 +253,15 @@ const Sidebar = ({ filters, setFilters }) => {
                     type="radio"
                     name="date"
                     value="pick a date"
-                    onChange={() => { setShowDatePicker(!showDatePicker)}}
+                    onChange={() => {
+                      setShowDatePicker(!showDatePicker)
+                      setHoyChecked(false);
+                      setMananaChecked(false);
+                      setFinDeSemanaChecked(false);
+                      setElegirUnaFechaChecked(true);
+                      setCualquierFechaChecked(false);
+                    }}
+                    checked={elegirUnaFechaChecked} 
                   />
                   <p className="pl-1">Elegir una fecha...</p>
                 </label>
