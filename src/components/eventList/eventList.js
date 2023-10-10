@@ -29,31 +29,21 @@ export default function EventList({ events=[], currentPage, handlePrevPage, hand
       <div className="flex flex-col items-center my-6 text-fomo-sec-white">
         { totalPages > 1 &&
             ( <>
-                <div className="grid grid-cols-2 md:px-20">
-                  <div className="col-span-1">
+                <div className="grid grid-cols-3 md:px-20">
+                  <div className="col-span-1 flex items-center">
                       <button
                         onClick={handlePrevPage}
                         disabled={currentPage === 1}
-                        className={`${currentPage === 1 ? "hidden" : "block"} mr-2 px-4 py-2 bg-fomo-pri-two border rounded-lg hover:opacity-50 transition duration-300 cursor-pointer`}
+                        className={`${currentPage === 1 ? "hidden" : "block"} font-bold mr-2 px-4 bg-fomo-pri-two border rounded-lg hover:opacity-50 transition duration-300 cursor-pointer`}
                       >
                         {"<"}
                       </button>
-                  </div>
-                  <div className="col-span-1">
-                    <button
-                      onClick={handleNextPage}
-                      disabled={currentPage === totalPages}
-                      className={`${currentPage === totalPages ? "hidden" : "block"} px-4 py-2 border rounded-lg bg-fomo-pri-two hover:opacity-50 transition duration-300 ${currentPage === totalPages ? "cursor-not-allowed	" : "cursor-pointer"}`}
-                    >
-                      {">"}
-                    </button>
-                  </div>
-                </div>
-                <div className="flex flex-row gap-2 py-2">
+            </div>
+                            <div className="flex flex-row col-span-1 gap-2 py-2">
                   {
                     generatePagesArray(6,currentPage,totalPages).map(
                       (pagina) => {
-                        return  <h1 className={`cursor-pointer ${currentPage == pagina ? "text-fomo-pri-two" : "text-fomo-sec-two"} hover:scale-110 transition duration-200`}
+                        return <h1 style={{fontSize: '18px'}} className={`cursor-pointer ${currentPage == pagina ? "text-fomo-pri-two" : "text-fomo-sec-two"} hover:scale-110 transition duration-200`}
                                     onClick={() => handlePageChange(pagina)}
                                     key={pagina}
                                   >
@@ -62,6 +52,16 @@ export default function EventList({ events=[], currentPage, handlePrevPage, hand
                       }
                     )
                   }
+                </div>
+                  <div className="col-span-1 flex items-center">
+                    <button
+                      onClick={handleNextPage}
+                      disabled={currentPage === totalPages}
+                      className={`${currentPage === totalPages ? "hidden" : "block"} font-bold px-4 border rounded-lg bg-fomo-pri-two hover:opacity-50 transition duration-300 ${currentPage === totalPages ? "cursor-not-allowed	" : "cursor-pointer"}`}
+                    >
+                      {">"}
+                    </button>
+                  </div>
                 </div>
               </>
             )
