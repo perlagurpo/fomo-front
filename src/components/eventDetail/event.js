@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CalendarIcon, ClockIcon, LocationIcon, TicketIcon } from "../icons/icons";
 import { diaAString, mesAString } from '../utils/dateOperations';
+import moment from 'moment';
 import Link from 'next/link';
 
 
@@ -8,14 +9,24 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
                                 hasTicket, ticketType, ticketPrice, ticketURL, ticketsLeft,
                                 eventLink, imageURL, description, category }) {
 
-  const[displayedStartDate, setDisplayedStartDate] = useState(new Date(startDate));
-  const[displayedEndDate, setDisplayedEndDate] = useState(new Date(endDate));
-
-  
+  const [displayedStartDate, setDisplayedStartDate] = useState(new Date(startDate));
+  const [displayedEndDate, setDisplayedEndDate] = useState(new Date(endDate));
+                                  
+  /**
+   * Formatea la duración del evento a horas y minutos utilizando las fechas de inicio y de fin
+   * Asume que ambas fechas son objetos Date válidos
+   * @returns String
+   */
+  function formatearDuracion(fechaInicio, fechaFin) {
+    let duracion = moment.duration((fechaFin.getTime() - fechaInicio.getTime()));
+    let horas = Math.floor(duracion.asHours());
+    let minutos = duracion.asMinutes() % 60;   
+    return `${ horas } horas ${ minutos != 0 ? minutos + " minutos" : "" }`;
+  }
 
   return(
     <div className='flex flex-col items-center justify-center text-fomo-sec-two mb-4'>
-      <img src={imageURL} alt='event_img' className='cover' />
+      <img src={imageURL} alt='event_img' className='cover max-h-screen lg:max-h-[70vh]' />
       
       <div className='flex flex-col items-center gap-4 mt-6 min-w-full'>
         
@@ -29,7 +40,11 @@ export default function Event({ name, startDate, startDay, endDate, endDay, loca
         <div className='grid grid-cols-1 gap-x-10  gap-y-12 md:gap-y-20 min-w-full md:grid-cols-2'>
           <Fecha startDate={startDate} displayedStartDate={displayedStartDate} />
           <Ubicacion location={location} />
-          <EventDescription description={description} duration={duration} hasTicket={hasTicket} ticketType={ticketType} />
+          <EventDescription description={description}
+                            duration={ endDate ? formatearDuracion(displayedStartDate, displayedEndDate) : "-" }
+                            hasTicket={hasTicket}
+                            ticketType={ticketType}
+                            />
           <EventTickets hasTicket={hasTicket} ticketPrice={ticketPrice} ticketURL={ticketURL} ticketsLeft={ticketsLeft} />
         </div>
       </div>
