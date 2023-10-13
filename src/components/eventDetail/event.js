@@ -69,25 +69,36 @@ function Fecha(props) {
 
 function Ubicacion(props) {
 
-  return(
-    <div>
-      <Link href={props.location.google_maps_link ? props.location.google_maps_link : "#"} target={props.location ? '_blank' : '_top'}>
-        <div className='flex flex-row gap-4 items-start'>
+  function renderUbicacionUI(location) {
+    return(
+      <div className='flex flex-row gap-4 items-start'>
           <div>
             <LocationIcon />
           </div>
           <div className='flex flex-col items-start'>
             <h2 className='font-bold text-lg'>Ubicación</h2>
             {
-              props.location ? (
-                <p>{ props.location.name + " - " + props.location.address }</p>
+              location ? (
+                <p>{ location.name + " - " + location.address }</p>
               )
               : <p>{"Sin datos"}</p>
-            }
-            
+            }          
           </div>
         </div>
-      </Link>
+    )
+  }
+
+  return(
+    <div>
+      {
+        props.location.google_maps_link ? (
+          <Link href={props.location.google_maps_link ? props.location.google_maps_link : "#"} target={props.location ? '_blank' : '_top'}>
+            { renderUbicacionUI(props.location) }
+          </Link>
+        )
+        :
+        ( renderUbicacionUI(props.location) )
+      }
     </div>
   );
 }
@@ -128,12 +139,14 @@ function EventTickets({ hasTicket, ticketPrice, ticketURL = "/", ticketsLeft }) 
     <div className='flex flex-col items-center justify-between gap-6 border border-4 border-gris-custom rounded-lg text-left p-3 md:min-w-[30%] '>
       <div className='flex flex-col min-w-[100%] gap-2'>
         
-      {hasTicket && (
-        <div className='flex flex-row justify-between'>
-          <h3 className='text-lg font-bold'>Valor de la entrada</h3>
-          <p className='text-lg font-bold'>{ticketPrice !== null ? "$" + ticketPrice : "Consultar"}</p>
-        </div>
-      )}
+      {
+        hasTicket && (
+          <div className='flex flex-row justify-between'>
+            <h3 className='text-lg font-bold'>Valor de la entrada</h3>
+            <p className='text-lg font-bold'>{ticketPrice !== null ? "$" + ticketPrice : "Consultar"}</p>
+          </div>
+        )
+      }
       </div>
       {
         hasTicket ? 
