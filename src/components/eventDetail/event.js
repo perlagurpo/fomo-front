@@ -71,7 +71,7 @@ function Ubicacion(props) {
 
   return(
     <div>
-      <Link href={props.location ? props.location.google_maps_link : "#"} target={props.location ? '_blank' : '_top'}>
+      <Link href={props.location.google_maps_link ? props.location.google_maps_link : "#"} target={props.location ? '_blank' : '_top'}>
         <div className='flex flex-row gap-4 items-start'>
           <div>
             <LocationIcon />
@@ -143,7 +143,9 @@ function EventTickets({ hasTicket, ticketPrice, ticketURL = "/", ticketsLeft }) 
             ticketURL !== null ? 
             (
               <a href={ticketURL.includes("http://") || ticketURL.includes("https://") ? new URL(ticketURL) : "/"} target='blank'>
-                <button className='bg-fomo-pri-two rounded-md min-w-[80%] py-2 px-7 text-lg font-bold text-white'>Reserva tu Entrada</button>
+                <button className='bg-fomo-pri-two rounded-md min-w-[80%] py-2 px-7 text-lg font-bold text-white'>
+                  Reserva tu Entrada
+                </button>
               </a>
             ) : <h3 className='text-md font-bold'>Consultar en el lugar por entradas</h3>
           )
