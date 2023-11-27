@@ -4,18 +4,18 @@ import BannerService from '@/app/api/banner.service';
 
 /**
  * Banner para sponsors publicitarios
- * espera recibir un objeto con imágenes para celu o para pc
+ * espera traer un objeto con imágenes para celu y para pc en iguales cantidades
+ * se adapta al tamaño de su contenedor
  */
 export default function SponsorBanner() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [banners, setBanners] = useState([]);
-  var bannersLength;
+  var bannersLength, timeoutID;
 
   function actualizarBanner() {
-    console.log("actualizo")
     setCurrentIndex(prevIndex => (prevIndex + 1) % bannersLength);
-    setTimeout(actualizarBanner, 5000);
+    timeoutID = setTimeout(actualizarBanner, 5000);
   }
 
   useEffect(
@@ -23,6 +23,7 @@ export default function SponsorBanner() {
       async function getData() {
         const rawBanners = await BannerService.getBanners();
         const newBanners = rawBanners.map(
+          // Para testear en localhost
           (banner) => {
             banner.image_short = "http://localhost:8000" + banner.image_short;
             banner.image_short_mobile = "http://localhost:8000" + banner.image_short_mobile;
@@ -36,7 +37,7 @@ export default function SponsorBanner() {
       getData().then(
         () => actualizarBanner()
       );
-      
+      return () => clearTimeout(timeoutID);
     }
   ,[]);
 
@@ -44,20 +45,14 @@ export default function SponsorBanner() {
 
   return(
     <div className="w-full h-full">
-      <p>{currentIndex}</p>
       {
-        banners.length > 0 && <img src={banners[currentIndex].image_short} className="hidden md:block w-full h-full opacity-90" />
-        
-        
+        banners.length > 0 && (
+          <>
+            <img src={banners[currentIndex].image_short} className="hidden md:block w-full h-full opacity-90" />
+            <img src={banners[currentIndex].image_short_mobile} className="md:hidden w-full h-full opacity-90" />
+          </>
+        )
       }
     </div>
   );
-
 }
-
-
-     /* {
-          images.small && (
-            <img src={images[currentImg][image_short_mobile]} className="block md:hidden w-full h-full opacity-90" />
-          )
-        } */

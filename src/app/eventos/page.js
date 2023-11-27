@@ -149,7 +149,7 @@ function Eventos() {
                   <div className="flex flex-col items-center md:items-start z-20" style={searchBarWidth}>
                     <SearchBar onSearch={handleSearch} activateSearch={true} searchValueEventName={searchValueFromUrl} />
                     <Sidebar filters={filters} setFilters={setFilters} />
-                    <div className='hidden md:block'>
+                    <div className='hidden md:block w-[55%]'>
                       <SponsorBanner />
                     </div>
                   </div>
@@ -159,36 +159,41 @@ function Eventos() {
             
             <div className="col-span-1 md:col-span-2" style={eventsContainerMinWidth}>
               <div className='flex flex-col min-w-full items-center'>
-              {
-                loading ?
-                  (
-                    <div className="my-[15%]">
-                      <LoadingSpinner size={12} />
-                    </div>
-                  ) :
-                  (
-                    <div className={`col-span-2 z-10 ${eventsContainerPadding}`}>
-                      {
-                        events && events.length == 0 && (
-                            <h2 className="text-2xl text-center py-4 px-4 md:px-0">
-                              {/* {events.length > 0
-                                ? `Eventos que coinciden con tu búsqueda "${name}"`
-                                : "¡Lo sentimos! no hay eventos que coincidan con tu búsqueda"} */}
-                              No hay eventos que coincidan con tu búsqueda
-                            </h2>
-                          )
-                      }
-                      <EventList  events={events}
-                                  currentPage={currentPage}
-                                  handlePrevPage={handlePrevPage}
-                                  handleNextPage={handleNextPage}
-                                  handlePageChange={handlePageChange}
-                                  totalPages={totalPages}
-                          />
-                    </div>  
-                     
-                  )
-              }
+                {
+                  loading ?
+                    (
+                      <div className="my-[15%]">
+                        <LoadingSpinner size={12} />
+                      </div>
+                    ) :
+                    (
+                      <div className={`col-span-2 z-10 ${eventsContainerPadding}`}>
+                        {
+                          events && events.length == 0 && (
+                              <h2 className="text-2xl text-center py-4 px-4 md:px-0">
+                                {/* {events.length > 0
+                                  ? `Eventos que coinciden con tu búsqueda "${name}"`
+                                  : "¡Lo sentimos! no hay eventos que coincidan con tu búsqueda"} */}
+                                No hay eventos que coincidan con tu búsqueda
+                              </h2>
+                            )
+                        }
+                        <EventList  events={events}
+                                    currentPage={currentPage}
+                                    handlePrevPage={handlePrevPage}
+                                    handleNextPage={handleNextPage}
+                                    handlePageChange={handlePageChange}
+                                    totalPages={totalPages}
+                            />
+                      </div>  
+                      
+                    )
+                }
+                <div className='md:hidden'>
+                  {
+                    windowWidth < 640 ? <SponsorBanner /> : null
+                  }
+                </div>
               </div>
             </div>
           </div>
