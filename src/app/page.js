@@ -1,10 +1,10 @@
 'use client'
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import HomeBanner from '@/components/home/homeBanner';
 import SearchBar from '@/components/home/searchBar';
 import SearchFilters from '@/components/home/searchFilters';
 import FeaturedEvents from '@/components/home/featuredEvents';
-import { useRouter } from 'next/navigation';
 import { buildQueryString } from '@/components/utils/filterOperations';
 
 export default function Home() {
@@ -37,7 +37,6 @@ export default function Home() {
     }
 
     router.push(`/eventos?${queryStringWithFilters}`);
-    // toggleFilters();
   };
 
   const handleFiltersChange = (newFilters) => {

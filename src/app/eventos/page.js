@@ -8,6 +8,7 @@ import EventList from '@/components/eventList/eventList';
 import { LoadingSpinner } from '@/components/icons/icons';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useDeviceSize from '@/hooks/useDeviceSize';
+import SponsorBanner from '@/components/utils/sponsorsBanner';
 
 function Eventos() {
   const [windowWidth, windowHeight] = useDeviceSize();
@@ -30,6 +31,7 @@ function Eventos() {
 
   const router = useRouter();
   const searchParams = useSearchParams();
+
 
   useEffect(() => {
     urlUsage(searchParams);
@@ -147,6 +149,9 @@ function Eventos() {
                   <div className="flex flex-col items-center md:items-start z-20" style={searchBarWidth}>
                     <SearchBar onSearch={handleSearch} activateSearch={true} searchValueEventName={searchValueFromUrl} />
                     <Sidebar filters={filters} setFilters={setFilters} />
+                    <div className='hidden md:block'>
+                      <SponsorBanner />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -154,7 +159,8 @@ function Eventos() {
             
             <div className="col-span-1 md:col-span-2" style={eventsContainerMinWidth}>
               <div className='flex flex-col min-w-full items-center'>
-              { loading ?
+              {
+                loading ?
                   (
                     <div className="my-[15%]">
                       <LoadingSpinner size={12} />
