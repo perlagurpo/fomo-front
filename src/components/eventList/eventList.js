@@ -1,6 +1,9 @@
 import EventCard from "@/components/eventCard/eventCard";
+import { usePagination, DOTS } from "./paginacion";
 
 export default function EventList({ events=[], currentPage, handlePrevPage, handleNextPage, handlePageChange, totalPages }) {
+
+  const pagesArray = usePagination(totalPages, 1, currentPage);
 
   return (
     <div>
@@ -30,7 +33,7 @@ export default function EventList({ events=[], currentPage, handlePrevPage, hand
         { totalPages > 1 &&
             ( <>
                 <div className="grid grid-cols-3 md:px-20">
-                  <div className="col-span-1 flex items-center">
+                  <div className="col-span-1 flex items-center justify-end">
                       <button
                         onClick={handlePrevPage}
                         disabled={currentPage === 1}
@@ -38,22 +41,25 @@ export default function EventList({ events=[], currentPage, handlePrevPage, hand
                       >
                         {"<"}
                       </button>
-            </div>
-                            <div className="flex flex-row col-span-1 gap-2 py-2">
-                  {
-                    generatePagesArray(6,currentPage,totalPages).map(
-                      (pagina) => {
-                        return <h1 style={{fontSize: '18px'}} className={`cursor-pointer ${currentPage == pagina ? "text-fomo-pri-two" : "text-fomo-sec-two"} hover:scale-110 transition duration-200`}
-                                    onClick={() => handlePageChange(pagina)}
-                                    key={pagina}
-                                  >
-                                  { pagina }
-                                </h1>
-                      }
-                    )
-                  }
-                </div>
-                  <div className="col-span-1 flex items-center">
+                  </div>
+                  <div className="flex flex-row col-span-1 gap-2 py-2 px-4">
+                    {
+                      pagesArray.map(
+                        (pagina,i) => {
+                          if(pagina == DOTS) {
+                            return <h1 className="text-fomo-sec-two" key={i}>...</h1>
+                          }
+                          return <h1  className={`cursor-pointer text-[18px] ${currentPage == pagina ? "text-fomo-pri-two" : "text-fomo-sec-two"} hover:scale-[1.02] transition duration-200`}
+                                      onClick={() => handlePageChange(pagina)}
+                                      key={i}
+                                    >
+                                    { pagina }
+                                  </h1>
+                        }
+                      )
+                    }
+                  </div>
+                  <div className="col-span-1 flex items-center justify-start">
                     <button
                       onClick={handleNextPage}
                       disabled={currentPage === totalPages}
@@ -69,26 +75,4 @@ export default function EventList({ events=[], currentPage, handlePrevPage, hand
       </div>
     </div>
   );
-}
-
-/**
- * Función para generar el listado de números con links a las páginas disponibles
- * @param {*} length
- * @param {*} current 
- * @param {*} total 
- * @returns number[]
- */
-function generatePagesArray(length=6, current=1, total) {
-  let paginas = Array.from({ length: total }, (_,value) => value + 1);
-  // Formateo lo que se muestra si hay más de seis páginas (muy caverna)
-  if(total > 6) {
-    let inicio, fin
-    if (current > 3) {
-      inicio = Math.min(Math.max(current - 3, 0), total);
-      fin = Math.min(Math.max(current + 3, 0), total);
-    }
-    paginas = paginas.slice(inicio, fin);
-    fin != total && paginas.push(total); 
-  }
-  return paginas;
 }

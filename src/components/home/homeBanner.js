@@ -45,12 +45,12 @@ const HomeBanner = () => {
             index === activeIndex ? 'opacity-100 translate-x-0' : 'hidden opacity-0 translate-x-full'
           }`}
           style={{
-            backgroundImage: `url(http://18.231.76.133${handleImageSrc(item)})`,
+            backgroundImage: `url(https://grupofomoadmin.com.ar${handleImageSrc(item)})`,
             zIndex: index === activeIndex ? 1 : 0,
           }}
         >
           <img
-            src={`http://18.231.76.133${handleImageSrc(item)}`}
+            src={`https://grupofomoadmin.com.ar${handleImageSrc(item)}`}
             alt="Banner"
             className="object-cover w-full h-full"
           />
