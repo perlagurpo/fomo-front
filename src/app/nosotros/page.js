@@ -31,7 +31,8 @@ function Nosotros() {
         <p className='mt-8'>Grupo FOMO: un grupo de curiosxs trabajadores del arte y la cultura.</p>
       </div>
       <div className="mt-8 mb-16 text-black w-5/6 max-w-4xl">
-        <img src="https://i.ibb.co/T0VBpYC/Whats-App-Image-2023-09-15-at-17-54-30.jpg"/>
+        {/* <img src="https://i.ibb.co/T0VBpYC/Whats-App-Image-2023-09-15-at-17-54-30.jpg"/> */}
+        <img src="/img/about/about.jpg" />
       </div>
     </div>
   );
