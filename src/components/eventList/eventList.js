@@ -45,13 +45,13 @@ export default function EventList({ events=[], currentPage, handlePrevPage, hand
                   <div className="flex flex-row col-span-1 gap-2 py-2 px-4">
                     {
                       pagesArray.map(
-                        (pagina) => {
+                        (pagina,i) => {
                           if(pagina == DOTS) {
-                            return <h1 className="text-fomo-sec-two">...</h1>
+                            return <h1 className="text-fomo-sec-two" key={i}>...</h1>
                           }
                           return <h1  className={`cursor-pointer text-[18px] ${currentPage == pagina ? "text-fomo-pri-two" : "text-fomo-sec-two"} hover:scale-[1.02] transition duration-200`}
                                       onClick={() => handlePageChange(pagina)}
-                                      key={pagina}
+                                      key={i}
                                     >
                                     { pagina }
                                   </h1>
