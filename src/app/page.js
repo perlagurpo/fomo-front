@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react';
+import Script from 'next/script'
 import HomeBanner from '@/components/home/homeBanner';
 import SearchBar from '@/components/home/searchBar';
 import SearchFilters from '@/components/home/searchFilters';
@@ -9,6 +10,8 @@ import { buildQueryString } from '@/components/utils/filterOperations';
 
 export default function Home() {
   const router = useRouter();
+
+  const gaID = process.env.GA_MEASUREMENT_ID;
 
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -46,6 +49,16 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center min-h-screen bg-fomo-sec-white font-poppins">
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaID}`} />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+ 
+          gtag('config', '${gaID}');
+        `}
+      </Script>
       {showFilters ? '' : <HomeBanner />}
       <div className="w-full max-w-screen-xl mx-auto p-4 md:pb-4 xl:px-72 lg:px-60 flex md:px-48 sm:px-36 xs:px-24 justify-center">
         <SearchBar onToggleFilters={toggleFilters} onSearch={handleSearch} showFilters={showFilters} />
