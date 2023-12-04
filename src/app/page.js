@@ -11,8 +11,6 @@ import { buildQueryString } from '@/components/utils/filterOperations';
 export default function Home() {
   const router = useRouter();
 
-  const gaID = process.env.GA_MEASUREMENT_ID;
-
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFilters, setSearchFilters] = useState({
@@ -49,14 +47,14 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center min-h-screen bg-fomo-sec-white font-poppins">
-      <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaID}`} />
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=G-KSX6SXXVNF`} />
       <Script id="google-analytics">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
  
-          gtag('config', '${gaID}');
+          gtag('config', 'G-KSX6SXXVNF');
         `}
       </Script>
       {showFilters ? '' : <HomeBanner />}
